@@ -4,3 +4,9 @@
 <h1 align="center"> 
 	🚧  Em construção...  🚧
 </h1>
+ :zap: Tech Stack
+<h1 align="center">
+  <img src="https://www.cloudways.com/blog/wp-content/uploads/20-Best-Web-Design-Tools-for-Design-Agencies.jpg" alt="Stack" height="250" width="900px">
+  <br>
+</h1>
+
