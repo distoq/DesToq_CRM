@@ -1,5 +1,5 @@
-import { Flex, Image } from "@chakra-ui/react";
-import DEStoq from "../../../assets/imgs/DEStoq.svg";
+import { Avatar, Flex, Image } from "@chakra-ui/react";
+import DEStoq from "../../../assets/imgs/DEStoq.png";
 
 const ImageLogin = () => {
   return (
@@ -15,17 +15,14 @@ const ImageLogin = () => {
       }
       bgRepeat="no-repeat"
       backgroundSize="100% 90%"
-      display={[
-        "none",
-        "none",
-        "none",
-        "none",
-        "flex",
-      ]}
+      display={["none", "none", "none", "none", "flex"]}
     >
       <Flex h="500px">
-        <Image
-          mt="300px"
+        <Avatar
+          w="200px"
+          h="200px"
+          ml="-100px"
+          mt="150px"
           position="absolute"
           top="200px"
           src={DEStoq}

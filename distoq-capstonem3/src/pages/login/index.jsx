@@ -1,6 +1,6 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Avatar, Flex, Image } from "@chakra-ui/react";
 import FormLogin from "../../components/login-components/FormLogin";
-import DEStoq from "../../assets/imgs/DEStoq.svg";
+import DEStoq from "../../assets/imgs/DEStoq.png";
 import ImageLogin from "../../components/login-components/ImageLogin";
 
 
@@ -13,9 +13,11 @@ const LoginPage = () => {
       align="center"
       direction={["column","column","column","column","row-reverse"]}
     >
-      <Image
+      <Avatar
+        w="200px"
+        h="200px"
         position="absolute"
-        top="200px"
+        top="100px"
         src={DEStoq}
         alt="logo da empresa"
         display={[
