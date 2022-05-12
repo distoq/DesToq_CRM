@@ -106,6 +106,9 @@ console.log(tokenUser)
               placeholder="Digite seu email"
               {...register("email")}
             />
+             {errors.email && (
+              <FormHelperText color="red.500" variant={"error"}>{errors.email.message}</FormHelperText>
+            )}
             <FormLabel htmlFor="email">Senha </FormLabel>
             <Input
               variant="outline"
@@ -115,7 +118,7 @@ console.log(tokenUser)
               {...register("password")}
             />
             {errors.password && (
-              <FormHelperText variant={"error"}>{errors.password.message}</FormHelperText>
+              <FormHelperText color="red.500" variant={"error"}>{errors.password.message}</FormHelperText>
             )}
           </FormControl>
 
