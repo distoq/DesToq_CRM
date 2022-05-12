@@ -1,7 +1,9 @@
 import { Button, Heading } from "@chakra-ui/react";
-import LoginPage from "./pages/login";
-import Routers from "./routes";
 
+import LoginPage from "./pages/login";
+import Register from "./pages/register";
+import { Flex } from "@chakra-ui/react";
+import Routers from "./routes";
 
 function App() {
   return (
@@ -10,5 +12,14 @@ function App() {
     </div>
   );
 }
+
+/* 
+function App() {
+  return (
+    <Flex>
+     <Register/>
+    </Flex>
+  );
+}*/
 
 export default App;
