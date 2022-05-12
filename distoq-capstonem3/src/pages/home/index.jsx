@@ -5,16 +5,17 @@ import { useJwt } from "react-jwt";
 import { ShowcaseContext } from "../../Providers/showcase/";
 import { CartContext } from "../../Providers/cart";
 
+import CardSC from "../../components/home-components";
 import { GrUserAdmin } from "react-icons/gr";
 
 const Home = ({ product }) => {
   const navigate = useNavigate();
-  const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
-  const { decodedToken, isExpired } = useJwt(tokenUser);
+  // const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
+  // const { decodedToken, isExpired } = useJwt(tokenUser);
   const { listProducts } = useContext(ShowcaseContext);
   const { cart, addCart } = useContext(CartContext);
-  const [isAdmin, setIsAdmin] = useState(false);
-  //console.log("cart na Home page", cart);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  console.log("cart na Home page", cart);
 
   // if (tokenUser !== "") {
   //   if (decodedToken?.sub === "1"){
@@ -22,10 +23,11 @@ const Home = ({ product }) => {
   //   }
   // }
 
-  if (decodedToken?.sub === "1") {
-    return setIsAdmin(!isAdmin);
-  }
-  //console.log(tokenUser);
+  // if (decodedToken?.sub === "1") {
+  //   return setIsAdmin(!isAdmin);
+  // }
+  // console.log(tokenUser);
+
   return (
     <main>
       <h1>hamburgueria</h1>
@@ -35,7 +37,8 @@ const Home = ({ product }) => {
           <GrUserAdmin />
         </button>
       </header>
-      <ul>
+      <CardSC />
+      {/* <ul>
         {listProducts.map((product) => (
           <li key={product.id}>
             <img src={product.image} alt={product.name} />
@@ -46,7 +49,7 @@ const Home = ({ product }) => {
             </button>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </main>
   );
 };
