@@ -14,18 +14,24 @@ const Home = ({ product }) => {
   const { listProducts } = useContext(ShowcaseContext);
   const { cart, addCart } = useContext(CartContext);
   const [isAdmin, setIsAdmin] = useState(false);
-  console.log("cart na Home page", cart);
+  //console.log("cart na Home page", cart);
+
+  // if (tokenUser !== "") {
+  //   if (decodedToken?.sub === "1"){
+  //     navigate("/dashboard")
+  //   }
+  // }
 
   if (decodedToken?.sub === "1") {
     return setIsAdmin(!isAdmin);
   }
-
+  //console.log(tokenUser);
   return (
     <main>
       <h1>hamburgueria</h1>
       <header>
         <button onClick={() => navigate("/cart")}>ver carrinho</button>
-        <button disable={isAdmin} onClick={() => navigate("/dashboard")}>
+        <button disabled onClick={() => navigate("/dashboard")}>
           <GrUserAdmin />
         </button>
       </header>
