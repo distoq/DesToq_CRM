@@ -16,7 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../../dataBase/db";
 import { toast } from "react-toastify";
 import { useJwt } from "react-jwt";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
 
@@ -122,7 +122,9 @@ console.log(tokenUser)
           <Button type="submit" variant="primary">LOGAR</Button>
         </form>
         <Text variant="primary">Não possui login ?</Text>
-        <Button type="button" variant="primary">REGISTRAR</Button>
+        <Link to="/register">
+          <Button type="button" variant="primary">REGISTRAR</Button>
+        </Link>
       </Flex>
     </>
   );

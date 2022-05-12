@@ -23,7 +23,7 @@ const FormRegister = () => {
       .required("Campo obrigatório")
       .email("Email inválido")
       .oneOf([yup.ref("email")], "Senhas não conferem"),
-    adress: yup.string().required("Campo obrigatório"),
+    address: yup.string().required("Campo obrigatório"),
     number: yup
       .string()
       .required("Campo obrigatório")
@@ -57,7 +57,7 @@ const FormRegister = () => {
     email,
     password,
     profile,
-    adress,
+    address,
     city,
     state,
     number,
@@ -68,9 +68,9 @@ const FormRegister = () => {
       email,
       password,
       profile,
-      adressInfo: {
+      addressInfo: {
         cep,
-        adress,
+        address,
         city,
         state,
         number,
@@ -146,17 +146,17 @@ const FormRegister = () => {
             )}
             <Flex>
               <Flex direction="column" w="100%">
-                <FormLabel htmlFor="adress">Seu endereço</FormLabel>
+                <FormLabel htmlFor="address">Seu endereço</FormLabel>
                 <Input
                   variant="outline"
-                  id="adress"
+                  id="address"
                   type="text"
                   placeholder="Digite seu endereço"
-                  {...register("adress")}
+                  {...register("address")}
                 />
                 {errors && (
                   <FormHelperText color="red">
-                    {errors.adress?.message}
+                    {errors.address?.message}
                   </FormHelperText>
                 )}
               </Flex>
