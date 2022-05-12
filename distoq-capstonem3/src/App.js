@@ -1,11 +1,12 @@
 import { Button, Heading } from "@chakra-ui/react";
+import LoginPage from "./pages/login";
+import Routers from "./routes";
 
 
 function App() {
   return (
     <div className="App">
-     <Heading variant={"primary"}>Olá</Heading>
-     <Button variant={"dashboard"}>Teste</Button>
+     <Routers/>
     </div>
   );
 }

@@ -15,8 +15,8 @@ export const thema= extendTheme({
       components: {
         Heading: {
           variants: {
-            primary: { fontSize: "32px", fontWeight: "700", color: "#000000" },
-            secondary: { fontSize: "32px", fontWeight: "700", color: "#000000" },
+            primary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
+            secondary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
           },
         },
         Text: {
@@ -32,10 +32,11 @@ export const thema= extendTheme({
                 background:"#101010",
                 color:"white",
                 margin:"10px",
-                width:"310px",
+                width:"300px",
                 height:"43",
               _hover: {
                 background: "#F4BF39",
+                color:"#101010",
               },
             },
             dashboard: {
@@ -50,12 +51,13 @@ export const thema= extendTheme({
             },
           },
         },
+     
         
       },
        styles: {
     global: {
       body: {
-        backgroundImage:"https://www.jeronimoburger.com.br/img/home/banner-sobre-desk.png"
+       
       },
     },
   },
