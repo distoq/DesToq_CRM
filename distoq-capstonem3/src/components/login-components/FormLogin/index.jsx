@@ -18,40 +18,27 @@ import { toast } from "react-toastify";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 
-
-
 const FormLogin = () => {
 
 const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token"))||''
 const {decodedToken,isExpired}=useJwt(tokenUser)
 const  history = useNavigate()
 
-if(tokenUser !== ''){
-  if(decodedToken?.sub === '1'){
-     history("/dashboard")
-  }else{
-     history("/")
-  }
-
-}
   const handleSubmitForm = (data) => {
    
-  
     api.post("login",data)
    .then(res=> {
     localStorage.setItem("@DEStoq:token",JSON.stringify(res.data.accessToken)) 
      toast.success("Usuário logado com sucesso")
      console.log(res.data)})
      
- if(decodedToken?.sub == 1){
+ if(decodedToken?.sub === 1){
 
    return history("/dashboard")
  }else{
    return history("/home")
  }
  
-
-
 }
 
 console.log(tokenUser)
@@ -77,9 +64,6 @@ console.log(tokenUser)
     resolver: yupResolver(formSchema),
   });
 
-  
-  
-
   return (
     <>
       <Flex
@@ -89,7 +73,7 @@ console.log(tokenUser)
         justify="center"
         align="center"
       >
-        <Heading mb="20px" variant="primary" as="h1" position="relative">
+        <Heading mt="50px" mb="20px" variant="primary" as="h1" position="relative">
           Faça seu login aqui !
         </Heading>
         <form onSubmit={ handleSubmit(handleSubmitForm)}>
@@ -135,10 +119,10 @@ console.log(tokenUser)
             )}
           </FormControl>
 
-          <Button type="submit" variant="primary">LOGIN</Button>
+          <Button type="submit" variant="primary">LOGAR</Button>
         </form>
         <Text variant="primary">Não possui login ?</Text>
-        <Button type="button" variant="primary">REGISTER</Button>
+        <Button type="button" variant="primary">REGISTRAR</Button>
       </Flex>
     </>
   );
