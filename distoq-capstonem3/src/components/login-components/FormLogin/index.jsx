@@ -1,14 +1,87 @@
 import {
-
   Button,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Heading,
   Input,
+  Text,
+ 
 } from "@chakra-ui/react";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { useContext, useEffect, useState } from "react";
+import { TokenContext } from "../../../Providers/Token";
+import api from "../../../dataBase/db";
+import { toast } from "react-toastify";
+import { useJwt } from "react-jwt";
+import { useNavigate } from "react-router-dom";
+
+
 
 const FormLogin = () => {
+
+const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token"))||''
+const {decodedToken,isExpired}=useJwt(tokenUser)
+const  history = useNavigate()
+
+if(tokenUser !== ''){
+  if(decodedToken?.sub === '1'){
+     history("/dashboard")
+  }else{
+     history("/")
+  }
+
+}
+  const handleSubmitForm = (data) => {
+   
+  
+    api.post("login",data)
+   .then(res=> {
+    localStorage.setItem("@DEStoq:token",JSON.stringify(res.data.accessToken)) 
+     toast.success("Usuário logado com sucesso")
+     console.log(res.data)})
+     
+ if(decodedToken?.sub == 1){
+
+   return history("/dashboard")
+ }else{
+   return history("/home")
+ }
+ 
+
+
+}
+
+console.log(tokenUser)
+  const formSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("digite um e-mail válido")
+      .required("Email obrigatório!"),
+    password: yup
+      .string()
+      .required("Senha obrigátoria!")
+      // .matches(
+      //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
+      //   "Senha Inválida. Sua senha deve conter pelo menos: uma letra Maiuscula, um número e um caracter especial($*&@#)"
+      // )
+      // .min(8, "Sua senha deve possuir no minimo 6 caracteres"),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  
+  
+
   return (
     <>
       <Flex
@@ -18,25 +91,24 @@ const FormLogin = () => {
         justify="center"
         align="center"
       >
-          <Heading mb="100px" variant="primary" as="h1" position="relative">
-        Faça seu login aqui !
-      </Heading>
-        <form  action="">
+        <Heading mb="20px" variant="primary" as="h1" position="relative">
+          Faça seu login aqui !
+        </Heading>
+        <form onSubmit={ handleSubmit(handleSubmitForm)}>
           <FormControl
-          display="flex"
-          flexDirection="column"
-          align="center"
+            display="flex"
+            flexDirection="column"
+            align="center"
             sx={{
               label: {
-                margin:"0 10px",
-                 
+                margin: "0 10px",
               },
               input: {
                 borderColor: "black",
-                color: "white",
+                color: "#101010",
                 width: "100%",
-                maxW:"300px",
-                margin:"auto",
+                maxW: "300px",
+                margin: "auto",
                 _placeholder: {
                   color: "black",
                   borderColor: "black",
@@ -50,6 +122,7 @@ const FormLogin = () => {
               id="email"
               type="email"
               placeholder="Digite seu email"
+              {...register("email")}
             />
             <FormLabel htmlFor="email">Senha </FormLabel>
             <Input
@@ -57,12 +130,17 @@ const FormLogin = () => {
               id="password"
               type="password"
               placeholder="Digite sua senha"
+              {...register("password")}
             />
-            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+            {errors.password && (
+              <FormHelperText variant={"error"}>{errors.password.message}</FormHelperText>
+            )}
           </FormControl>
-          
-          <Button variant="primary">LOGIN</Button>
+
+          <Button type="submit" variant="primary">LOGIN</Button>
         </form>
+        <Text variant="primary">Não possui login ?</Text>
+        <Button type="button" variant="primary">REGISTER</Button>
       </Flex>
     </>
   );
