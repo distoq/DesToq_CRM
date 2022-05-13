@@ -5,6 +5,7 @@ import Providers from "./Providers";
 import { thema } from "./styles/GlobalStyles";
 import "@fontsource/itim";
 import "@fontsource/nunito";
+import "@fontsource/rubik"
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ToastContainer } from "react-toastify";

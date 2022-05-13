@@ -4,7 +4,7 @@ import { extendTheme } from "@chakra-ui/react";
 export const thema= extendTheme({
 
     fonts: {
-        heading: "Itim",
+        heading: "rubik",
         body: "Nunito",
       },
       colors: {
@@ -33,7 +33,7 @@ export const thema= extendTheme({
                 color:"white",
                 margin:"10px",
                 width:"300px",
-                height:"43",
+                height:"43px",
               _hover: {
                 background: "#F4BF39",
                 color:"#101010",
