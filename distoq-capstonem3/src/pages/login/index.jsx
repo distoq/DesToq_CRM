@@ -1,17 +1,24 @@
-import { Avatar, Flex, Image } from "@chakra-ui/react";
+import { Avatar, Flex } from "@chakra-ui/react";
 import FormLogin from "../../components/login-components/FormLogin";
 import DEStoq from "../../assets/imgs/DEStoq.png";
 import ImageLogin from "../../components/login-components/ImageLogin";
-
+import { useContext } from "react";
+import { TokenContext } from "../../Providers/Token";
+import { Navigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const { token } = useContext(TokenContext);
+  if (token) {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <Flex
       w="100vw"
       h="100vh"
       justify="center"
       align="center"
-      direction={["column","column","column","column","row-reverse"]}
+      direction={["column", "column", "column", "column", "row-reverse"]}
     >
       <Avatar
         w="200px"
@@ -30,8 +37,8 @@ const LoginPage = () => {
       />
 
       <FormLogin />
-      
-      <ImageLogin/>
+
+      <ImageLogin />
     </Flex>
   );
 };
