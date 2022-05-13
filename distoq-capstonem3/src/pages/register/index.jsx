@@ -9,12 +9,12 @@ const Register = () => {
     <Flex
       direction="row"
       w="100vw"
-      h="100%"
+      minH="100%"
       justify="center"
       align="center"
       backgroundColor="white"
     >
-      <Flex minW="45%" minH="100vh" direction="column" textAlign="center" align="center" justify="center">
+      <Flex minW="45%" minH="100%" direction="column" textAlign="center" align="center" justify="center">
         <Flex direction="column" textAlign="center" align="center">
           <Box w="100%" maxW="400px" justify="flex-start" align="center">
             <Image
