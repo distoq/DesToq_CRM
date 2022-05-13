@@ -12,30 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
 
-import { MdDashboard } from "react-icons/md";
-import { GiFactory } from "react-icons/gi";
-import { AiFillBank, AiOutlineDropbox } from "react-icons/ai";
-import {
-  FaBoxes,
-  FaHamburger,
-  FaFileInvoiceDollar,
-  FaOpencart,
-} from "react-icons/fa";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
 export const PedidosPage = () => {
-  const options = [
-    "Dashboard",
-    "Pedidos",
-    "Fornecedores",
-    "Insumos",
-    "Compras",
-    "Produtos",
-    "Estoque",
-    "Financeiro",
-  ];
-
-  const { activeDashboardPage, setActiveDashboarPage } = useActivePage();
+  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+    useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -44,36 +25,6 @@ export const PedidosPage = () => {
   });
 
   const group = getRootProps();
-
-  const handleIcons = (value) => {
-    switch (value) {
-      case "Dashboard":
-        return <MdDashboard />;
-      case "Pedidos":
-        return <FaFileInvoiceDollar />;
-
-      case "Fornecedores":
-        return <GiFactory />;
-
-      case "Insumos":
-        return <AiOutlineDropbox />;
-
-      case "Compras":
-        return <FaOpencart />;
-
-      case "Produtos":
-        return <FaHamburger />;
-
-      case "Estoque":
-        return <FaBoxes />;
-
-      case "Financeiro":
-        return <AiFillBank />;
-
-      default:
-        break;
-    }
-  };
 
   function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props);

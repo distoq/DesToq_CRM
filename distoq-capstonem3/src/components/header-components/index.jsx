@@ -18,10 +18,7 @@ import {
 import DEStoq from "../../assets/imgs/DEStoq-white.png";
 import React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { MdDashboard } from "react-icons/md";
-import { GiFactory } from "react-icons/gi";
-import { AiFillBank, AiOutlineDropbox } from "react-icons/ai";
-import { FaBoxes, FaHamburger, FaFileInvoiceDollar, FaOpencart } from "react-icons/fa";
+
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { useActivePage } from "../../Providers/DashboardPageController";
 
@@ -29,18 +26,8 @@ const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const options = [
-    "Dashboard",
-    "Pedidos",
-    "Fornecedores",
-    "Insumos",
-    "Compras",
-    "Produtos",
-    "Estoque",
-    "Financeiro",
-  ];
-
-  const { activeDashboardPage, setActiveDashboarPage } = useActivePage();
+  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+    useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -49,36 +36,6 @@ const DashboardHeader = () => {
   });
 
   const group = getRootProps();
-
-  const handleIcons = (value) => {
-    switch (value) {
-      case "Dashboard":
-        return <MdDashboard />;
-      case "Pedidos":
-        return <FaFileInvoiceDollar />;
-
-      case "Fornecedores":
-        return <GiFactory />;
-
-      case "Insumos":
-        return <AiOutlineDropbox />;
-
-      case "Compras":
-      return <FaOpencart />;
-
-      case "Produtos":
-        return <FaHamburger />;
-
-      case "Estoque":
-        return <FaBoxes />;
-
-      case "Financeiro":
-        return <AiFillBank />;
-
-      default:
-        break;
-    }
-  };
 
   function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props);
