@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { ShowcaseContext } from "../../Providers/showcase/";
 import { HeaderHome } from "../../components/home-components/HeaderHome";
 import Search from "../../components/home-components/HeaderHome/SearchHome";
-import { useIslogged } from "../../Providers/isLogged";
 import { CartContext } from "../../Providers/cart";
 import CardSC from "../../components/home-components";
 import {
@@ -22,11 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 const Home = ({ product }) => {
-  const { isLogged } = useIslogged();
   
-  if(isLogged){
-    
-  }
   const navigate = useNavigate();
   const { listProducts } = useContext(ShowcaseContext);
   const { cart, addCart } = useContext(CartContext);
