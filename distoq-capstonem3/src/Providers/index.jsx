@@ -1,13 +1,17 @@
-import { SearchHomeProvider } from "./SearchHome";
 import TokenProvider from "./Token";
+import { SearchHomeProvider } from "./SearchHome";
+import { DashboardPageControllerProvider } from "./DashboardPageController";
 
-const Provider = ({ children }) => {
+const Providers = ({ children }) => {
   return (
     <TokenProvider>
-    <SearchHomeProvider>
-      {children}
-    </SearchHomeProvider>
+      <DashboardPageControllerProvider>
+        <SearchHomeProvider>
+          {children}
+        </SearchHomeProvider>
+      </DashboardPageControllerProvider>
     </TokenProvider>
   );
 };
-export default Provider;
+export default Providers;
+
