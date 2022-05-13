@@ -16,9 +16,12 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useIslogged } from "../../../Providers/isLogged";
 
+
+
 const FormLogin = () => {
+  
   const navigate = useNavigate();
-  const { userLogged } = useIslogged();
+  const {userLogged  } = useIslogged();
   const handleSubmitForm = (data) => {
     api
       .post("login", data)
@@ -28,8 +31,8 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        userLogged();
-        return navigate("/home");
+        userLogged()
+       return navigate("/home")
       })
       .catch((err) => {
         toast.error("Ops, algo deu errado");
@@ -104,7 +107,7 @@ const FormLogin = () => {
               placeholder="Digite seu email"
               {...register("email")}
             />
-            {errors.email && (
+             {errors.email && (
               <FormHelperText color="red.500" variant={"error"}>
                 {errors.email.message}
               </FormHelperText>
