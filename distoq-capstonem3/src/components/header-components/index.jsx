@@ -21,7 +21,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { MdDashboard } from "react-icons/md";
 import { GiFactory } from "react-icons/gi";
 import { AiFillBank, AiOutlineDropbox } from "react-icons/ai";
-import { FaBoxes, FaHamburger, FaFileInvoiceDollar } from "react-icons/fa";
+import { FaBoxes, FaHamburger, FaFileInvoiceDollar, FaOpencart } from "react-icons/fa";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { useActivePage } from "../../Providers/DashboardPageController";
 
@@ -34,6 +34,7 @@ const DashboardHeader = () => {
     "Pedidos",
     "Fornecedores",
     "Insumos",
+    "Compras",
     "Produtos",
     "Estoque",
     "Financeiro",
@@ -61,6 +62,9 @@ const DashboardHeader = () => {
 
       case "Insumos":
         return <AiOutlineDropbox />;
+
+      case "Compras":
+      return <FaOpencart />;
 
       case "Produtos":
         return <FaHamburger />;
