@@ -10,6 +10,7 @@ import {
   Text,
   Button,
   Stack,
+  UnorderedList
 } from "@chakra-ui/react";
 import { toast } from "react-toastify";
 
@@ -19,13 +20,14 @@ const CardSC = ({ product }) => {
   console.log("cart na Home page", cart);
 
   return (
-    // <Flex
-    //   direction={["column", "column", "row", "row", "row"]}
-    //   wrap={["nowrap", "nowrap", "wrap", "wrap", "wrap"]}
-    //   align={["center", "center", "center", "center", "center"]}
-    //   justify={["center", "center", "center", "center", "center"]}
-    // >
-    <List
+    <Flex
+      direction={["column", "column", "row", "row", "row"]}
+      wrap={["nowrap", "", "wrap", "", ""]}
+      align={["center", "center", "center", "center", "center"]}
+      justify={["center", "center", "center", "center", "center"]}
+    >
+    
+    <UnorderedList
       w={["277px", "297px", "835px", "835px", "1125px"]}
       h="100%"
       // h="507px"
@@ -80,7 +82,8 @@ const CardSC = ({ product }) => {
           </Flex>
         </ListItem>
       ))}
-    </List>
+    </UnorderedList>
+    </Flex>
   );
 };
 
