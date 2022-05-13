@@ -8,9 +8,6 @@ import { Navigate } from "react-router-dom";
 
 const LoginPage = () => {
   const { token } = useContext(TokenContext);
-  if (token) {
-    return <Navigate to="/home" replace />;
-  }
 
   return (
     <Flex

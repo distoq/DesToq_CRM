@@ -19,7 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmitForm = (data) => {
     api
@@ -30,7 +30,7 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        return history("/home");
+       return navigate("/home")
       })
       .catch((err) => {
         toast.error("Ops, algo deu errado");

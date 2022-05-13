@@ -9,12 +9,6 @@ import { TokenContext } from "../../Providers/Token";
 const Home = () => {
   const { token } = useContext(TokenContext);
 
- 
-
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
-
   return (
     <>
       <Flex direction="column" justify="center" align="center">
