@@ -1,4 +1,4 @@
-import { createContext,useState } from "react";
+import { createContext, useState } from "react";
 
 export const TokenContext = createContext("");
 
@@ -7,14 +7,11 @@ const TokenProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
   );
 
-
-
   return (
     <TokenContext.Provider
       value={{
         token,
         setToken,
-      
       }}
     >
       {children}

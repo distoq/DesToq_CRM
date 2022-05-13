@@ -1,4 +1,4 @@
-import {  Button, Flex, Image } from "@chakra-ui/react";
+import { Button, Flex, Image } from "@chakra-ui/react";
 
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
@@ -6,12 +6,18 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
+import { useIslogged } from "../../../Providers/isLogged";
 
 const HeaderHome = () => {
-  const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
-  const decodedToken = decodeToken(tokenUser)
-  const navigate = useNavigate()
+  const { isLogged,userLogOut } = useIslogged();
+  const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
+  const decodedToken = decodeToken(tokenUser);
+  const navigate = useNavigate();
 
+  const handleLogOut = () => {
+    userLogOut()
+    navigate("/")
+  }
   return (
     <>
       <Flex
@@ -26,7 +32,7 @@ const HeaderHome = () => {
           <Image src={DEStoq} alt="logo da empresa" />
           <Flex>
             <Button
-             disabled={decodedToken.sub !== "1"}
+              disabled={decodedToken?.sub !== "1"}
               bg="transparent"
               _hover={{ bg: "transparent" }}
               onClick={() => navigate("/dashboard")}
@@ -36,7 +42,7 @@ const HeaderHome = () => {
             <Button bg="transparent" _hover={{ bg: "transparent" }}>
               <AiOutlineShoppingCart fontSize={35} color="#ffff" />
             </Button>
-            <Button bg="transparent" _hover={{ bg: "transparent" }}>
+            <Button bg="transparent" _hover={{ bg: "transparent" }} onClick={handleLogOut} >
               <BsBoxArrowInRight color="white" fontSize={35} />
             </Button>
           </Flex>

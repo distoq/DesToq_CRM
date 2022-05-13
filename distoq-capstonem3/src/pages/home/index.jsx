@@ -4,10 +4,16 @@ import { Navigate } from "react-router-dom";
 
 import { HeaderHome } from "../../components/home-components/HeaderHome";
 import Search from "../../components/home-components/HeaderHome/SearchHome";
+import { useIslogged } from "../../Providers/isLogged";
 import { TokenContext } from "../../Providers/Token";
 
 const Home = () => {
-  const { token } = useContext(TokenContext);
+  const { isLogged } = useIslogged();
+
+  console.log(isLogged)
+  if(isLogged){
+    
+  }
 
   return (
     <>
