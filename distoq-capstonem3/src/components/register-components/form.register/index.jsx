@@ -7,14 +7,17 @@ import {
   Input,
   Box,
   FormHelperText,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormRegister = () => {
+  const history = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -49,6 +52,7 @@ const FormRegister = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -82,6 +86,19 @@ const FormRegister = () => {
       .catch((_) => console.log("error"));
   };
 
+  const cepSearch = (e) => {
+    const cep = e.target.value.replace(/\D/g, "");
+    axios
+      .get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((response) => {
+        const address = response.data;
+        setValue("address", address.logradouro);
+        setValue("city", address.localidade);
+        setValue("state", address.uf);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Flex maxW="400px" justify="center" align="center">
       <form onSubmit={handleSubmit(onRegister)}>
@@ -102,6 +119,9 @@ const FormRegister = () => {
                   color: "#716C6C",
                 },
               },
+              label: {
+                margin: "0",
+              },
             }}
           >
             <FormLabel htmlFor="name">Name</FormLabel>
@@ -113,7 +133,7 @@ const FormRegister = () => {
               {...register("name")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.name?.message}
               </FormHelperText>
             )}
@@ -126,7 +146,7 @@ const FormRegister = () => {
               {...register("email")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.email?.message}
               </FormHelperText>
             )}
@@ -140,7 +160,7 @@ const FormRegister = () => {
               {...register("confirmEmail")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.confirmEmail?.message}
               </FormHelperText>
             )}
@@ -155,7 +175,7 @@ const FormRegister = () => {
                   {...register("address")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="1px">
                     {errors.address?.message}
                   </FormHelperText>
                 )}
@@ -172,7 +192,7 @@ const FormRegister = () => {
                   {...register("number")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="1px">
                     {errors.number?.message}
                   </FormHelperText>
                 )}
@@ -189,7 +209,7 @@ const FormRegister = () => {
                   {...register("state")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="1px">
                     {errors.state?.message}
                   </FormHelperText>
                 )}
@@ -202,9 +222,10 @@ const FormRegister = () => {
                   type="text"
                   placeholder="Confirme o CEP"
                   {...register("cep")}
+                  onBlur={cepSearch}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="1px">
                     {errors.CEP?.message}
                   </FormHelperText>
                 )}
@@ -219,7 +240,7 @@ const FormRegister = () => {
               {...register("city")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.city?.message}
               </FormHelperText>
             )}
@@ -232,7 +253,7 @@ const FormRegister = () => {
               {...register("password")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.password?.message}
               </FormHelperText>
             )}
@@ -245,7 +266,7 @@ const FormRegister = () => {
               {...register("confirmPassword")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.confirmPassword?.message}
               </FormHelperText>
             )}
@@ -255,7 +276,7 @@ const FormRegister = () => {
               <option value="user">Usuário</option>
             </Select>
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.profile?.message}
               </FormHelperText>
             )}
@@ -263,6 +284,10 @@ const FormRegister = () => {
             <Button variant="primary" w="100%" mr="0" ml="0" type="submit">
               CADASTRAR
             </Button>
+            <Text>
+              Já possui cadastro?{" "}
+              <Link onClick={() => history("/")}>clique aqui</Link>
+            </Text>
           </FormControl>
         </Box>
       </form>
