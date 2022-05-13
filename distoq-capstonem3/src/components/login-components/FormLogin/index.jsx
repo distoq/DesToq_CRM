@@ -7,54 +7,46 @@ import {
   Heading,
   Input,
   Text,
- 
 } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import api from "../../../dataBase/db";
 import { toast } from "react-toastify";
-import { useJwt } from "react-jwt";
 import { Link, useNavigate } from "react-router-dom";
+import { useIslogged } from "../../../Providers/isLogged";
 
 const FormLogin = () => {
-
-const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token"))||''
-const {decodedToken,isExpired}=useJwt(tokenUser)
-const  history = useNavigate()
-
+  const navigate = useNavigate();
+  const { userLogged } = useIslogged();
   const handleSubmitForm = (data) => {
-   
-    api.post("login",data)
-   .then(res=> {
-    localStorage.setItem("@DEStoq:token",JSON.stringify(res.data.accessToken)) 
-     toast.success("Usuário logado com sucesso")
-     console.log(res.data)})
-     
- if(decodedToken?.sub === 1){
+    api
+      .post("login", data)
+      .then((res) => {
+        toast.success("Usuário logado com sucesso");
+        localStorage.setItem(
+          "@DEStoq:token",
+          JSON.stringify(res.data.accessToken)
+        );
+        userLogged();
+        return navigate("/home");
+      })
+      .catch((err) => {
+        toast.error("Ops, algo deu errado");
+      });
+  };
 
-   return history("/dashboard")
- }else{
-   return history("/home")
- }
- 
-}
-
-console.log(tokenUser)
   const formSchema = yup.object().shape({
     email: yup
       .string()
       .email("digite um e-mail válido")
       .required("Email obrigatório!"),
-    password: yup
-      .string()
-      .required("Senha obrigátoria!")
-      // .matches(
-      //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
-      //   "Senha Inválida. Sua senha deve conter pelo menos: uma letra Maiuscula, um número e um caracter especial($*&@#)"
-      // )
-      // .min(8, "Sua senha deve possuir no minimo 6 caracteres"),
+    password: yup.string().required("Senha obrigátoria!"),
+    // .matches(
+    //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
+    //   "Senha Inválida. Sua senha deve conter pelo menos: uma letra Maiuscula, um número e um caracter especial($*&@#)"
+    // )
+    // .min(8, "Sua senha deve possuir no minimo 6 caracteres"),
   });
   const {
     register,
@@ -73,10 +65,16 @@ console.log(tokenUser)
         justify="center"
         align="center"
       >
-        <Heading mt="50px" mb="20px" variant="primary" as="h1" position="relative">
+        <Heading
+          mt="50px"
+          mb="20px"
+          variant="primary"
+          as="h1"
+          position="relative"
+        >
           Faça seu login aqui !
         </Heading>
-        <form onSubmit={ handleSubmit(handleSubmitForm)}>
+        <form onSubmit={handleSubmit(handleSubmitForm)}>
           <FormControl
             display="flex"
             flexDirection="column"
@@ -106,6 +104,11 @@ console.log(tokenUser)
               placeholder="Digite seu email"
               {...register("email")}
             />
+            {errors.email && (
+              <FormHelperText color="red.500" variant={"error"}>
+                {errors.email.message}
+              </FormHelperText>
+            )}
             <FormLabel htmlFor="email">Senha </FormLabel>
             <Input
               variant="outline"
@@ -115,15 +118,21 @@ console.log(tokenUser)
               {...register("password")}
             />
             {errors.password && (
-              <FormHelperText variant={"error"}>{errors.password.message}</FormHelperText>
+              <FormHelperText color="red.500" variant={"error"}>
+                {errors.password.message}
+              </FormHelperText>
             )}
           </FormControl>
 
-          <Button type="submit" variant="primary">LOGAR</Button>
+          <Button type="submit" variant="primary">
+            LOGAR
+          </Button>
         </form>
         <Text variant="primary">Não possui login ?</Text>
         <Link to="/register">
-          <Button type="button" variant="primary">REGISTRAR</Button>
+          <Button type="button" variant="primary">
+            REGISTRAR
+          </Button>
         </Link>
       </Flex>
     </>

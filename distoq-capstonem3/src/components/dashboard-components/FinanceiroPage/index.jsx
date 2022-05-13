@@ -21,9 +21,9 @@ import {
   FaFileInvoiceDollar,
   FaOpencart,
 } from "react-icons/fa";
-import { useActivePage } from "../../Providers/DashboardPageController";
+import { useActivePage } from "../../../Providers/DashboardPageController";
 
-export const ProdutosPage = () => {
+export const FinanceiroPage = () => {
   const options = [
     "Dashboard",
     "Pedidos",
@@ -151,7 +151,7 @@ export const ProdutosPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Produtos Page
+          Financeiro Page
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
@@ -195,4 +195,4 @@ export const ProdutosPage = () => {
   );
 };
 
-export default ProdutosPage;
+export default FinanceiroPage;
