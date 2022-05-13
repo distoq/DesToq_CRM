@@ -7,14 +7,17 @@ import {
   Input,
   Box,
   FormHelperText,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormRegister = () => {
+  const history = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -49,6 +52,7 @@ const FormRegister = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -80,6 +84,19 @@ const FormRegister = () => {
       .post("https://destoq.herokuapp.com/register", user)
       .then((_) => console.log("success"))
       .catch((_) => console.log("error"));
+  };
+
+  const cepSearch = (e) => {
+    const cep = e.target.value.replace(/\D/g, "");
+    axios
+      .get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((response) => {
+        const address = response.data;
+        setValue("address", address.logradouro);
+        setValue("city", address.localidade);
+        setValue("state", address.uf);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -205,6 +222,7 @@ const FormRegister = () => {
                   type="text"
                   placeholder="Confirme o CEP"
                   {...register("cep")}
+                  onBlur={cepSearch}
                 />
                 {errors && (
                   <FormHelperText color="red" m="0px">
@@ -222,7 +240,7 @@ const FormRegister = () => {
               {...register("city")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.city?.message}
               </FormHelperText>
             )}
@@ -235,7 +253,7 @@ const FormRegister = () => {
               {...register("password")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.password?.message}
               </FormHelperText>
             )}
@@ -248,7 +266,7 @@ const FormRegister = () => {
               {...register("confirmPassword")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.confirmPassword?.message}
               </FormHelperText>
             )}
@@ -258,7 +276,7 @@ const FormRegister = () => {
               <option value="user">Usuário</option>
             </Select>
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="1px">
                 {errors.profile?.message}
               </FormHelperText>
             )}
@@ -266,6 +284,10 @@ const FormRegister = () => {
             <Button variant="primary" w="100%" mr="0" ml="0" type="submit">
               CADASTRAR
             </Button>
+            <Text>
+              Já possui cadastro?{" "}
+              <Link onClick={() => history("/")}>clique aqui</Link>
+            </Text>
           </FormControl>
         </Box>
       </form>

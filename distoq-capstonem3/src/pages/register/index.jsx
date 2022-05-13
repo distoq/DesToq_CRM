@@ -14,7 +14,7 @@ const Register = () => {
       align="center"
       backgroundColor="white"
     >
-      <Flex minW="45%" direction="column" textAlign="center" align="center">
+      <Flex minW="45%" minH="100vh" direction="column" textAlign="center" align="center" justify="center">
         <Flex direction="column" textAlign="center" align="center">
           <Box w="100%" maxW="400px" justify="flex-start" align="center">
             <Image
