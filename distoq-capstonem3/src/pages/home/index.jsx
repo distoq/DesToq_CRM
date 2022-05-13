@@ -1,56 +1,38 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useJwt } from "react-jwt";
 
 import { ShowcaseContext } from "../../Providers/showcase/";
 import { CartContext } from "../../Providers/cart";
 
 import CardSC from "../../components/home-components";
-import { GrUserAdmin } from "react-icons/gr";
+import {
+  Flex,
+  Box,
+  Button,
+  Heading,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 const Home = ({ product }) => {
   const navigate = useNavigate();
-  // const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
-  // const { decodedToken, isExpired } = useJwt(tokenUser);
   const { listProducts } = useContext(ShowcaseContext);
   const { cart, addCart } = useContext(CartContext);
-  // const [isAdmin, setIsAdmin] = useState(false);
   console.log("cart na Home page", cart);
 
-  // if (tokenUser !== "") {
-  //   if (decodedToken?.sub === "1"){
-  //     navigate("/dashboard")
-  //   }
-  // }
-
-  // if (decodedToken?.sub === "1") {
-  //   return setIsAdmin(!isAdmin);
-  // }
-  // console.log(tokenUser);
-
   return (
-    <main>
-      <h1>hamburgueria</h1>
-      <header>
-        <button onClick={() => navigate("/cart")}>ver carrinho</button>
-        <button disabled onClick={() => navigate("/dashboard")}>
-          <GrUserAdmin />
-        </button>
-      </header>
+    <>
+      <Heading w="100%" h="80px">
+        <button onClick={() => navigate("/cart")}>CARRINHO</button>
+      </Heading>
       <CardSC />
-      {/* <ul>
-        {listProducts.map((product) => (
-          <li key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <p>{product.name}</p>
-            <h4>R$ {product.price}</h4>
-            <button type="button" onClick={() => addCart(product)}>
-              comprar
-            </button>
-          </li>
-        ))}
-      </ul> */}
-    </main>
+    </>
   );
 };
 
