@@ -12,16 +12,16 @@ import {
 } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
 
-import { useActivePage } from "../../Providers/DashboardPageController";
+import { useActivePage } from "../../../Providers/DashboardPageController";
 
 export const ProdutosPage = () => {
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
 
   const group = getRootProps();

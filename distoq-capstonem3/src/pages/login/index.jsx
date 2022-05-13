@@ -1,4 +1,4 @@
-import { Avatar, Flex, Image } from "@chakra-ui/react";
+import { Avatar, Flex } from "@chakra-ui/react";
 import FormLogin from "../../components/login-components/FormLogin";
 import DEStoq from "../../assets/imgs/DEStoq.png";
 import ImageLogin from "../../components/login-components/ImageLogin";

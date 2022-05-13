@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
 
-import { useActivePage } from "../../Providers/DashboardPageController";
+import { useActivePage } from "../../../Providers/DashboardPageController";
 
-export const ProdutosPage = () => {
+export const FinanceiroPage = () => {
   const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
     useActivePage();
 
@@ -102,7 +102,7 @@ export const ProdutosPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Produtos Page
+          Financeiro Page
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
@@ -146,4 +146,4 @@ export const ProdutosPage = () => {
   );
 };
 
-export default ProdutosPage;
+export default FinanceiroPage;
