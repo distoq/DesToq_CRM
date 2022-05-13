@@ -3,11 +3,7 @@ import FormLogin from "../../components/login-components/FormLogin";
 import DEStoq from "../../assets/imgs/DEStoq.png";
 import ImageLogin from "../../components/login-components/ImageLogin";
 
-
-
 const LoginPage = () => {
-
-
   return (
     <Flex
       w="100vw"
