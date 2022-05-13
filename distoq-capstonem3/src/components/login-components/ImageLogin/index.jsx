@@ -17,14 +17,10 @@ const ImageLogin = () => {
       backgroundSize="100% 90%"
       display={["none", "none", "none", "none", "flex"]}
     >
-      <Flex h="500px">
+      <Flex>
         <Avatar
           w="200px"
           h="200px"
-          ml="-100px"
-          mt="150px"
-          position="absolute"
-          top="200px"
           src={DEStoq}
           alt="logo da empresa"
         />

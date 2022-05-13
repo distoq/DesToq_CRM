@@ -17,17 +17,17 @@ const LoginPage = () => {
       direction={["column", "column", "column", "column", "row-reverse"]}
     >
       <Avatar
-        w="200px"
-        h="200px"
+        w="120px"
+        h="120px"
         position="absolute"
         top="100px"
         src={DEStoq}
         alt="logo da empresa"
         display={[
-          "inline-block",
-          "inline-block",
-          "inline-block",
-          "inline-block",
+          "flex",
+          "flex",
+          "flex",
+          "flex",
           "none",
         ]}
       />

@@ -21,7 +21,7 @@ import { useIslogged } from "../../../Providers/isLogged";
 const FormLogin = () => {
   
   const navigate = useNavigate();
-  const {userLogged  } = useIslogged();
+  const { isLogged,userLogged  } = useIslogged();
   const handleSubmitForm = (data) => {
     api
       .post("login", data)
@@ -31,7 +31,7 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        userLogged()
+        
        return navigate("/home")
       })
       .catch((err) => {
