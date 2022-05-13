@@ -1,18 +1,17 @@
 import { Flex } from "@chakra-ui/react";
-import { useContext, } from "react";
-import { Navigate } from "react-router-dom";
+
 
 import { HeaderHome } from "../../components/home-components/HeaderHome";
 import Search from "../../components/home-components/HeaderHome/SearchHome";
-import { TokenContext } from "../../Providers/Token";
+import { useIslogged } from "../../Providers/isLogged";
+
 
 const Home = () => {
-  const { token } = useContext(TokenContext);
+  const { isLogged } = useIslogged();
 
- 
-
-  if (!token) {
-    return <Navigate to="/" replace />;
+  console.log(isLogged)
+  if(isLogged){
+    
   }
 
   return (
