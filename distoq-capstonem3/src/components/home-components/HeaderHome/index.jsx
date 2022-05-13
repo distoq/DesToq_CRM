@@ -9,7 +9,7 @@ import { decodeToken } from "react-jwt";
 import { useIslogged } from "../../../Providers/isLogged";
 
 const HeaderHome = () => {
-  const { isLogged,userLogOut } = useIslogged();
+  const { userLogOut } = useIslogged();
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();

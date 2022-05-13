@@ -2,12 +2,11 @@ import { Avatar, Flex } from "@chakra-ui/react";
 import FormLogin from "../../components/login-components/FormLogin";
 import DEStoq from "../../assets/imgs/DEStoq.png";
 import ImageLogin from "../../components/login-components/ImageLogin";
-import { useContext } from "react";
-import { TokenContext } from "../../Providers/Token";
-import { Navigate } from "react-router-dom";
+
+
 
 const LoginPage = () => {
-  const { token } = useContext(TokenContext);
+
 
   return (
     <Flex
