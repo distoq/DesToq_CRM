@@ -1,12 +1,13 @@
-import TokenProvider from "./Token"
+import TokenProvider from "./Token";
+import { DashboardPageControllerProvider } from "./DashboardPageController";
 
-
-const Provider = ({children}) => {
-
-    return(
-        <TokenProvider>
-            {children}
-        </TokenProvider>
-    )
-}
-export default Provider
+const Providers = ({ children }) => {
+  return (
+    <TokenProvider>
+      <DashboardPageControllerProvider>
+        {children}
+      </DashboardPageControllerProvider>
+    </TokenProvider>
+  );
+};
+export default Providers;
