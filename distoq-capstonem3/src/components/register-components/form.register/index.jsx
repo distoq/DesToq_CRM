@@ -102,6 +102,9 @@ const FormRegister = () => {
                   color: "#716C6C",
                 },
               },
+              label: {
+                margin: "0 2px 2px 0"
+              }
             }}
           >
             <FormLabel htmlFor="name">Name</FormLabel>
@@ -113,7 +116,7 @@ const FormRegister = () => {
               {...register("name")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="0px">
                 {errors.name?.message}
               </FormHelperText>
             )}
@@ -126,7 +129,7 @@ const FormRegister = () => {
               {...register("email")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="0px">
                 {errors.email?.message}
               </FormHelperText>
             )}
@@ -140,7 +143,7 @@ const FormRegister = () => {
               {...register("confirmEmail")}
             />
             {errors && (
-              <FormHelperText color="red">
+              <FormHelperText color="red" m="0px">
                 {errors.confirmEmail?.message}
               </FormHelperText>
             )}
@@ -155,7 +158,7 @@ const FormRegister = () => {
                   {...register("address")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.address?.message}
                   </FormHelperText>
                 )}
@@ -172,7 +175,7 @@ const FormRegister = () => {
                   {...register("number")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.number?.message}
                   </FormHelperText>
                 )}
@@ -189,7 +192,7 @@ const FormRegister = () => {
                   {...register("state")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.state?.message}
                   </FormHelperText>
                 )}
@@ -204,7 +207,7 @@ const FormRegister = () => {
                   {...register("cep")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.CEP?.message}
                   </FormHelperText>
                 )}
