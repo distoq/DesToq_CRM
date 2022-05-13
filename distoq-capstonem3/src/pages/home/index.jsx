@@ -1,20 +1,28 @@
-const Home = ()=> {
-    
-    return (
-        <>
-            {/* if(tokenUser !== ''){
-            if(decodedToken?.sub === '1'){
-                history("/dashboard")
-            }else{
-                history("/")
-            }
+import { Flex } from "@chakra-ui/react";
+import { useContext, } from "react";
+import { Navigate } from "react-router-dom";
 
-            } */}
-        
-            <div>Oi sou a home</div>
-        
-        </>
-    )
-}
+import { HeaderHome } from "../../components/home-components/HeaderHome";
+import Search from "../../components/home-components/HeaderHome/SearchHome";
+import { TokenContext } from "../../Providers/Token";
 
-export default Home
+const Home = () => {
+  const { token } = useContext(TokenContext);
+
+ 
+
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <>
+      <Flex direction="column" justify="center" align="center">
+        <HeaderHome />
+        <Search />
+      </Flex>
+    </>
+  );
+};
+
+export default Home;
