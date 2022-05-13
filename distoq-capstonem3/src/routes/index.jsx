@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import FormRegister from "../components/register-components/form.register";
 import Dashboard from "../pages/dashboard";
 import Home from "../pages/home";
 import LoginPage from "../pages/login";
+import Register from "../pages/register";
 
 const Routers = () => {
   return (
@@ -10,7 +10,7 @@ const Routers = () => {
       <Route path="/" element={<LoginPage />} />
       <Route path="/home" element={<Home />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/register" element={<FormRegister />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 };
