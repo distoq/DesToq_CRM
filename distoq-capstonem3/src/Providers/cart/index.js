@@ -15,6 +15,10 @@ export const CartProvider = ({ children }) => {
 
   const deleteCart = (id) => {
     const newCart = cart.filter((item) => item.id !== id);
+    
+    // const newCart = [ ...cart ];
+    // newCart.splice(id, 1);
+
     setCart(newCart);
     localStorage.setItem("@DEStoq:cart", JSON.stringify(newCart));
   };

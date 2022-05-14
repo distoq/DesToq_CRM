@@ -55,13 +55,13 @@ const CardSC = () => {
                 </Heading>
                 <Flex pr="15px" justify="flex-end">
                 {Array(5)
-            .fill('')
-            .map((_, i) => (
-              <StarIcon
-                key={i}
-                color={i < product.rating ? '#de9e36' : 'gray.300'}
-              />
-            ))}
+                  .fill('')
+                  .map((_, i) => (
+                    <StarIcon
+                      key={i}
+                      color={i < product.rating ? '#de9e36' : 'gray.300'}
+                    />
+                ))}
                 </Flex>
 
                 <Popover>
@@ -76,10 +76,10 @@ const CardSC = () => {
                   </PopoverContent>
                 </Popover>
                 <Text fontSize="lg" pl="10px">
-                  {product.price.toLocaleString("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                {product.price.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
                 </Text>
               </Stack>
               <Flex justify="center">
