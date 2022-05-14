@@ -14,11 +14,14 @@ import {
   UnorderedList,
   ListItem,
   Avatar,
+  useToast,
+
 } from "@chakra-ui/react";
 
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { DeleteIcon } from '@chakra-ui/icons';
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
@@ -38,9 +41,28 @@ const HeaderHome = () => {
     return previous + current.price;
   }, 0);
 
+  const toast = useToast()
   const handleLogOut = () => {
     navigate("/");
+    toast({
+      description: "Logout Feito com Sucesso",
+      status: 'success',
+      duration: 1500,
+      isClosable: true,
+      position: 'top',
+    })
   };
+
+  const deleteFromCart = (id) => {
+    deleteCart(id);
+    toast({
+      description: "Produto removido com Sucesso!",
+      status: 'success',
+      duration: 1500,
+      isClosable: true,
+      position: 'top',
+    })
+  }
 
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart"));
@@ -73,6 +95,11 @@ const HeaderHome = () => {
                 bottom="10px"
                 left="60px"
                 variant="secondary"
+                color="#111"
+                bg="#fff"
+                height="30px"
+                borderRadius="50px"
+                padding="7px"
               >
                 {cart.length}
               </Text>
@@ -128,8 +155,8 @@ const HeaderHome = () => {
                               currency: "BRL",
                             })}
                           </Text>
-                          <Button onClick={() => deleteCart(product.id)}>
-                            X
+                          <Button onClick={() => deleteFromCart(product.id)}>
+                            <DeleteIcon/>
                           </Button>
                         </ListItem>
                       ))}

@@ -20,14 +20,25 @@ import {
   PopoverBody,
   ListItem,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
-import { toast } from "react-toastify";
-import { StarIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons";
 
 const CardSC = () => {
   const { listProducts } = useContext(ShowcaseContext);
   const { cart, addCart } = useContext(CartContext);
-  console.log("cart na Home page", cart);
+
+  const toast = useToast()
+  const addToCart = (id) => {
+    addCart(id);
+    toast({
+      description: "Produto Adicionado com Sucesso",
+      status: 'success',
+      duration: 1500,
+      isClosable: true,
+      position: 'top',
+    })
+  }
 
   return (
     <Flex w="100%" align="center" justify="center">
@@ -65,9 +76,11 @@ const CardSC = () => {
                 </Flex>
 
                 <Popover>
+                  <Flex justify="flex-end">
                   <PopoverTrigger>
-                    <Button bg="transparent">Descrição</Button>
+                    <Button bg="transparent">Descrição <AddIcon ml="10px" cursor="pointer" /> </Button>
                   </PopoverTrigger>
+                  </Flex>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverCloseButton />
@@ -87,7 +100,7 @@ const CardSC = () => {
                   variant="primary"
                   w="247px"
                   onClick={() =>
-                    addCart(product) && toast.success("adicionado")
+                    addToCart(product) 
                   }
                 >
                   COMPRAR

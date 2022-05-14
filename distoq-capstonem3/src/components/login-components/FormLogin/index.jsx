@@ -7,6 +7,7 @@ import {
   Heading,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -17,11 +18,20 @@ import { Link, useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   const navigate = useNavigate();
+
+  const toast = useToast();
+
   const handleSubmitForm = (data) => {
     api
       .post("login", data)
       .then((res) => {
-        toast.success("Usuário logado com sucesso");
+        toast({
+          description: "Usuário logado com sucesso!",
+          status: 'success',
+          duration: 1500,
+          isClosable: true,
+          position: 'top',
+        })
         localStorage.setItem(
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
@@ -29,7 +39,13 @@ const FormLogin = () => {
         return navigate("/home");
       })
       .catch((err) => {
-        toast.error("Ops, algo deu errado");
+        toast({
+          description: "Ops, algo deu errado!",
+          status: 'error',
+          duration: 1500,
+          isClosable: true,
+          position: 'top',
+        })
       });
   };
 
