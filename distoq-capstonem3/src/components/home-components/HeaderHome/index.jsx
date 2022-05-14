@@ -6,16 +6,14 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
-import { useIslogged } from "../../../Providers/isLogged";
 
 const HeaderHome = () => {
-  const { userLogOut } = useIslogged();
+
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    userLogOut()
     navigate("/")
   }
   return (

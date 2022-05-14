@@ -14,11 +14,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../../dataBase/db";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { useIslogged } from "../../../Providers/isLogged";
 
 const FormLogin = () => {
   const navigate = useNavigate();
-  const { userLogged } = useIslogged();
   const handleSubmitForm = (data) => {
     api
       .post("login", data)
@@ -28,7 +26,6 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        userLogged();
         return navigate("/home");
       })
       .catch((err) => {

@@ -14,14 +14,14 @@ import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-export const DashboardPage = () => {
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+export const ProdutosPage = () => {
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
 
   const group = getRootProps();
@@ -102,7 +102,7 @@ export const DashboardPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Dashboard Page
+          Produtos Page
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
@@ -146,4 +146,4 @@ export const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default ProdutosPage;
