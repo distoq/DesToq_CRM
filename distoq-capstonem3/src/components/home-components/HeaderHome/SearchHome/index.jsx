@@ -8,7 +8,6 @@ const Search = ({ value }) => {
   return (
     <Flex m="10" align="center" w="100%" maxW="400px">
       <Input
-     
         variant="outline"
         value={inputSearch}
         type="email"

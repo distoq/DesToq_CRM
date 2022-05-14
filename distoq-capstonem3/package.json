@@ -9,6 +9,7 @@
     "@emotion/styled": "^11",
     "@fontsource/itim": "^4.5.8",
     "@fontsource/nunito": "^4.5.8",
+    "@fontsource/rubik": "^4.5.9",
     "@hookform/resolvers": "^2.8.8",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
