@@ -5,11 +5,13 @@ import { IsLoggedProvider } from "./isLogged";
 import { ShowcaseProvider } from "./showcase";
 import { CartProvider } from "./cart";
 import { ProvidersListProvider } from "./ProvidersList";
+import { StockProvider } from "./Stock";
 
 const Providers = ({ children }) => {
   return (
     <TokenProvider>
       <DashboardPageControllerProvider>
+        <StockProvider>
         <ProvidersListProvider>
         <ShowcaseProvider>
           <IsLoggedProvider>
@@ -21,6 +23,7 @@ const Providers = ({ children }) => {
           </IsLoggedProvider>
         </ShowcaseProvider>
         </ProvidersListProvider>
+        </StockProvider>
       </DashboardPageControllerProvider>
     </TokenProvider>
   );

@@ -12,7 +12,6 @@ export const ShowcaseProvider = ({ children }) => {
 
   const getProducts = () => {
     api.get(`/products`).then((resp) => {
-      console.log("data em getProducts", resp.data);
       setListProducts(resp.data);
     });
   };
