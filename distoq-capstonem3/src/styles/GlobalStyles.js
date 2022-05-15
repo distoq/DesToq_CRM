@@ -17,6 +17,7 @@ export const thema= extendTheme({
           variants: {
             primary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
             secondary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
+            dashboard:{fontSize: "24px", fontWeight: "500", color: "#000000" }
           },
         },
         Text: {
