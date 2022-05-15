@@ -139,6 +139,7 @@ export const EstoquePage = () => {
         >
           Estoque Page
         </Heading>
+      
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
             pr="4.5rem"
@@ -217,13 +218,15 @@ export const EstoquePage = () => {
                   </UnorderedList>
                 </TabPanel>
                 <TabPanel>
-                  <Flex>
+                  <Flex mr="10px" direction="column" justify={"center"} align="flex-end">
+
+                  <Flex justify={"flex-start"}>
                     <FormLabel>Defina o estoque mínimo</FormLabel>
                     {errors.min && (
                       <Text color="red.500">{errors.min.message}</Text>
                     )}
                   </Flex>
-                  <InputGroup>
+                
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                       <FormControl>
                         <Input
@@ -239,7 +242,8 @@ export const EstoquePage = () => {
                         </Button>
                       </FormControl>
                     </form>
-                  </InputGroup>
+                  </Flex>
+                 
                   <UnorderedList m="0">
                     {stockList?.map((stockItem) => (
                       <StockList
