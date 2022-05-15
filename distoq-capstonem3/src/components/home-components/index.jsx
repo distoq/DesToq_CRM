@@ -9,7 +9,6 @@ import {
   Button,
   Stack,
   UnorderedList,
-  Box,
   Wrap,
   Popover,
   PopoverTrigger,
@@ -22,11 +21,11 @@ import {
   Heading,
   useToast,
 } from "@chakra-ui/react";
-import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
 
 const CardSC = () => {
   const { listProducts } = useContext(ShowcaseContext);
-  const { cart, addCart } = useContext(CartContext);
+  const { addCart } = useContext(CartContext);
 
   const toast = useToast()
   const addToCart = (id) => {
