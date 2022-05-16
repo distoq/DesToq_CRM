@@ -5,24 +5,140 @@ import {
   Heading,
   Input,
   InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  InputRightAddon,
   InputRightElement,
+  Select,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
-
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useActivePage } from "../../../Providers/DashboardPageController";
+import { CardCompras } from "./ComprasCard";
+import { useEffect, useState } from "react";
+import api from "../../../dataBase/db";
 
 export const ComprasPage = () => {
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
+  // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
+
+  const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
+  const [ordersList, setOrdersList] = useState(null);
+
+  const getOrdersList = () => {
+    api
+      .get("/orders?_sort=id&_order=desc")
+      .then((res) => setOrdersList(res.data))
+      .catch((err) => err);
+  };
+
+  console.log(ordersList);
+  useEffect(() => {
+    getOrdersList();
+  }, []);
+
+  useEffect(() => {
+    api.get("/providers?_embed=supplies").then((res) => {
+      setProvidersAndSuppliesList(res.data);
+    });
+  }, []);
+
+  const [supplyByProvider, setSupplyByProvider] = useState(null);
+  const [selectedSupply, setSelectedSupply] = useState(null);
+  const [selectedSupplyPrice, setSelectedSupplyPrice] = useState(0);
+  const [selectedSupplyUnt, setSelectedSupplyUnt] = useState("Un.");
+  const [orderQty, setOrderQty] = useState(0);
+  const [orderTotalValue, setOrderTotalValue] = useState(0);
+
+  const formSchema = yup.object().shape({
+    supplyId: yup
+      .number()
+      .typeError("*** Preço obrigatório!")
+      .nullable(true)
+      .required("*** Preço obrigatória!"),
+    providerId: yup
+      .number()
+      .typeError("*** Preço obrigatório!")
+      .nullable(true)
+      .required("*** Preço obrigatória!"),
+
+    quantity: yup
+      .number()
+      .typeError("*** Quantidade obrigatória!")
+      .positive("Proíbido valor negativo!")
+      .nullable(true)
+      .required("*** Quantidade obrigatória!"),
+  });
+
+  useEffect(() => {
+    setOrderTotalValue(orderQty * selectedSupplyPrice);
+  }, [orderQty, selectedSupplyPrice]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const inputFornecedor = document.querySelector(".inputFornecedor");
+
+  const onSubmitFunction = (data) => {
+    const providerFilter = providersAndSuppliesList.filter(
+      (ele) => ele.id === data.providerId
+    );
+    const dataOC = {
+      ...data,
+      purchasePrice: selectedSupplyPrice,
+      totalValue: orderTotalValue,
+      supplyData: selectedSupply[0],
+      providerData: providerFilter[0],
+      status: "Emitido",
+    };
+    console.log(dataOC);
+    data = "";
+    inputFornecedor.value = "";
+    handleInputs();
+
+    api
+      .post(`/orders`, dataOC, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc3RvcUBwcm90b24ubWUiLCJpYXQiOjE2NTI2NjE2MDcsImV4cCI6MTY1MjY2NTIwNywic3ViIjoiMSJ9.7zidteSlVxMEnlS_eWJdGoLU4PQS8O4s9uZKa1TJPP4`,
+        },
+      })
+      .then((ele) => getOrdersList());
+
+    getOrdersList();
+  };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
+
+  const handleInputs = () => {
+    setSelectedSupply(null);
+    setSelectedSupplyPrice(0);
+    setSelectedSupplyUnt("Un");
+    setOrderQty(0);
+    setOrderTotalValue(0);
+  };
 
   const group = getRootProps();
 
@@ -99,12 +215,25 @@ export const ComprasPage = () => {
         <Heading
           variant="primary"
           width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
+          margin={["0px", "0px", "0px", "0px", "20px 20px"]}
+          display={[
+            "inline-block",
+            "inline-block",
+            "inline-block",
+            "inline-block",
+            "none",
+          ]}
           textAlign="center"
         >
-          Compras Page
+          Compras
         </Heading>
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
+        <InputGroup
+          size="md"
+          width={"90%"}
+          maxW={"500px"}
+          margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
+          display={["flex", "flex", "flex", "flex", "none"]}
+        >
           <Input
             pr="4.5rem"
             type={"text"}
@@ -138,7 +267,278 @@ export const ComprasPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            CONTEUDO AQUI!!!!
+            <Tabs
+              isFitted
+              variant="enclosed"
+              w={"100%"}
+              backgroundColor={"#434343"}
+              borderRadius={"20px"}
+            >
+              <TabList mb="1em">
+                <Tab
+                  color={"#fff"}
+                  fontWeight={"bold"}
+                  fontSize={"26px"}
+                  _selected={{
+                    color: "#F4BF39",
+                    borderBottomColor: "#F4BF39",
+                    borderBottomWidth: "2px",
+                  }}
+                  _focus={{
+                    borderColor: "#F4BF39",
+                    borderTopLeftRadius: "18px",
+                    border: "2px",
+                  }}
+                >
+                  Ordens de Compra
+                </Tab>
+                <Tab
+                  color={"#fff"}
+                  fontWeight={"bold"}
+                  fontSize={"26px"}
+                  _selected={{
+                    color: "#F4BF39",
+                    borderBottomColor: "#F4BF39",
+                    borderBottomWidth: "2px",
+                  }}
+                  _focus={{
+                    borderColor: "#F4BF39",
+                    borderTopRightRadius: "18px",
+                    border: "2px",
+                  }}
+                >
+                  Adicionar Ordem de Compra
+                </Tab>
+              </TabList>
+              <TabPanels
+                sx={{
+                  minWidth: "100%",
+                  height: "100%",
+                  // maxHeight: "calc(100% - 75px)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                maxHeight={[
+                  "calc(100% - 150px)",
+                  "calc(100% - 110px)",
+                  "calc(100% - 110px)",
+                  "calc(100% - 110px)",
+                  "calc(100% - 80px)",
+                ]}
+              >
+                <TabPanel
+                  // backgroundColor={"#feffce"}
+                  width={"90%"}
+                  height={"100%"}
+                  maxH={"80vh"}
+                  display={"flex"}
+                  flexDir={"column"}
+                  justfyContent={"center"}
+                  alignItens={"center"}
+                  overflowY={"auto"}
+                  sx={{
+                    "&::-webkit-scrollbar": {
+                      width: "5px",
+                      height: "50px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "#7a7a7a",
+                      marginTop: "25px",
+                      marginBottom: "25px",
+                      borderRadius: "5px",
+                      boxShadow: "inset 0 0 3px black",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "#505050",
+                      boxShadow: "inset 0 0 5px #e7e7e7dd",
+                      borderRadius: "5px",
+                    },
+                    "&::-webkit-scrollbar-thumb:hover": {
+                      background: "#555",
+                    },
+                  }}
+                >
+                  {ordersList?.map((ele) => (
+                    <CardCompras
+                      order={ele}
+                      getOrdersList={getOrdersList}
+                      setOrdersList={setOrdersList}
+                    />
+                  ))}
+                </TabPanel>
+                <TabPanel
+                  width={"100%"}
+                  height={"100%"}
+                  maxH={"100%"}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{}}
+                >
+                  <Flex
+                    w={"100%"}
+                    maxWidth={"700px"}
+                    height={"100%"}
+                    justifyContent={"center"}
+                  >
+                    <Stack
+                      spacing={3}
+                      width="400px"
+                      maxWidth={"90%"}
+                      height={"100%"}
+                      display="flex"
+                      flexDir={"column"}
+                      alignItems="center"
+                      justifyContent={"center"}
+                      padding={"0 30px"}
+                      backgroundColor={"#fff"}
+                      borderRadius={"10px"}
+                      boxShadow="0 0 10px grey"
+                      color={"black"}
+                    >
+                      <Heading fontSize={"30px"}>
+                        {" "}
+                        Criar Ordem de Compra
+                      </Heading>
+                      <Select
+                        className="inputFornecedor"
+                        placeholder="Fornecedores"
+                        borderColor={errors.provider && "#ff0000"}
+                        border={errors.provider && "2px"}
+                        {...register("providerId")}
+                        onChange={(e) => {
+                          handleInputs();
+                          setSelectedSupply(null);
+
+                          const provider = providersAndSuppliesList.filter(
+                            (provider) => provider.id == e.currentTarget.value
+                          );
+
+                          provider[0] &&
+                            setSupplyByProvider(provider[0].supplies);
+                        }}
+                      >
+                        {providersAndSuppliesList?.map((ele) => (
+                          <option value={ele.id}>{ele.fantasyName}</option>
+                        ))}
+                      </Select>
+                      {errors.provider && (
+                        <Text color={"#ff0000"} width={"95%"}>
+                          {errors.provider.message}
+                        </Text>
+                      )}
+                      <Select
+                        placeholder="Insumo"
+                        borderColor={errors.supply && "#ff0000"}
+                        border={errors.supply && "2px"}
+                        {...register("supplyId")}
+                        onChange={(e) => {
+                          handleInputs();
+
+                          const selected = supplyByProvider.filter(
+                            (ele) => ele.id == e.target.value
+                          );
+
+                          setSelectedSupply(selected);
+                          setSelectedSupplyPrice(selected[0].purchasePrice);
+                          setSelectedSupplyUnt(selected[0].measurementUnit);
+                        }}
+                        value={
+                          (selectedSupply &&
+                            selectedSupply[0] &&
+                            selectedSupply[0].id &&
+                            selectedSupply[0].id) ||
+                          ""
+                        }
+                      >
+                        {supplyByProvider?.map((e) => (
+                          <option value={+e.id}>{e.name}</option>
+                        ))}
+                      </Select>
+                      {errors.supply && (
+                        <Text color={"#ff0000"} width={"95%"}>
+                          {errors.supply.message}
+                        </Text>
+                      )}
+
+                      <InputGroup>
+                        <InputLeftElement
+                          pointerEvents="none"
+                          color="gray.300"
+                          fontSize="1.2em"
+                          children="$"
+                        />
+                        <Input
+                          readOnly
+                          placeholder="Preço"
+                          type={"number"}
+                          borderColor={errors.purchasePrice && "#ff0000"}
+                          border={errors.purchasePrice && "2px"}
+                          {...register("purchasePrice")}
+                          value={selectedSupplyPrice.toFixed(2)}
+                        />
+                        <InputRightAddon children={selectedSupplyUnt} />
+                        <Input
+                          placeholder="Qty"
+                          type={"number"}
+                          borderColor={errors.quantity && "#ff0000"}
+                          border={errors.quantity && "2px"}
+                          {...register("quantity")}
+                          onChange={(e) => {
+                            setOrderQty(e.target.value);
+
+                            // setOrderTotalValue(orderQty * selectedSupplyPrice);
+                          }}
+                          value={orderQty}
+                        />
+                        <InputRightAddon children="Qty" />
+                      </InputGroup>
+                      {errors.purchasePrice && (
+                        <Text color={"#ff0000"} width={"95%"}>
+                          {errors.purchasePrice.message}
+                        </Text>
+                      )}
+                      {errors.quantity && (
+                        <Text color={"#ff0000"} width={"95%"}>
+                          {errors.quantity.message}
+                        </Text>
+                      )}
+                      <InputGroup>
+                        <InputLeftAddon children="Valor da Ordem" />
+                        <InputLeftElement
+                          pointerEvents="none"
+                          color="gray.300"
+                          fontSize="1.2em"
+                          left={"150px"}
+                          children="$"
+                        />
+                        <Input
+                          disabled
+                          type={"number"}
+                          borderColor={errors.totalValue && "#ff0000"}
+                          border={errors.totalValue && "2px"}
+                          value={orderTotalValue.toFixed(2)}
+                          {...register("totalValue")}
+                        />
+                      </InputGroup>
+                      {errors.totalValue && (
+                        <Text color={"#ff0000"} width={"95%"}>
+                          {errors.totalValue.message}
+                        </Text>
+                      )}
+                      <Button
+                        minHeight={"40px"}
+                        colorScheme="blue"
+                        onClick={handleSubmit(onSubmitFunction)}
+                      >
+                        Cadastrar Ordem de Compra
+                      </Button>
+                    </Stack>
+                  </Flex>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </Flex>
         </Flex>
       </Flex>

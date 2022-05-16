@@ -91,19 +91,21 @@ const HeaderHome = () => {
               <RiAdminFill fontSize={35} color="#ffff" />
             </Button>
             {cart.length !== 0 && (
-              <Text
+              <Avatar
                 position="relative"
-                bottom="10px"
+                bottom="20px"
                 left="60px"
                 variant="secondary"
-                color="#111"
-                bg="#fff"
-                height="30px"
-                borderRadius="50px"
+                color="#101010"
+                bg="#ffff"
+                w="20px"
+                h="20px"
                 padding="7px"
+                fontSize={"12px"}
+                fontWeight={"bold"}
               >
                 {cart.length}
-              </Text>
+              </Avatar>
             )}
             <Button
               bg="transparent"

@@ -12,7 +12,7 @@ import { MdDashboard } from "react-icons/md";
 export const dashboardPageControllerContext = createContext();
 
 export const DashboardPageControllerProvider = ({ children }) => {
-  const [activeDashboardPage, setActiveDashboarPage] = useState("Dashboard");
+  const [activeDashboardPage, setActiveDashboardPage] = useState("Dashboard");
 
   const handleIcons = (value) => {
     switch (value) {
@@ -59,7 +59,7 @@ export const DashboardPageControllerProvider = ({ children }) => {
     <dashboardPageControllerContext.Provider
       value={{
         activeDashboardPage,
-        setActiveDashboarPage,
+        setActiveDashboardPage,
         handleIcons,
         options,
       }}

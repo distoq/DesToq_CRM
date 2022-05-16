@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const TokenContext = createContext("");
 
-const TokenProvider = ({ children }) => {
+export const TokenProvider = ({ children }) => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
   );
@@ -18,5 +18,5 @@ const TokenProvider = ({ children }) => {
     </TokenContext.Provider>
   );
 };
+export const useToken = () => useContext(TokenContext);
 
-export default TokenProvider;

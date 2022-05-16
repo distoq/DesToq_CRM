@@ -11,7 +11,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
-
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
 export const ProdutosPage = () => {
@@ -23,7 +22,6 @@ export const ProdutosPage = () => {
     defaultValue: activeDashboardPage,
     onChange: setActiveDashboardPage,
   });
-
   const group = getRootProps();
 
   function RadioCard(props) {

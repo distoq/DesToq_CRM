@@ -9,7 +9,6 @@ import {
   Button,
   Stack,
   UnorderedList,
-  Box,
   Wrap,
   Popover,
   PopoverTrigger,
@@ -22,6 +21,7 @@ import {
   Heading,
   useToast,
 } from "@chakra-ui/react";
+
 import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons";
 import { useInputHome } from "../../Providers/SearchHome";
 
@@ -35,6 +35,7 @@ const CardSC = () => {
       product.category.toLowerCase().includes(inputSearch.toLowerCase())
   );
   const toast = useToast();
+  
   const addToCart = (id) => {
     addCart(id);
     toast({
@@ -102,10 +103,13 @@ const CardSC = () => {
                   </PopoverContent>
                 </Popover>
                 <Text fontSize="lg" pl="10px">
-                  {product.price.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+
+                {product.price.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                  minimumFractionDigits: 2
+                })}
+
                 </Text>
               </Stack>
               <Flex justify="center">

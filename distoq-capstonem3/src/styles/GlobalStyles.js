@@ -17,11 +17,13 @@ export const thema= extendTheme({
           variants: {
             primary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
             secondary: { fontSize: "32px", fontWeight: "500", color: "#000000" },
+            dashboard:{fontSize: "24px", fontWeight: "500", color: "#000000" }
           },
         },
         Text: {
           variants: {
             primary: { fontSize: "15px", fontWeight: "600px", color: "#000000" },
+            bold:{ fontSize: "15px", fontWeight: "700px", color: "#000000" },
             secondary: { fontSize: "15px", fontWeight: "600px", color: "#FFFFFF" },
             price: { fontSize: "15px", fontWeight: "600px", color: "#000000" },
           },
