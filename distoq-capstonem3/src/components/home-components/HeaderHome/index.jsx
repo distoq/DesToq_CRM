@@ -27,7 +27,6 @@ import { decodeToken } from "react-jwt";
 import React, { useContext } from "react";
 import { CartContext } from "../../../Providers/cart";
 import api from "../../../services/api";
-// import { v4 as uuidv4 } from "uuid";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
@@ -36,18 +35,16 @@ const HeaderHome = () => {
   const { cart, deleteCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const toast = useToast();
 
   const sum = cart.reduce((previous, current) => {
-    return previous + current.price;
+    return previous + current.price * current.quantity;
   }, 0);
-
-  const toast = useToast();
-  // let newId = uuidv4();
 
   const handleLogOut = () => {
     navigate("/");
     toast({
-      description: "deslogado com sucesso",
+      description: "deslogado",
       status: "success",
       duration: 1500,
       isClosable: true,
@@ -96,19 +93,23 @@ const HeaderHome = () => {
               <RiAdminFill fontSize={35} color="#ffff" />
             </Button>
             {cart.length !== 0 && (
-              <Text
+              <Avatar
                 position="relative"
-                bottom="10px"
+                bottom="20px"
                 left="60px"
                 variant="secondary"
-                color="#111"
-                bg="#fff"
-                height="30px"
-                borderRadius="50px"
+                color="#101010"
+                bg="#ffff"
+                w="20px"
+                h="20px"
                 padding="7px"
+                fontSize={"12px"}
+                fontWeight={"bold"}
               >
-                {cart.length}
-              </Text>
+                {cart.reduce((previous, current) => {
+                  return previous + current.quantity;
+                }, 0)}
+              </Avatar>
             )}
             <Button
               bg="transparent"
@@ -133,7 +134,7 @@ const HeaderHome = () => {
                   <Flex direction="center" align="center" justify="center">
                     <UnorderedList m="0">
                       {cart.map((product, index) => {
-                        // product.id = uuidv4();
+                        const sumProduct = product.price * product.quantity;
                         return (
                           <ListItem
                             key={index}
@@ -157,8 +158,11 @@ const HeaderHome = () => {
                             <Text w={"100px"} maxW={"100px"}>
                               {product.name}
                             </Text>
+                            <Text w={"100px"} maxW={"100px"}>
+                              Qtd: {product.quantity}
+                            </Text>
                             <Text>
-                              {product.price.toLocaleString("pt-br", {
+                              {sumProduct.toLocaleString("pt-br", {
                                 style: "currency",
                                 currency: "BRL",
                               })}
@@ -193,7 +197,7 @@ const HeaderHome = () => {
                     </Text>
                   </Flex>
                   <Button variant="primary" w="350px" onClick={getOrder}>
-                    Finalizar Compra
+                    finalizar compra
                   </Button>
                 </DrawerFooter>
               </DrawerContent>

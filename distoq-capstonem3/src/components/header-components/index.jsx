@@ -10,6 +10,9 @@ import {
   DrawerOverlay,
   Flex,
   Image,
+  Input,
+  InputGroup,
+  InputRightElement,
   useDisclosure,
   useRadio,
   useRadioGroup,
@@ -21,18 +24,19 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { useActivePage } from "../../Providers/DashboardPageController";
+import { GoSearch } from "react-icons/go";
 
 const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
 
   const group = getRootProps();
@@ -106,6 +110,34 @@ const DashboardHeader = () => {
             <HamburgerIcon w="45px" h="47px" />
           </Button>
           <Image src={DEStoq} width="150px" alt="DEStoq logo" />
+          <InputGroup
+            size="md"
+            width={"90%"}
+            maxW={"400px"}
+            margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
+            display={["none", "none", "none", "none", "flex"]}
+          >
+            <Input
+              pr="4.5rem"
+              type={"text"}
+              placeholder="Faça sua pesquisa..."
+              backgroundColor={"white"}
+              fontWeight={"bold"}
+              boxShadow={"0 0 5px grey"}
+              _focus={{
+                boxShadow: "0 0 10px grey",
+              }}
+            />
+            <InputRightElement width="4.5rem">
+              <Button
+                h="1.75rem"
+                size="sm"
+                onClick={() => console.log("teste")}
+              >
+                <GoSearch />
+              </Button>
+            </InputRightElement>
+          </InputGroup>
           <Button
             backgroundColor="#101010"
             display={["none", "none", "none", "none", "inline-block"]}
