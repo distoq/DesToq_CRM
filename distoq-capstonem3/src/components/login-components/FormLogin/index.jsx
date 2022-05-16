@@ -26,11 +26,11 @@ const FormLogin = () => {
       .then((res) => {
         toast({
           description: "Usuário logado com sucesso!",
-          status: 'success',
+          status: "success",
           duration: 1500,
           isClosable: true,
-          position: 'top',
-        })
+          position: "top",
+        });
         localStorage.setItem(
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
@@ -40,11 +40,11 @@ const FormLogin = () => {
       .catch((err) => {
         toast({
           description: "Ops, algo deu errado!",
-          status: 'error',
+          status: "error",
           duration: 1500,
           isClosable: true,
-          position: 'top',
-        })
+          position: "top",
+        });
       });
   };
 

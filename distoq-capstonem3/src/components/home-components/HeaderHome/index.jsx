@@ -35,7 +35,6 @@ const HeaderHome = () => {
   const { cart, deleteCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
   const sum = cart.reduce((previous, current) => {
     return previous + current.price;
   }, 0);
