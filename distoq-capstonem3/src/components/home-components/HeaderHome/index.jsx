@@ -15,19 +15,19 @@ import {
   ListItem,
   Avatar,
   useToast,
-
 } from "@chakra-ui/react";
-
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from "@chakra-ui/icons";
+
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import React, { useContext } from "react";
 import { CartContext } from "../../../Providers/cart";
 import api from "../../../services/api";
+// import { v4 as uuidv4 } from "uuid";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
@@ -41,33 +41,39 @@ const HeaderHome = () => {
     return previous + current.price;
   }, 0);
 
-  const toast = useToast()
+  const toast = useToast();
+  // let newId = uuidv4();
+
   const handleLogOut = () => {
     navigate("/");
     toast({
-      description: "Logout Feito com Sucesso",
-      status: 'success',
+      description: "deslogado com sucesso",
+      status: "success",
       duration: 1500,
       isClosable: true,
-      position: 'top',
-    })
+      position: "top",
+    });
   };
 
   const deleteFromCart = (id) => {
     deleteCart(id);
     toast({
-      description: "Produto removido com Sucesso!",
-      status: 'success',
+      description: "produto removido!",
+      status: "success",
       duration: 1500,
       isClosable: true,
-      position: 'top',
-    })
-  }
+      position: "top",
+    });
+  };
 
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart"));
-    api.post("/tickets", cartItems).then((res) => console.log(res.data)).catch((err)=> console.log(err))
+    api
+      .post("/tickets", cartItems)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
+
   return (
     <>
       <Flex
@@ -126,40 +132,45 @@ const HeaderHome = () => {
                 <DrawerBody>
                   <Flex direction="center" align="center" justify="center">
                     <UnorderedList m="0">
-                      {cart.map((product, index) => (
-                        <ListItem
-                          key={index}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="space-between"
-                          width={["280px", "300px", "600px"]}
-                          h="85px"
-                          m="10px"
-                          p="10px"
-                          border="1px solid black"
-                          borderRadius="10px"
-                          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                        >
-                          <Avatar
-                            w="57px"
-                            h="57px"
-                            src={product.image}
-                            alt={product.name}
-                          />
-                          <Text w={"100px"} maxW={"100px"}>
-                            {product.name}
-                          </Text>
-                          <Text>
-                            {product.price.toLocaleString("pt-br", {
-                              style: "currency",
-                              currency: "BRL",
-                            })}
-                          </Text>
-                          <Button onClick={() => deleteFromCart(product.id)}>
-                            <DeleteIcon/>
-                          </Button>
-                        </ListItem>
-                      ))}
+                      {cart.map((product, index) => {
+                        // product.id = uuidv4();
+                        return (
+                          <ListItem
+                            key={index}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            width={["280px", "300px", "600px"]}
+                            h="85px"
+                            m="10px"
+                            p="10px"
+                            border="1px solid black"
+                            borderRadius="10px"
+                            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                          >
+                            <Avatar
+                              w="57px"
+                              h="57px"
+                              src={product.image}
+                              alt={product.name}
+                            />
+                            <Text w={"100px"} maxW={"100px"}>
+                              {product.name}
+                            </Text>
+                            <Text>
+                              {product.price.toLocaleString("pt-br", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}
+                            </Text>
+                            <Button
+                              onClick={() => deleteFromCart(product.uniqueId)}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </ListItem>
+                        );
+                      })}
                     </UnorderedList>
                   </Flex>
                 </DrawerBody>

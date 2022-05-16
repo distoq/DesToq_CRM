@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export const CartContext = createContext([]);
 
@@ -6,7 +7,9 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addCart = (product) => {
+    product.uniqueId = uuidv4();
     const list = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
+
     list.push(product);
     setCart(list);
     console.log("list dentro do addCart", list);
@@ -14,11 +17,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const deleteCart = (id) => {
-    const newCart = cart.filter((item) => item.id !== id);
-    
-    // const newCart = [ ...cart ];
-    // newCart.splice(id, 1);
-
+    const newCart = cart.filter((item) => item.uniqueId !== id);
     setCart(newCart);
     localStorage.setItem("@DEStoq:cart", JSON.stringify(newCart));
   };
