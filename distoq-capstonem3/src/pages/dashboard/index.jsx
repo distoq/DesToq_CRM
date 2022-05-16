@@ -2,7 +2,7 @@ import DashboardPage from "../../components/dashboard-components/DashboardPage";
 import PedidosPage from "../../components/dashboard-components/PedidosPage";
 import FornecedoresPage from "../../components/dashboard-components/FornecedoresPage";
 import InsumosPage from "../../components/dashboard-components/InsumosPage";
-import ProdutosPage from "../../components/dashboard-components";
+import ProdutosPage from "../../components/dashboard-components/ProdutosPage";
 import EstoquePage from "../../components/dashboard-components/EstoquePage";
 import FinanceiroPage from "../../components/dashboard-components/FinanceiroPage";
 import DashboardHeader from "../../components/header-components";
