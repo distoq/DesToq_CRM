@@ -35,7 +35,7 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        return navigate("/home");
+        return navigate("/");
       })
       .catch((err) => {
         toast({

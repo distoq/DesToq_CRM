@@ -42,7 +42,7 @@ const HeaderHome = () => {
   }, 0);
 
   const handleLogOut = () => {
-    navigate("/");
+    navigate("/login");
     toast({
       description: "deslogado",
       status: "success",
