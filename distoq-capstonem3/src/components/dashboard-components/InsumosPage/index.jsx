@@ -39,6 +39,11 @@ export const InsumosPage = () => {
 
   const { providersList, setProvidersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
+  const [input, setInput] = useState("");
+
+  const filteredSuppliesList = suppliesList.filter((item) =>
+    item.name.toLowerCase().includes(input.toLowerCase())
+  );
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
@@ -203,7 +208,7 @@ export const InsumosPage = () => {
           width={"90%"}
           maxW={"500px"}
           margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-          display={["flex", "flex", "flex", "flex", "none"]}
+          display={["flex", "flex", "flex", "flex", "flex"]}
         >
           <Input
             pr="4.5rem"
@@ -215,6 +220,8 @@ export const InsumosPage = () => {
             _focus={{
               boxShadow: "0 0 10px grey",
             }}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
@@ -330,7 +337,7 @@ export const InsumosPage = () => {
                     },
                   }}
                 >
-                  {suppliesList?.map((resp) => (
+                  {filteredSuppliesList?.map((resp) => (
                     <CardInsumo supply={resp} />
                   ))}
                 </TabPanel>

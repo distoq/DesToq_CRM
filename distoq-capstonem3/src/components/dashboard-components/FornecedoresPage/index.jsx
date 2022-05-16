@@ -16,6 +16,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
@@ -34,6 +35,12 @@ export const FornecedoresPage = () => {
   });
   const { providersList } = useProvidersList();
   const group = getRootProps();
+
+  const [input, setInput] = useState("");
+
+  const filteredProvidersList = providersList.filter((item) =>
+    item.companyName.toLowerCase().includes(input.toLowerCase())
+  );
 
   function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -124,6 +131,8 @@ export const FornecedoresPage = () => {
             _focus={{
               boxShadow: "0 0 10px grey",
             }}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
@@ -183,7 +192,7 @@ export const FornecedoresPage = () => {
               <TabPanels>
                 <TabPanel >
                   <UnorderedList  m="10">
-                    {providersList?.map((list) => (
+                    {filteredProvidersList?.map((list) => (
                       <ListProviders key={list.id} list={list} />
                     ))}
                   </UnorderedList>
