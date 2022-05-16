@@ -1,20 +1,25 @@
-const Home = ()=> {
-    
-    return (
-        <>
-            {/* if(tokenUser !== ''){
-            if(decodedToken?.sub === '1'){
-                history("/dashboard")
-            }else{
-                history("/")
-            }
+import { useContext } from "react";
+import { HeaderHome } from "../../components/home-components/HeaderHome";
+import Search from "../../components/home-components/HeaderHome/SearchHome";
+import { CartContext } from "../../Providers/cart";
+import CardSC from "../../components/home-components";
+import { Flex } from "@chakra-ui/react";
+import HomeFilter from "../../components/home-components/HomeFilter";
 
-            } */}
-        
-            <div>Oi sou a home</div>
-        
-        </>
-    )
-}
+const Home = () => {
+  const { cart } = useContext(CartContext);
+  console.log("cart na Home page", cart);
 
-export default Home
+  return (
+    <>
+      <Flex direction="column" justify="center" align="center" w="100vw">
+        <HeaderHome />
+        <HomeFilter />
+        <Search />
+        <CardSC />
+      </Flex>
+    </>
+  );
+};
+
+export default Home;

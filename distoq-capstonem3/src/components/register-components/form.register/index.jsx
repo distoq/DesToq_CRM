@@ -7,14 +7,17 @@ import {
   Input,
   Box,
   FormHelperText,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormRegister = () => {
+  const history = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -49,6 +52,7 @@ const FormRegister = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -82,6 +86,19 @@ const FormRegister = () => {
       .catch((_) => console.log("error"));
   };
 
+  const cepSearch = (e) => {
+    const cep = e.target.value.replace(/\D/g, "");
+    axios
+      .get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((response) => {
+        const address = response.data;
+        setValue("address", address.logradouro);
+        setValue("city", address.localidade);
+        setValue("state", address.uf);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Flex maxW="400px" justify="center" align="center">
       <form onSubmit={handleSubmit(onRegister)}>
@@ -102,22 +119,34 @@ const FormRegister = () => {
                   color: "#716C6C",
                 },
               },
+              label: {
+                margin: "0 2px 2px 0"
+              }
             }}
           >
-            <FormLabel htmlFor="name">Name</FormLabel>
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Name</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
+                {errors.name?.message}
+              </FormHelperText>
+            )}
+            </Flex>
             <Input
               variant="outline"
               id="name"
               type="text"
               placeholder="Digite seu nome"
               {...register("name")}
-            />
-            {errors && (
-              <FormHelperText color="red">
+              />
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Email</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
                 {errors.name?.message}
               </FormHelperText>
-            )}
-            <FormLabel htmlFor="email">Email </FormLabel>
+              )}
+            </Flex>
             <Input
               variant="outline"
               id="email"
@@ -125,13 +154,14 @@ const FormRegister = () => {
               placeholder="Digite seu email"
               {...register("email")}
             />
-            {errors && (
-              <FormHelperText color="red">
-                {errors.email?.message}
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Confirme seu email</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
+                {errors.name?.message}
               </FormHelperText>
-            )}
-            <FormLabel htmlFor="confirmEmail">Confirmar Email </FormLabel>
-
+              )}
+            </Flex>
             <Input
               variant="outline"
               id="confirmEmail"
@@ -139,13 +169,42 @@ const FormRegister = () => {
               placeholder="Confirme seu email"
               {...register("confirmEmail")}
             />
-            {errors && (
-              <FormHelperText color="red">
-                {errors.confirmEmail?.message}
-              </FormHelperText>
-            )}
             <Flex>
-              <Flex direction="column" w="100%">
+            <Flex mt="10px" direction="column">
+                <FormLabel htmlFor="cep">CEP</FormLabel>
+                <Input
+                  variant="outline"
+                  id="cep"
+                  type="text"
+                  placeholder="Confirme o CEP"
+                  {...register("cep")}
+                  onBlur={cepSearch}
+                />
+                {errors && (
+                  <FormHelperText color="red" m="0px">
+                    {errors.CEP?.message}
+                  </FormHelperText>
+                )}
+              </Flex>
+              <Flex mt="10px" direction="column" sx={{ input: { w: "98%" } }}>
+                <FormLabel htmlFor="state">Estado</FormLabel>
+                <Input
+                  ml="3px"
+                  variant="outline"
+                  id="state"
+                  type="text"
+                  placeholder="Digite o Estado"
+                  {...register("state")}
+                />
+                {errors && (
+                  <FormHelperText color="red" m="0px">
+                    {errors.state?.message}
+                  </FormHelperText>
+                )}
+              </Flex>
+            </Flex>
+            <Flex>
+              <Flex mt="10px" direction="column" w="100%">
                 <FormLabel htmlFor="address">Seu endereço</FormLabel>
                 <Input
                   variant="outline"
@@ -155,12 +214,12 @@ const FormRegister = () => {
                   {...register("address")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.address?.message}
                   </FormHelperText>
                 )}
               </Flex>
-              <Flex direction="column" w="50%" ml="1%" wrap="nowrap">
+              <Flex mt="10px" direction="column" w="50%" ml="1%" wrap="nowrap">
                 <FormLabel htmlFor="number" wrap="nowrap">
                   Número
                 </FormLabel>
@@ -172,45 +231,21 @@ const FormRegister = () => {
                   {...register("number")}
                 />
                 {errors && (
-                  <FormHelperText color="red">
+                  <FormHelperText color="red" m="0px">
                     {errors.number?.message}
                   </FormHelperText>
                 )}
               </Flex>
             </Flex>
-            <Flex>
-              <Flex direction="column" sx={{ input: { w: "98%" } }}>
-                <FormLabel htmlFor="state">Estado</FormLabel>
-                <Input
-                  variant="outline"
-                  id="state"
-                  type="text"
-                  placeholder="Digite o Estado"
-                  {...register("state")}
-                />
-                {errors && (
-                  <FormHelperText color="red">
-                    {errors.state?.message}
-                  </FormHelperText>
-                )}
-              </Flex>
-              <Flex direction="column">
-                <FormLabel htmlFor="cep">CEP</FormLabel>
-                <Input
-                  variant="outline"
-                  id="cep"
-                  type="text"
-                  placeholder="Confirme o CEP"
-                  {...register("cep")}
-                />
-                {errors && (
-                  <FormHelperText color="red">
-                    {errors.CEP?.message}
-                  </FormHelperText>
-                )}
-              </Flex>
+            
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Digite a cidade</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
+                {errors.name?.message}
+              </FormHelperText>
+              )}
             </Flex>
-            <FormLabel htmlFor="city">Cidade</FormLabel>
             <Input
               variant="outline"
               id="city"
@@ -218,12 +253,14 @@ const FormRegister = () => {
               placeholder="Digite a cidade"
               {...register("city")}
             />
-            {errors && (
-              <FormHelperText color="red">
-                {errors.city?.message}
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Senha</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
+                {errors.name?.message}
               </FormHelperText>
-            )}
-            <FormLabel htmlFor="password">Senha</FormLabel>
+              )}
+            </Flex>
             <Input
               variant="outline"
               id="password"
@@ -231,12 +268,14 @@ const FormRegister = () => {
               placeholder="Digite sua senha"
               {...register("password")}
             />
-            {errors && (
-              <FormHelperText color="red">
-                {errors.password?.message}
+            <Flex mt="10px" justify="space-between">
+              <FormLabel htmlFor="name">Confirme sua senha</FormLabel>
+              {errors && (
+              <FormHelperText color="red" m="0px">
+                {errors.name?.message}
               </FormHelperText>
-            )}
-            <FormLabel htmlFor="confirmPassword">Confirme sua senha</FormLabel>
+              )}
+            </Flex>
             <Input
               variant="outline"
               id="confirmPassword"
@@ -244,25 +283,13 @@ const FormRegister = () => {
               placeholder="Confirme sua senha"
               {...register("confirmPassword")}
             />
-            {errors && (
-              <FormHelperText color="red">
-                {errors.confirmPassword?.message}
-              </FormHelperText>
-            )}
-            <FormLabel htmlFor="profile">Selecione o tipo de perfil:</FormLabel>
-            <Select placeholder="Escolha o perfil" {...register("profile")}>
-              <option value="admin">Administrador</option>
-              <option value="user">Usuário</option>
-            </Select>
-            {errors && (
-              <FormHelperText color="red">
-                {errors.profile?.message}
-              </FormHelperText>
-            )}
-
             <Button variant="primary" w="100%" mr="0" ml="0" type="submit">
               CADASTRAR
             </Button>
+            <Text>
+              Já possui cadastro?{" "}
+              <Link onClick={() => history("/")}>clique aqui</Link>
+            </Text>
           </FormControl>
         </Box>
       </form>

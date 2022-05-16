@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/react": "^1.8.8",
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/itim": "^4.5.8",
     "@fontsource/nunito": "^4.5.8",
+    "@fontsource/rubik": "^4.5.9",
     "@hookform/resolvers": "^2.8.8",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -23,6 +25,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.1",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11"
   },
