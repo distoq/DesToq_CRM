@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ShowcaseContext } from "../../Providers/showcase/";
 import { CartContext } from "../../Providers/cart";
+import { useInputHome } from "../../Providers/SearchHome";
 
 import {
   Flex,
@@ -22,24 +23,24 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { AddIcon, DeleteIcon, StarIcon } from "@chakra-ui/icons";
-import { useInputHome } from "../../Providers/SearchHome";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
 
 const CardSC = () => {
   const { listProducts } = useContext(ShowcaseContext);
-  const { cart, addCart } = useContext(CartContext);
-  const { inputSearch, addInputSearch } = useInputHome();
+  const { addCart } = useContext(CartContext);
+  const { inputSearch } = useInputHome();
+  const toast = useToast();
+
   const searchFilter = listProducts.filter(
     (product) =>
       product.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
       product.category.toLowerCase().includes(inputSearch.toLowerCase())
   );
-  const toast = useToast();
-  
+
   const addToCart = (id) => {
     addCart(id);
     toast({
-      description: "Produto Adicionado com Sucesso",
+      description: "adicionado!",
       status: "success",
       duration: 1500,
       isClosable: true,
@@ -51,14 +52,14 @@ const CardSC = () => {
     <Flex w="100%" align="center" justify="center">
       <UnorderedList w="80%" maxW="1300px" display="flex" direction={"column"}>
         <Wrap align="center" justify="center" h="100%" maxH={"1440px"}>
-          {searchFilter.map((product) => (
+          {searchFilter.map((product, index) => (
             <ListItem
-              width="257px"
+              w="257px"
               h="507px"
               border="1px solid #E5E5E5"
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              key={product.id}
+              key={index}
             >
               <Image
                 w="257px"
@@ -91,25 +92,23 @@ const CardSC = () => {
                   <Flex justify="flex-end">
                     <PopoverTrigger>
                       <Button bg="transparent">
-                        Descrição <AddIcon ml="10px" cursor="pointer" />{" "}
+                        descrição <AddIcon ml="10px" cursor="pointer" />
                       </Button>
                     </PopoverTrigger>
                   </Flex>
                   <PopoverContent>
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <PopoverHeader>Descrição</PopoverHeader>
+                    <PopoverHeader>Descrição:</PopoverHeader>
                     <PopoverBody>{product.description}</PopoverBody>
                   </PopoverContent>
                 </Popover>
                 <Text fontSize="lg" pl="10px">
-
-                {product.price.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                  minimumFractionDigits: 2
-                })}
-
+                  {product.price.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                  })}
                 </Text>
               </Stack>
               <Flex justify="center">

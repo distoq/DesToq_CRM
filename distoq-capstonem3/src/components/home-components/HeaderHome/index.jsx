@@ -16,11 +16,11 @@ import {
   Avatar,
   useToast,
 } from "@chakra-ui/react";
-
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { DeleteIcon } from "@chakra-ui/icons";
+
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
@@ -35,15 +35,16 @@ const HeaderHome = () => {
   const { cart, deleteCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const toast = useToast();
+
   const sum = cart.reduce((previous, current) => {
-    return previous + current.price;
+    return previous + current.price * current.quantity;
   }, 0);
 
-  const toast = useToast();
   const handleLogOut = () => {
     navigate("/");
     toast({
-      description: "Logout Feito com Sucesso",
+      description: "deslogado",
       status: "success",
       duration: 1500,
       isClosable: true,
@@ -54,7 +55,7 @@ const HeaderHome = () => {
   const deleteFromCart = (id) => {
     deleteCart(id);
     toast({
-      description: "Produto removido com Sucesso!",
+      description: "produto removido!",
       status: "success",
       duration: 1500,
       isClosable: true,
@@ -69,6 +70,7 @@ const HeaderHome = () => {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };
+
   return (
     <>
       <Flex
@@ -104,7 +106,9 @@ const HeaderHome = () => {
                 fontSize={"12px"}
                 fontWeight={"bold"}
               >
-                {cart.length}
+                {cart.reduce((previous, current) => {
+                  return previous + current.quantity;
+                }, 0)}
               </Avatar>
             )}
             <Button
@@ -129,40 +133,48 @@ const HeaderHome = () => {
                 <DrawerBody>
                   <Flex direction="center" align="center" justify="center">
                     <UnorderedList m="0">
-                      {cart.map((product, index) => (
-                        <ListItem
-                          key={index}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="space-between"
-                          width={["280px", "300px", "600px"]}
-                          h="85px"
-                          m="10px"
-                          p="10px"
-                          border="1px solid black"
-                          borderRadius="10px"
-                          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                        >
-                          <Avatar
-                            w="57px"
-                            h="57px"
-                            src={product.image}
-                            alt={product.name}
-                          />
-                          <Text w={"100px"} maxW={"100px"}>
-                            {product.name}
-                          </Text>
-                          <Text>
-                            {product.price.toLocaleString("pt-br", {
-                              style: "currency",
-                              currency: "BRL",
-                            })}
-                          </Text>
-                          <Button onClick={() => deleteFromCart(product.id)}>
-                            <DeleteIcon />
-                          </Button>
-                        </ListItem>
-                      ))}
+                      {cart.map((product, index) => {
+                        const sumProduct = product.price * product.quantity;
+                        return (
+                          <ListItem
+                            key={index}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            width={["280px", "300px", "600px"]}
+                            h="85px"
+                            m="10px"
+                            p="10px"
+                            border="1px solid black"
+                            borderRadius="10px"
+                            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                          >
+                            <Avatar
+                              w="57px"
+                              h="57px"
+                              src={product.image}
+                              alt={product.name}
+                            />
+                            <Text w={"100px"} maxW={"100px"}>
+                              {product.name}
+                            </Text>
+                            <Text w={"100px"} maxW={"100px"}>
+                              Qtd: {product.quantity}
+                            </Text>
+                            <Text>
+                              {sumProduct.toLocaleString("pt-br", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}
+                            </Text>
+                            <Button
+                              onClick={() => deleteFromCart(product.uniqueId)}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </ListItem>
+                        );
+                      })}
                     </UnorderedList>
                   </Flex>
                 </DrawerBody>
@@ -185,7 +197,7 @@ const HeaderHome = () => {
                     </Text>
                   </Flex>
                   <Button variant="primary" w="350px" onClick={getOrder}>
-                    Finalizar Compra
+                    finalizar compra
                   </Button>
                 </DrawerFooter>
               </DrawerContent>

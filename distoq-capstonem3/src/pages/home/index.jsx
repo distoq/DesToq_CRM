@@ -8,7 +8,7 @@ import HomeFilter from "../../components/home-components/HomeFilter";
 
 const Home = () => {
   const { cart } = useContext(CartContext);
-  console.log("cart na Home page", cart);
+  console.log("cart na Homepage", cart);
 
   return (
     <>
