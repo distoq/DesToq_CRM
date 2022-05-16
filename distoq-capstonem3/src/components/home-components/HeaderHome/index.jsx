@@ -41,7 +41,7 @@ const HeaderHome = () => {
 
   const toast = useToast();
   const handleLogOut = () => {
-    navigate("/");
+    navigate("/login");
     toast({
       description: "Logout Feito com Sucesso",
       status: "success",

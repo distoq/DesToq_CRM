@@ -8,8 +8,8 @@ import Register from "../pages/register";
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/home" element={<Home />} />
+      <Route exact path="/" element={<Home />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/register" element={<Register />} />
     </Routes>
