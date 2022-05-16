@@ -40,6 +40,8 @@ export const InsumosPage = () => {
   const { providersList, setProvidersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
 
+  const { token } = useToken();
+
   useEffect(() => {
     api.get("/supplies").then((res) => {
       console.log(res.data);
@@ -56,8 +58,6 @@ export const InsumosPage = () => {
       setSupliesList(resp.data);
     });
   };
-
-  const { token, setToken } = useToken();
 
   const formSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório!"),
@@ -96,7 +96,7 @@ export const InsumosPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc3RvcUBwcm90b24ubWUiLCJpYXQiOjE2NTI2NjcwMzksImV4cCI6MTY1MjY3MDYzOSwic3ViIjoiMSJ9.Tp-jZGbRmYGWT1YR5l9XvkvJPvc_eWgTHsItevBH0PY`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
