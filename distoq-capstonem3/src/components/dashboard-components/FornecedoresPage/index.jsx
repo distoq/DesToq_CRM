@@ -24,13 +24,13 @@ import { FormProviders } from "./FormFornecedor";
 import { ListProviders } from "./ListFornecedores";
 
 export const FornecedoresPage = () => {
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
   const { providersList } = useProvidersList();
   const group = getRootProps();

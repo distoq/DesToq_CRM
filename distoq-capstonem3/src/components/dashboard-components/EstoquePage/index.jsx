@@ -32,13 +32,12 @@ export const EstoquePage = () => {
   const [minValue, setMinValue] = useState(
     JSON.parse(localStorage.getItem("@DEStoq:minStock")) || { min: 0 }
   );
-  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } =
-    useActivePage();
+  const { activeDashboardPage, setActiveDashboarPage, handleIcons, options } = useActivePage();
   const { stockList } = useStockList();
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
-    onChange: setActiveDashboarPage,
+    onChange: setActiveDashboardPage,
   });
 
   const group = getRootProps();

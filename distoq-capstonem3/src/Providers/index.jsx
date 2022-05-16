@@ -1,5 +1,6 @@
 import {TokenProvider} from "./Token";
 import { SearchHomeProvider } from "./SearchHome";
+import { SelectValuesProvider } from "./SelectValues";
 import { DashboardPageControllerProvider } from "./DashboardPageController";
 import { IsLoggedProvider } from "./isLogged";
 import { ShowcaseProvider } from "./showcase";
@@ -17,7 +18,9 @@ const Providers = ({ children }) => {
           <IsLoggedProvider>
             <CartProvider>
               <SearchHomeProvider>
-                {children}
+                <SelectValuesProvider>
+                  {children}
+                </SelectValuesProvider>
               </SearchHomeProvider>
             </CartProvider>
           </IsLoggedProvider>
@@ -29,4 +32,3 @@ const Providers = ({ children }) => {
   );
 };
 export default Providers;
-
