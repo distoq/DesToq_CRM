@@ -14,9 +14,12 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../../services/api"
+import {toast} from "react-toastify"
 
 const FormRegister = () => {
   const history = useNavigate();
+
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -45,7 +48,6 @@ const FormRegister = () => {
       .string()
       .required("Campo obrigatório")
       .oneOf([yup.ref("password")], "Senhas não conferem"),
-    profile: yup.string().required("Campo obrigatório"),
   });
 
   const {
@@ -55,22 +57,21 @@ const FormRegister = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onRegister = ({
+  const Register = ({
     name,
     email,
     password,
-    profile,
     address,
     city,
     state,
     number,
     cep,
   }) => {
+    console.log("oi")
     const user = {
       name,
       email,
       password,
-      profile,
       addressInfo: {
         cep,
         address,
@@ -79,10 +80,11 @@ const FormRegister = () => {
         number,
       },
     };
-    axios
-      .post("https://destoq.herokuapp.com/register", user)
-      .then((_) => console.log("success"))
-      .catch((_) => console.log("error"));
+     
+    api
+      .post("/register", user)
+      .then((_) => toast.success("Cadastro realizado com sucesso"))
+      .catch((_) => toast.error("Email em uso"));
   };
 
   const cepSearch = (e) => {
@@ -95,14 +97,15 @@ const FormRegister = () => {
         setValue("city", address.localidade);
         setValue("state", address.uf);
       })
-      .catch((err) => console.log(err));
+      .catch((_) => toast.error("Cep inválido"));
   };
 
   return (
     <Flex maxW="400px" justify="center" align="center">
-      <form onSubmit={handleSubmit(onRegister)}>
+      <form onSubmit={handleSubmit(Register)}>       
         <Box p="15px">
           <FormControl
+          
             sx={{
               input: {
                 borderColor: "black",
@@ -119,17 +122,17 @@ const FormRegister = () => {
                 },
               },
               label: {
-                margin: "0 2px 2px 0"
-              }
+                margin: "0 2px 2px 0",
+              },
             }}
           >
             <Flex mt="10px" justify="space-between">
               <FormLabel htmlFor="name">Name</FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
-            )}
+                <FormHelperText color="red" m="0px">
+                  {errors.name?.message}
+                </FormHelperText>
+              )}
             </Flex>
             <Input
               variant="outline"
@@ -137,13 +140,13 @@ const FormRegister = () => {
               type="text"
               placeholder="Digite seu nome"
               {...register("name")}
-              />
+            />
             <Flex mt="10px" justify="space-between">
-              <FormLabel htmlFor="name">Email</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
+                <FormHelperText color="red" m="0px">
+                  {errors.email?.message}
+                </FormHelperText>
               )}
             </Flex>
             <Input
@@ -154,11 +157,11 @@ const FormRegister = () => {
               {...register("email")}
             />
             <Flex mt="10px" justify="space-between">
-              <FormLabel htmlFor="name">Confirme seu email</FormLabel>
+              <FormLabel htmlFor="confirmEmail">Confirme seu email</FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
+                <FormHelperText color="red" m="0px">
+                  {errors.confirmEmail?.message}
+                </FormHelperText>
               )}
             </Flex>
             <Input
@@ -169,7 +172,7 @@ const FormRegister = () => {
               {...register("confirmEmail")}
             />
             <Flex>
-            <Flex mt="10px" direction="column">
+              <Flex mt="10px" direction="column">
                 <FormLabel htmlFor="cep">CEP</FormLabel>
                 <Input
                   variant="outline"
@@ -236,13 +239,13 @@ const FormRegister = () => {
                 )}
               </Flex>
             </Flex>
-            
+
             <Flex mt="10px" justify="space-between">
-              <FormLabel htmlFor="name">Digite a cidade</FormLabel>
+              <FormLabel htmlFor="city">Digite a cidade</FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
+                <FormHelperText color="red" m="0px">
+                  {errors.city?.message}
+                </FormHelperText>
               )}
             </Flex>
             <Input
@@ -253,11 +256,11 @@ const FormRegister = () => {
               {...register("city")}
             />
             <Flex mt="10px" justify="space-between">
-              <FormLabel htmlFor="name">Senha</FormLabel>
+              <FormLabel htmlFor="password">Senha</FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
+                <FormHelperText color="red" m="0px">
+                  {errors.password?.message}
+                </FormHelperText>
               )}
             </Flex>
             <Input
@@ -268,11 +271,13 @@ const FormRegister = () => {
               {...register("password")}
             />
             <Flex mt="10px" justify="space-between">
-              <FormLabel htmlFor="name">Confirme sua senha</FormLabel>
+              <FormLabel htmlFor="confirmPasswprd">
+                Confirme sua senha
+              </FormLabel>
               {errors && (
-              <FormHelperText color="red" m="0px">
-                {errors.name?.message}
-              </FormHelperText>
+                <FormHelperText color="red" m="0px">
+                  {errors.confirmPassword?.message}
+                </FormHelperText>
               )}
             </Flex>
             <Input
