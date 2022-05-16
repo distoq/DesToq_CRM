@@ -6,10 +6,27 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+// import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+// import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  ComposedChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import { motion } from "framer-motion";
+
 import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
@@ -17,6 +34,7 @@ import { useActivePage } from "../../../Providers/DashboardPageController";
 export const FinanceiroPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
+
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -66,8 +84,66 @@ export const FinanceiroPage = () => {
       </Box>
     );
   }
+
+  const faturamento = [
+    {name: 'Mar', uv: 150, pv: 2400, amt: 2400},
+    {name: 'Abr', uv: 200, pv: 2400, amt: 2400},
+    {name: 'Mai', uv: 350, pv: 2400, amt: 2400},
+
+  ];
+  const vendas = [
+    {name: 'Page A', uv: 150, pv: 2400, amt: 2400},
+    {name: 'Page B', uv: 200, pv: 2400, amt: 2400},
+    {name: 'Page C', uv: 350, pv: 2400, amt: 2400},
+
+  ];
+  const data = [
+    {
+      name: 'Janeiro',
+      uv: 590,
+      pv: 800,
+      amt: 1400,
+    },
+    {
+      name: 'Fevereiro',
+      uv: 868,
+      pv: 967,
+      amt: 1506,
+    },
+    {
+      name: 'Março',
+      uv: 1397,
+      pv: 1098,
+      amt: 989,
+    },
+    {
+      name: 'Abril',
+      uv: 1480,
+      pv: 1200,
+      amt: 1228,
+    },
+    {
+      name: 'Maio',
+      uv: 1520,
+      pv: 1108,
+      amt: 1100,
+    },
+    {
+      name: 'Junho',
+      uv: 1400,
+      pv: 680,
+      amt: 1700,
+    },
+  ];
   return (
     //FULL CONTAINER
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+    
     <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
@@ -102,7 +178,7 @@ export const FinanceiroPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Financeiro Page
+          Financeiro 
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
@@ -129,7 +205,7 @@ export const FinanceiroPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#434343"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -137,13 +213,161 @@ export const FinanceiroPage = () => {
             borderTopRadius={"15px"}
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
+            m={"20px"}
+            justifyContent={"space-around"}
+            flexWrap={"wrap"}
           >
-            CONTEUDO AQUI!!!!
+
+            {/* <Flex flexDirection={"column"} flex="wrap" width={"100%"} height={"100%"} justifyContent={"center"}>
+              <Box>
+                <Text color={"#ccc"} textAlign={"center"}>
+                  Faturamento Bruto
+                </Text>
+                <LineChart width={600} height={300} data={faturamento}>
+                  <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                  <CartesianGrid stroke="#ccc" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                </LineChart>
+              </Box>
+              <Text color={"#ccc"} textAlign={"center"}>
+                  Vendas Trimestral
+                </Text>
+              <LineChart width={600} height={300} data={vendas} margin={{ top: 55, right: 200, bottom: 5, left: 0 }}>
+                <Line type="monotone" dataKey="uv" stroke="#c02410c7" />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+              </LineChart>
+            </Flex> */}
+
+          
+            {/* <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                width={500}
+                height={300}
+                data={faturamento}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="pv" fill="#8884d8" />
+                <Bar dataKey="uv" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer> */}
+
+            {/* <ResponsiveContainer width="40%" height="50%">
+              
+            </ResponsiveContainer> */}
+            {/* <ResponsiveContainer width="40%" height="50%">
+              
+            </ResponsiveContainer> */}
+            {/* <ResponsiveContainer width="40%" height="50%">
+              
+            </ResponsiveContainer> */}
+            {/* <ResponsiveContainer width="40%" height="50%">
+              
+            </ResponsiveContainer> */}
+            <Flex 
+              flexWrap={"wrap"}
+              justifyContent={"space-around"}
+
+            >
+              <ComposedChart
+                width={350}
+                height={350}
+                data={data}
+                margin={{
+                  top: 30,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" scale="band" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="uv" barSize={20} fill="#F4BF39" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+
+
+              <ComposedChart
+                width={350}
+                height={350}
+                data={data}
+                margin={{
+                  top: 30,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" scale="band" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="uv" barSize={20} fill="#F4BF39" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+
+              <ComposedChart
+                width={350}
+                height={350}
+                data={data}
+                margin={{
+                  top: 30,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" scale="band" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="uv" barSize={20} fill="#F4BF39" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+
+              <ComposedChart
+                width={350}
+                height={350}
+                data={data}
+                margin={{
+                  top: 30,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" scale="band" />
+                <YAxis />
+                <Tooltip/>
+                <Legend/>
+                <Bar dataKey="uv" barSize={20} fill="#F4BF39" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+            </Flex>
+          
           </Flex>
         </Flex>
       </Flex>
     </Flex>
+    </motion.div>
   );
 };
-
 export default FinanceiroPage;
