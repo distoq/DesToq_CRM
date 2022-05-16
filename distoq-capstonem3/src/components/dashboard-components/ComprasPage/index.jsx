@@ -334,7 +334,7 @@ export const ComprasPage = () => {
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}
-                  justfyContent={"center"}
+                  justifyContent={"center"}
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{
