@@ -1,21 +1,32 @@
-import { TokenProvider } from "./Token";
+import {TokenProvider} from "./Token";
 import { SearchHomeProvider } from "./SearchHome";
+import { SelectValuesProvider } from "./SelectValues";
 import { DashboardPageControllerProvider } from "./DashboardPageController";
 import { IsLoggedProvider } from "./isLogged";
-import { SelectValuesProvider } from "./SelectValues";
+import { ShowcaseProvider } from "./showcase";
+import { CartProvider } from "./cart";
 import { ProvidersListProvider } from "./ProvidersList";
+import { StockProvider } from "./Stock";
 
 const Providers = ({ children }) => {
   return (
     <TokenProvider>
       <DashboardPageControllerProvider>
-        <IsLoggedProvider>
-          <SearchHomeProvider>
-            <SelectValuesProvider>
-              <ProvidersListProvider>{children}</ProvidersListProvider>
-            </SelectValuesProvider>
-          </SearchHomeProvider>
-        </IsLoggedProvider>
+        <StockProvider>
+        <ProvidersListProvider>
+        <ShowcaseProvider>
+          <IsLoggedProvider>
+            <CartProvider>
+              <SearchHomeProvider>
+                <SelectValuesProvider>
+                  {children}
+                </SelectValuesProvider>
+              </SearchHomeProvider>
+            </CartProvider>
+          </IsLoggedProvider>
+        </ShowcaseProvider>
+        </ProvidersListProvider>
+        </StockProvider>
       </DashboardPageControllerProvider>
     </TokenProvider>
   );

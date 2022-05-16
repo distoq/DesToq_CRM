@@ -6,6 +6,12 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  UnorderedList,
   useRadio,
   useRadioGroup,
   VStack,
@@ -13,6 +19,9 @@ import {
 import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
+import { useProvidersList } from "../../../Providers/ProvidersList";
+import { FormProviders } from "./FormFornecedor";
+import { ListProviders } from "./ListFornecedores";
 
 export const FornecedoresPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -23,7 +32,7 @@ export const FornecedoresPage = () => {
     defaultValue: activeDashboardPage,
     onChange: setActiveDashboardPage,
   });
-
+  const { providersList } = useProvidersList();
   const group = getRootProps();
 
   function RadioCard(props) {
@@ -102,7 +111,7 @@ export const FornecedoresPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Fornecedores Page
+          Fornecedores
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
@@ -129,7 +138,7 @@ export const FornecedoresPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#434343"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -138,7 +147,60 @@ export const FornecedoresPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            CONTEUDO AQUI!!!!
+            <Tabs w="100%">
+              <TabList>
+                <Tab
+                  color="#F4BF39"
+                  borderColor="#F4BF39"
+                  _focus={{
+                    color: "#F4BF39",
+                    borderBottom: "2px",
+                    borderColor: "#F4BF39",
+                    borderTopLeftRadius: "15px",
+                  }}
+                  w="100%"
+                >
+                  <Heading variant={"dashboard"} color="##F4BF39">
+                    Listar Fornecedores
+                  </Heading>
+                </Tab>
+                <Tab
+                  color="#F4BF39"
+                  borderColor="#F4BF39"
+                  _focus={{
+                    borderBottom: "2px",
+                    color: "#F4BF39",
+                    borderColor: "#F4BF39",
+                    borderTopRightRadius: "15px",
+                  }}
+                  w="100%"
+                >
+                  <Heading variant={"dashboard"} color="##F4BF39">
+                    Cadastrar Fornecedor
+                  </Heading>
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel >
+                  <UnorderedList  m="10">
+                    {providersList?.map((list) => (
+                      <ListProviders key={list.id} list={list} />
+                    ))}
+                  </UnorderedList>
+                </TabPanel>
+                <TabPanel display={"flex"} justifyContent="center">
+                  <Flex
+                    bg="#ffff"
+                    justify="center"
+                    align="center"
+                    maxWidth="340px"
+                    borderRadius={"20px"}
+                  >
+                    <FormProviders />
+                  </Flex>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </Flex>
         </Flex>
       </Flex>

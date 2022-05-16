@@ -9,9 +9,8 @@ const Register = () => {
     <Flex
       direction="row"
       w="100vw"
-      minH="100%"
+      minH="100vh"
       justify="center"
-      align="center"
       backgroundColor="white"
     >
       <Flex minW="45%" minH="100%" direction="column" textAlign="center" align="center" justify="center">
@@ -35,11 +34,10 @@ const Register = () => {
 
       <Flex
         w="100%"
-        h="100vh"
         backgroundColor="black"
         backgroundImage={banner}
-        backgroundSize="cover"
-        backgroundRepeat="no-repeat"
+        backgroundSize={["contain","cover","cover","100%"]}
+        backgroundRepeat="repeat"
         backgroundPosition="center"
         display={["none", "none", "none", "flex"]}
         justify="center"
