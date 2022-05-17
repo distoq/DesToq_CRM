@@ -229,47 +229,6 @@ export const ComprasPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 20px"]}
-          display={[
-            "inline-block",
-            "inline-block",
-            "inline-block",
-            "inline-block",
-            "none",
-          ]}
-          textAlign="center"
-        >
-          Compras
-        </Heading>
-        <InputGroup
-          size="md"
-          width={"90%"}
-          maxW={"500px"}
-          margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-          display={["flex", "flex", "flex", "flex", "flex"]}
-        >
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
         <Flex
           width={"100%"}
           height={"100%"}
@@ -277,7 +236,7 @@ export const ComprasPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -290,40 +249,46 @@ export const ComprasPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              backgroundColor={"#434343"}
+             
               borderRadius={"20px"}
             >
               <TabList mb="1em">
                 <Tab
-                  color={"#fff"}
+                  color="#101010"
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background:"#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
+              
                     borderTopLeftRadius: "18px",
-                    border: "2px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Ordens de Compra
                 </Tab>
                 <Tab
-                  color={"#fff"}
+                  color="#101010"
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background:"#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
+              
+                    borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
-                    border: "2px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Adicionar Ordem de Compra

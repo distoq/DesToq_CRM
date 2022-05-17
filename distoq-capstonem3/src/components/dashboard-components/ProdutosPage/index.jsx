@@ -1,16 +1,13 @@
 import {
   Box,
-  Button,
+
   Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
+
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { GoSearch } from "react-icons/go";
+
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
 export const ProdutosPage = () => {
@@ -94,32 +91,7 @@ export const ProdutosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
-          textAlign="center"
-        >
-          Produtos Page
-        </Heading>
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+        
         <Flex
           width={"100%"}
           height={"100%"}
@@ -127,7 +99,7 @@ export const ProdutosPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}

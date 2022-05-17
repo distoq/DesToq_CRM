@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
   Select,
   Stack,
   Tab,
@@ -19,7 +18,6 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { GoSearch } from "react-icons/go";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardInsumo } from "./InsumoCard";
@@ -37,8 +35,13 @@ export const InsumosPage = () => {
     useActivePage();
   const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const { providersList, setProvidersList } = useProvidersList();
+  const { providersList} = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
+  const [input, setInput] = useState("");
+
+  const filteredSuppliesList = suppliesList.filter((item) =>
+    item.name.toLowerCase().includes(input.toLowerCase())
+  );
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
@@ -154,7 +157,7 @@ export const InsumosPage = () => {
     );
   }
   return (
-    //FULL CONTAINER
+
     <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
@@ -183,45 +186,8 @@ export const InsumosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 20px"]}
-          display={[
-            "inline-block",
-            "inline-block",
-            "inline-block",
-            "inline-block",
-            "none",
-          ]}
-          textAlign="center"
-        >
-          Insumos
-        </Heading>
-        <InputGroup
-          size="md"
-          width={"90%"}
-          maxW={"500px"}
-          margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-          display={["flex", "flex", "flex", "flex", "none"]}
-        >
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+ 
+       
         <Flex
           width={"100%"}
           height={"100%"}
@@ -229,7 +195,7 @@ export const InsumosPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -242,40 +208,45 @@ export const InsumosPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              backgroundColor={"#434343"}
+             
               borderRadius={"20px"}
             >
               <TabList mb="1em">
                 <Tab
-                  color={"#fff"}
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
+                   fontWeight={"bold"}
+                   fontSize={"26px"}
+                   color="#101010"
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background:"#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
                     borderTopLeftRadius: "18px",
-                    border: "2px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Insumos Cadastrados
                 </Tab>
                 <Tab
-                  color={"#fff"}
+                 color="#101010"
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background:"#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
+              
+                    borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
-                    border: "2px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Adicionar Insumos
@@ -330,7 +301,7 @@ export const InsumosPage = () => {
                     },
                   }}
                 >
-                  {suppliesList?.map((resp) => (
+                  {filteredSuppliesList?.map((resp) => (
                     <CardInsumo supply={resp} />
                   ))}
                 </TabPanel>

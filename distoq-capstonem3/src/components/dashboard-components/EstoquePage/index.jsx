@@ -32,7 +32,8 @@ export const EstoquePage = () => {
   const [minValue, setMinValue] = useState(
     JSON.parse(localStorage.getItem("@DEStoq:minStock")) || { min: 0 }
   );
-  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } = useActivePage();
+  const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
+    useActivePage();
   const { stockList } = useStockList();
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -130,35 +131,6 @@ export const EstoquePage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
-          textAlign="center"
-        >
-          Estoque Page
-        </Heading>
-      
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-
         <Flex
           width={"100%"}
           height={"100%"}
@@ -166,7 +138,7 @@ export const EstoquePage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#434343"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -178,28 +150,40 @@ export const EstoquePage = () => {
             <Tabs w="100%">
               <TabList>
                 <Tab
-                  color="#F4BF39"
-                  borderColor="#F4BF39"
+                  color="#101010"
+                  _selected={{
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background: "#14213d",
+                    borderBottomWidth: "2px",
+                  }}
                   _focus={{
-                    color: "#F4BF39",
-                    borderBottom: "2px",
-                    borderColor: "#F4BF39",
-                    borderTopLeftRadius: "15px",
+                    color: "#FFFF",
+
+                    borderTopLeftRadius: "18px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
                   }}
                   w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
-                    Estoque
+                    Estoque Mínimo
                   </Heading>
                 </Tab>
                 <Tab
-                  color="#F4BF39"
-                  borderColor="#F4BF39"
+                  color="#101010"
+                  _selected={{
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background: "#14213d",
+                    borderBottomWidth: "2px",
+                  }}
                   _focus={{
-                    borderBottom: "2px",
-                    color: "#F4BF39",
-                    borderColor: "#F4BF39",
-                    borderTopRightRadius: "15px",
+                    color: "#FFFF",
+
+                    borderTopLeftRadius: "18px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
                   }}
                   w="100%"
                 >
@@ -217,22 +201,28 @@ export const EstoquePage = () => {
                   </UnorderedList>
                 </TabPanel>
                 <TabPanel>
-                  <Flex mr="10px" direction="column" justify={"center"} align="flex-end">
+                  <Flex
+                    mr="10px"
+                    direction="column"
+                    justify={"center"}
+                    align="flex-end"
+                  >
+                    <Flex justify={"flex-start"} >
+                      <FormLabel color="#101010">Defina o estoque mínimo</FormLabel>
+                      {errors.min && (
+                        <Text color="red.500">{errors.min.message}</Text>
+                      )}
+                    </Flex>
 
-                  <Flex justify={"flex-start"}>
-                    <FormLabel>Defina o estoque mínimo</FormLabel>
-                    {errors.min && (
-                      <Text color="red.500">{errors.min.message}</Text>
-                    )}
-                  </Flex>
-                
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                       <FormControl>
                         <Input
+                         borderColor={" #101010"}
+                         color="#101010"
                           type="number"
-                          maxW="100px"
+                          maxW="120px"
                           placeholder="Qtd Mínima"
-                          _placeholder={{ color: "#ffff" }}
+                          _placeholder={{color:"#434343"}}
                           errorBorderColor={errors.min && "red.300"}
                           {...register("min")}
                         />
@@ -242,7 +232,7 @@ export const EstoquePage = () => {
                       </FormControl>
                     </form>
                   </Flex>
-                 
+
                   <UnorderedList m="0">
                     {stockList?.map((stockItem) => (
                       <StockList
