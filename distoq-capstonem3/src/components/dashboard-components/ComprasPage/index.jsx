@@ -229,7 +229,6 @@ export const ComprasPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-     
         <Flex
           width={"100%"}
           height={"100%"}
