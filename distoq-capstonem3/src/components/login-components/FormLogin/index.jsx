@@ -25,7 +25,7 @@ const FormLogin = () => {
       .post("login", data)
       .then((res) => {
         toast({
-          description: "Usuário logado com sucesso!",
+          description: "Logado com sucesso!",
           status: "success",
           duration: 1500,
           isClosable: true,
@@ -39,7 +39,7 @@ const FormLogin = () => {
       })
       .catch((err) => {
         toast({
-          description: "Ops, algo deu errado!",
+          description: "Ops! Algo deu errado",
           status: "error",
           duration: 1500,
           isClosable: true,
@@ -52,8 +52,8 @@ const FormLogin = () => {
     email: yup
       .string()
       .email("digite um e-mail válido")
-      .required("Email obrigatório!"),
-    password: yup.string().required("Senha obrigátoria!"),
+      .required("E-mail obrigatório!"),
+    password: yup.string().required("Senha obrigatória!"),
     // .matches(
     //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
     //   "Senha Inválida. Sua senha deve conter pelo menos: uma letra Maiuscula, um número e um caracter especial($*&@#)"
@@ -84,7 +84,7 @@ const FormLogin = () => {
           as="h1"
           position="relative"
         >
-          Faça seu login aqui !
+          Faça seu login aqui!
         </Heading>
         <form onSubmit={handleSubmit(handleSubmitForm)}>
           <FormControl
@@ -108,12 +108,12 @@ const FormLogin = () => {
               },
             }}
           >
-            <FormLabel htmlFor="email">Email </FormLabel>
+            <FormLabel htmlFor="email">E-mail </FormLabel>
             <Input
               variant="outline"
               id="email"
               type="email"
-              placeholder="Digite seu email"
+              placeholder="digite seu e-mail"
               {...register("email")}
             />
             {errors.email && (
@@ -126,7 +126,7 @@ const FormLogin = () => {
               variant="outline"
               id="password"
               type="password"
-              placeholder="Digite sua senha"
+              placeholder="digite sua senha"
               {...register("password")}
             />
             {errors.password && (
@@ -140,10 +140,10 @@ const FormLogin = () => {
             LOGAR
           </Button>
         </form>
-        <Text variant="primary">Não possui login ?</Text>
+        <Text variant="primary">Ainda não possui cadastro?</Text>
         <Link to="/register">
           <Button type="button" variant="primary">
-            REGISTRAR
+            CADASTRAR
           </Button>
         </Link>
       </Flex>

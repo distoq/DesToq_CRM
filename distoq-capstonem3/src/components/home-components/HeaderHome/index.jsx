@@ -20,12 +20,13 @@ import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { DeleteIcon } from "@chakra-ui/icons";
-
 import DEStoq from "../../../assets/imgs/DEStoq.svg";
-import { useNavigate } from "react-router-dom";
-import { decodeToken } from "react-jwt";
+
 import React, { useContext } from "react";
 import { CartContext } from "../../../Providers/cart";
+import { useToken } from "../../../Providers/Token";
+import { useNavigate } from "react-router-dom";
+import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
 
 const HeaderHome = () => {
@@ -42,7 +43,9 @@ const HeaderHome = () => {
   }, 0);
 
   const handleLogOut = () => {
+    localStorage.clear();
     navigate("/login");
+
     toast({
       description: "deslogado",
       status: "success",
@@ -55,7 +58,7 @@ const HeaderHome = () => {
   const deleteFromCart = (id) => {
     deleteCart(id);
     toast({
-      description: "produto removido!",
+      description: "removido!",
       status: "success",
       duration: 1500,
       isClosable: true,
@@ -63,12 +66,21 @@ const HeaderHome = () => {
     });
   };
 
+  const { token } = useToken();
+  console.log(token);
+
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart"));
-    api
-      .post("/tickets", cartItems)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+
+    if (token) {
+      api
+        .post("/tickets", cartItems, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err));
+    }
+    navigate("/login");
   };
 
   return (
