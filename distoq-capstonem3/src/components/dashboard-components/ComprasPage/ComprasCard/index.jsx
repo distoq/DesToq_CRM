@@ -93,8 +93,6 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
                   }
                 )
                 .then((rep) => getOrdersList());
-              // getOrdersList();
-              console.log(order);
             }}
           >
             <option value="Emitido">Emitido</option>
@@ -128,7 +126,6 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
         <Input
           value={`${quantity} ${supplyData.measurementUnit}`}
           width={"100px"}
-          // type="number"
           backgroundColor={"#fff"}
           disabled
         />
