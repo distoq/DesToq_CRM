@@ -4,22 +4,9 @@ import {
   Heading,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, LineChart, Text, Tooltip, XAxis, YAxis } from "recharts";
-import api from "../../../../dataBase/db";
 
 export const CardChart = () => {
-  // const { id, name, provider, purchasePrice, category, measurementUnit } =
-  //   supply;
-
-  // const [providerData, setProviderData] = useState(null);
-
-  // useEffect(() => {
-  //   api.get(`/providers/${+provider}?_embed=supplies`).then((res) => {
-  //     console.log(res.data);
-  //     setProviderData(res.data);
-  //   });
-  // }, []);
 
   const faturamento = [
     {name: 'Mar', uv: 150, pv: 2400, amt: 2400},
@@ -90,12 +77,10 @@ export const CardChart = () => {
           flexDir={"row"}
           alignItems="center"
           flexWrap={"wrap"}
-          // justifyContent={"center"}
           padding={"0 30px"}
           borderRadius={"10px"}
-          // boxShadow="0 0 10px grey"
         >
-          <Heading mt={"30px"} color={"#fff"} textAlign={"center"} width={"100%"}> Resultado Mensal </Heading>
+          <Heading mt={"30px"} color={"#464646"} textAlign={"center"} width={"100%"}> Resultado Mensal </Heading>
           <Flex width={"100%"} justify={"space-around"} flexWrap={"wrap"}>
             <ComposedChart
               width={350}
@@ -136,7 +121,7 @@ export const CardChart = () => {
               <Line type="monotone" dataKey="uv" stroke="#ff7300" />
             </ComposedChart> 
           </Flex>
-          <Heading color={"#fff"} textAlign={"center"} width={"100%"}> Resultado Trimestral </Heading>
+          <Heading color={"#464646"} textAlign={"center"} width={"100%"}> Resultado Trimestral </Heading>
           <Flex width={"100%"} justify={"space-around"} flexWrap={"wrap"}>
             <ComposedChart
               width={350}
@@ -177,7 +162,7 @@ export const CardChart = () => {
               <Line type="monotone" dataKey="uv" stroke="#ff7300" />
             </ComposedChart>                        
           </Flex>
-          <Heading color={"#fff"} textAlign={"center"} width={"100%"}> Resultado Anual </Heading>
+          <Heading color={"#464646"} textAlign={"center"} width={"100%"}> Resultado Anual </Heading>
           <Flex width={"100%"} justify={"space-around"} flexWrap={"wrap"}>
             <ComposedChart
               width={350}
@@ -220,31 +205,7 @@ export const CardChart = () => {
 
 
           </Flex>
-          <Flex flexDirection={"column"} flex="wrap" width={"100%"} height={"100%"} justifyContent={"center"}>
-              <Box>
-                <Text color={"#ccc"} textAlign={"center"}>
-                  Faturamento Bruto
-                </Text>
-                <LineChart width={600} height={300} data={faturamento}>
-                  <Line type="monotone" dataKey="uv" stroke="#F4BF39" />
-                  <CartesianGrid stroke="#ccc" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                </LineChart>
-              </Box>
-              <Text color={"#ccc"} textAlign={"center"}>
-                  Vendas Trimestral
-                </Text>
-              <LineChart width={600} height={300} data={vendas} margin={{ top: 55, right: 200, bottom: 5, left: 0 }}>
-                <Line type="monotone" dataKey="uv" stroke="#c02410c7" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="name" />
-                <YAxis />
-              </LineChart>
-            </Flex>
-          
         </Stack>
-        
       </Flex>
     </>
     

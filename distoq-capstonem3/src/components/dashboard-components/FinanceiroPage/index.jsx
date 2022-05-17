@@ -7,18 +7,10 @@ import {
   InputGroup,
   InputRightElement,
   Tab,
-  Table,
-  TableContainer,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
   useRadio,
   useRadioGroup,
   VStack,
@@ -82,7 +74,6 @@ export const FinanceiroPage = () => {
   }
 
   return (
-    //FULL CONTAINER
     <motion.div
       initial={{opacity:0}}
       animate={{opacity:1}}
