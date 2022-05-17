@@ -8,8 +8,6 @@ import HomeFilter from "../../components/home-components/HomeFilter";
 
 const Home = () => {
   const { cart } = useContext(CartContext);
-  console.log("cart na Homepage", cart);
-
   return (
     <>
       <Flex direction="column" justify="center" align="center" w="100vw">
