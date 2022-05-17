@@ -19,6 +19,7 @@ import {
   Tabs,
   Text,
   Textarea,
+  Flex,
   useRadio,
   useRadioGroup,
   VStack,
@@ -261,7 +262,7 @@ export const ProdutosPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}

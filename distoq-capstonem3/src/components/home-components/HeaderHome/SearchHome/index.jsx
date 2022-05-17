@@ -11,11 +11,11 @@ const Search = ({ value }) => {
         variant="outline"
         value={inputSearch}
         type="email"
-        placeholder="Digite sua pesquisa"
+        placeholder="digite sua pesquisa"
         borderColor="#101010"
         color="#101010"
         _placeholder={{ color: "#101010" }}
-        onChange={(e)=> addInputSearch(e.target.value)}
+        onChange={(e) => addInputSearch(e.target.value)}
       />
       <Box position="relative" right={"25px"}>
         <FiSearch color="#101010" />

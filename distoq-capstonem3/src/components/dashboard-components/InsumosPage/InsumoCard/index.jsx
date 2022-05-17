@@ -52,11 +52,11 @@ export const CardInsumo = ({ supply }) => {
           fontSize={"22px"}
           width={"fit-content"}
           backgroundColor={"#fff"}
-          borderRadius={"20px"}
+          borderRadius={"5px"}
           padding={"5px 10px 0px 10px"}
           boxShadow={"0 0 5px #202020"}
         >
-          ID: #{id}
+          id: #{id}
         </Text>
         <Text fontWeight={"bold"}>Insumo: {name}</Text>
         <Text fontWeight={"bold"}>

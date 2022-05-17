@@ -16,6 +16,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
@@ -34,6 +35,12 @@ export const FornecedoresPage = () => {
   });
   const { providersList } = useProvidersList();
   const group = getRootProps();
+
+  const [input, setInput] = useState("");
+
+  const filteredProvidersList = providersList.filter((item) =>
+    item.companyName.toLowerCase().includes(input.toLowerCase())
+  );
 
   function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -113,24 +120,7 @@ export const FornecedoresPage = () => {
         >
           Fornecedores
         </Heading>
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+
         <Flex
           width={"100%"}
           height={"100%"}
@@ -138,7 +128,7 @@ export const FornecedoresPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#434343"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -147,31 +137,46 @@ export const FornecedoresPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            <Tabs w="100%">
+            <Tabs
+              colorScheme={"white"}
+              color="black"
+              w="100%"
+              borderColor="black"
+            >
               <TabList>
                 <Tab
-                  color="#F4BF39"
-                  borderColor="#F4BF39"
-                  _focus={{
-                    color: "#F4BF39",
-                    borderBottom: "2px",
-                    borderColor: "#F4BF39",
-                    borderTopLeftRadius: "15px",
-                  }}
-                  w="100%"
+                     _selected={{
+                      color: "#FFFF",
+                      background:"#14213d",
+                      borderBottomColor: "#14213d",
+                      borderBottomWidth: "2px",
+                    }}
+                    _focus={{
+                      color: "#FFFF",
+                      borderColor: "",
+                      borderTopLeftRadius: "18px",
+                      borderTopRightRadius: "18px",
+                      border: "2px solid #14213d",
+                    }}
+                    w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
                     Listar Fornecedores
                   </Heading>
                 </Tab>
                 <Tab
-                  color="#F4BF39"
-                  borderColor="#F4BF39"
+                  _selected={{
+                   
+                    borderBottomColor: "#14213d",
+                    background:"#14213d",
+                    borderBottomWidth: "2px",
+                  }}
                   _focus={{
-                    borderBottom: "2px",
-                    color: "#F4BF39",
-                    borderColor: "#F4BF39",
-                    borderTopRightRadius: "15px",
+                    color: "#FFFF",
+                    borderColor: "#14213d",
+                    borderTopLeftRadius: "18px",
+                    borderTopRightRadius: "18px",
+                    border: "2px",
                   }}
                   w="100%"
                 >
@@ -181,9 +186,9 @@ export const FornecedoresPage = () => {
                 </Tab>
               </TabList>
               <TabPanels>
-                <TabPanel >
-                  <UnorderedList  m="10">
-                    {providersList?.map((list) => (
+                <TabPanel>
+                  <UnorderedList m="10">
+                    {filteredProvidersList?.map((list) => (
                       <ListProviders key={list.id} list={list} />
                     ))}
                   </UnorderedList>

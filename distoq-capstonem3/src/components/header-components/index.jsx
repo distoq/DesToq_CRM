@@ -81,7 +81,6 @@ const DashboardHeader = () => {
       </Box>
     );
   }
-
   return (
     <>
       <Flex
@@ -97,6 +96,7 @@ const DashboardHeader = () => {
           h="100%"
           alignItems="center"
           justifyContent="space-between"
+        
         >
           <Button
             width="45px"
@@ -115,7 +115,7 @@ const DashboardHeader = () => {
             width={"90%"}
             maxW={"400px"}
             margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-            display={["none", "none", "none", "none", "flex"]}
+            display={["flex"]}
           >
             <Input
               pr="4.5rem"
@@ -140,7 +140,7 @@ const DashboardHeader = () => {
           </InputGroup>
           <Button
             backgroundColor="#101010"
-            display={["none", "none", "none", "none", "inline-block"]}
+            display={ "inline-block"}
             _hover={{
               backgroundColor: "#F4BF39",
             }}
