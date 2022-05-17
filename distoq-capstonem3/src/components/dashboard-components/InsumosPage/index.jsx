@@ -40,7 +40,21 @@ export const InsumosPage = () => {
   const { providersList, setProvidersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
 
+  const [supplyName, setSupplyName] = useState("");
+  const [supplyCategory, setSupplyCategory] = useState("");
+  const [supplyProvider, setSupplyProvider] = useState("");
+  const [supplyPurchasePrice, setSupplyPurchasePrice] = useState(null);
+  const [supplyUnt, setSupplyUnt] = useState("");
+
   const { token } = useToken();
+
+  const handleInputsValue = () => {
+    setSupplyName("");
+    setSupplyCategory("");
+    setSupplyProvider("");
+    setSupplyPurchasePrice(0);
+    setSupplyUnt("");
+  };
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
@@ -100,7 +114,8 @@ export const InsumosPage = () => {
           },
         }
       )
-      .then((resp) => getApi());
+      .then((_) => handleInputsValue())
+      .then((_) => getApi());
   };
 
   console.log(errors);
@@ -372,6 +387,8 @@ export const InsumosPage = () => {
                         {...register("name")}
                         borderColor={errors.name && "#ff0000"}
                         border={errors.name && "2px"}
+                        value={supplyName}
+                        onChange={(e) => setSupplyName(e.target.value)}
                       />
                       {errors.name && (
                         <Text color={"#ff0000"} width={"95%"}>
@@ -383,6 +400,8 @@ export const InsumosPage = () => {
                         {...register("category")}
                         borderColor={errors.category && "#ff0000"}
                         border={errors.category && "2px"}
+                        value={supplyCategory}
+                        onChange={(e) => setSupplyCategory(e.target.value)}
                       >
                         {categoriasOptions.map((e) => (
                           <option value={e}>{e}</option>
@@ -398,6 +417,8 @@ export const InsumosPage = () => {
                         {...register("provider")}
                         borderColor={errors.provider && "#ff0000"}
                         border={errors.provider && "2px"}
+                        value={supplyProvider}
+                        onChange={(e) => setSupplyProvider(e.target.value)}
                       >
                         {providersList?.map((ele) => (
                           <option value={ele.id}>{ele.fantasyName}</option>
@@ -421,6 +442,10 @@ export const InsumosPage = () => {
                           {...register("purchasePrice")}
                           borderColor={errors.purchasePrice && "#ff0000"}
                           border={errors.purchasePrice && "2px"}
+                          value={supplyPurchasePrice}
+                          onChange={(e) =>
+                            setSupplyPurchasePrice(e.target.value)
+                          }
                         />
 
                         <Select
@@ -428,6 +453,8 @@ export const InsumosPage = () => {
                           {...register("measurementUnit")}
                           borderColor={errors.measurementUnit && "#ff0000"}
                           border={errors.measurementUnit && "2px"}
+                          value={supplyUnt}
+                          onChange={(e) => setSupplyUnt(e.target.value)}
                         >
                           {unidadesDeMedidaOptions.map((e) => (
                             <option value={e}>{e}</option>
