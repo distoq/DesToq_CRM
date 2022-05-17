@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Text,
   Link,
+  useToast,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -15,11 +16,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../../../services/api";
-import { toast } from "react-toastify";
+
 
 const FormRegister = () => {
   const history = useNavigate();
-
+  const toast = useToast()
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
@@ -83,8 +84,20 @@ const FormRegister = () => {
 
     api
       .post("/register", user)
-      .then((_) => toast.success("Cadastrado com sucesso!"))
-      .catch((_) => toast.error("E-mail já está em uso"));
+      .then((_) => toast({
+        description: "Registrado!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      }))
+      .catch((_) => toast({
+        description: "Registrado!",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      }));
   };
 
   const cepSearch = (e) => {

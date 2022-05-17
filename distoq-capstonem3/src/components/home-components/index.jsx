@@ -42,7 +42,7 @@ const CardSC = () => {
     toast({
       description: "adicionado!",
       status: "success",
-      duration: 1500,
+      duration: 4000,
       isClosable: true,
       position: "top",
     });

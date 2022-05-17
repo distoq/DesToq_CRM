@@ -21,7 +21,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { GoSearch } from "react-icons/go";
+
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,8 +33,7 @@ import api from "../../../dataBase/db";
 export const ComprasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
-  // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
-
+  
   const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
   const [ordersList, setOrdersList] = useState([]);
   const [input, setInput] = useState("");
@@ -62,7 +61,6 @@ export const ComprasPage = () => {
       .catch((err) => err);
   };
 
-  console.log(ordersList);
   useEffect(() => {
     getOrdersList();
   }, []);
