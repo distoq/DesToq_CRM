@@ -4,7 +4,6 @@ import Search from "../../components/home-components/HeaderHome/SearchHome";
 import { CartContext } from "../../Providers/cart";
 import CardSC from "../../components/home-components";
 import { Flex } from "@chakra-ui/react";
-
 const Home = () => {
   const { cart } = useContext(CartContext)
   console.log("cart na Home page", cart)

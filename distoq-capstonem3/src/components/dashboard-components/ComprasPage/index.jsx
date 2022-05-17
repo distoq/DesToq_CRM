@@ -36,7 +36,24 @@ export const ComprasPage = () => {
   // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
   const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
-  const [ordersList, setOrdersList] = useState(null);
+  const [ordersList, setOrdersList] = useState([]);
+  const [input, setInput] = useState("");
+
+  const filteredOrdersList = ordersList.filter((item) => 
+    item.status.toLowerCase().includes(input.toLowerCase()) ||
+      item.providerData.companyName
+        .toLowerCase()
+        .includes(input.toLowerCase()) ||
+      item.providerData.fantasyName
+        .toLowerCase()
+        .includes(input.toLowerCase()) ||
+      item.supplyData.category
+        .toLowerCase()
+        .includes(input.toLowerCase()) ||
+      item.supplyData.name
+        .toLowerCase()
+        .includes(input.toLowerCase())  
+  );
 
   const getOrdersList = () => {
     api
@@ -232,7 +249,7 @@ export const ComprasPage = () => {
           width={"90%"}
           maxW={"500px"}
           margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-          display={["flex", "flex", "flex", "flex", "none"]}
+          display={["flex", "flex", "flex", "flex", "flex"]}
         >
           <Input
             pr="4.5rem"
@@ -244,6 +261,8 @@ export const ComprasPage = () => {
             _focus={{
               boxShadow: "0 0 10px grey",
             }}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
@@ -334,7 +353,7 @@ export const ComprasPage = () => {
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}
-                  justifyContent={"center"}
+                  justfyContent={"center"}
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{
@@ -359,7 +378,7 @@ export const ComprasPage = () => {
                     },
                   }}
                 >
-                  {ordersList?.map((ele) => (
+                  {filteredOrdersList?.map((ele) => (
                     <CardCompras
                       order={ele}
                       getOrdersList={getOrdersList}
