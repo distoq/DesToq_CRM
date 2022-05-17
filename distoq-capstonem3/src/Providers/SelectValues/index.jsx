@@ -12,6 +12,7 @@ export const SelectValuesProvider = ({ children }) => {
     "Carnes",
     "Panificadora",
     "Perecíveis",
+    "Lanches",
   ];
 
   return (

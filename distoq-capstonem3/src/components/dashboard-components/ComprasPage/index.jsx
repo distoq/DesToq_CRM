@@ -29,6 +29,7 @@ import { useActivePage } from "../../../Providers/DashboardPageController";
 import { CardCompras } from "./ComprasCard";
 import { useEffect, useState } from "react";
 import api from "../../../dataBase/db";
+import { useToken } from "../../../Providers/Token";
 
 export const ComprasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -54,6 +55,8 @@ export const ComprasPage = () => {
         .toLowerCase()
         .includes(input.toLowerCase())  
   );
+
+  const { token } = useToken();
 
   const getOrdersList = () => {
     api
@@ -135,7 +138,7 @@ export const ComprasPage = () => {
       .post(`/orders`, dataOC, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc3RvcUBwcm90b24ubWUiLCJpYXQiOjE2NTI2NjE2MDcsImV4cCI6MTY1MjY2NTIwNywic3ViIjoiMSJ9.7zidteSlVxMEnlS_eWJdGoLU4PQS8O4s9uZKa1TJPP4`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((ele) => getOrdersList());
@@ -348,6 +351,7 @@ export const ComprasPage = () => {
                       order={ele}
                       getOrdersList={getOrdersList}
                       setOrdersList={setOrdersList}
+                      token={token}
                     />
                   ))}
                 </TabPanel>
