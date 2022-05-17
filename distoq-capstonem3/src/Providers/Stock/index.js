@@ -12,7 +12,7 @@ export const StockProvider = ({ children }) => {
 
   const getListStock = () => {
     api
-      .get("/orders")
+      .get("/stock")
       .then((res) => setStockList(res.data))
       .catch((err) => err);
   };

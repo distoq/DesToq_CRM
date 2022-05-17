@@ -24,10 +24,11 @@ import DEStoq from "../../../assets/imgs/DEStoq.svg";
 
 import React, { useContext } from "react";
 import { CartContext } from "../../../Providers/cart";
-import { useToken } from "../../../Providers/Token";
+
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
+import { useToken } from "../../../Providers/Token";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
@@ -49,7 +50,7 @@ const HeaderHome = () => {
     toast({
       description: "deslogado",
       status: "success",
-      duration: 1500,
+      duration: 4000,
       isClosable: true,
       position: "top",
     });
@@ -60,27 +61,41 @@ const HeaderHome = () => {
     toast({
       description: "removido!",
       status: "success",
-      duration: 1500,
+      duration: 4000,
       isClosable: true,
       position: "top",
     });
   };
 
   const { token } = useToken();
-  console.log(token);
+
 
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart"));
-
     if (token) {
       api
-        .post("/tickets", cartItems, {
+        .post("tickets/", cartItems, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          toast({
+            description: "adicionado!",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+            position: "top",
+          });
+        })
+        .catch((err) => {
+          toast({
+            description: "Ops, Algo deu errado!",
+            status: "error",
+            duration: 4000,
+            isClosable: true,
+            position: "top",
+          });
+        });
     }
-    navigate("/login");
   };
 
   return (
@@ -98,6 +113,7 @@ const HeaderHome = () => {
           <Flex w={["151px", "200px", "300px"]}>
             <Button
               disabled={decodedToken?.sub !== "1"}
+              display={decodedToken?.sub !== "1" ? "flex" : "none"}
               bg="transparent"
               _hover={{ bg: "transparent" }}
               onClick={() => navigate("/dashboard")}
