@@ -16,8 +16,9 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GoSearch } from "react-icons/go";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useProvidersList } from "../../../Providers/ProvidersList";
@@ -36,10 +37,10 @@ export const FornecedoresPage = () => {
   const { providersList } = useProvidersList();
   const group = getRootProps();
 
-  const [input, setInput] = useState("");
+  const { inputSearch } = useContext(DashFilterContext);
 
   const filteredProvidersList = providersList.filter((item) =>
-    item.companyName.toLowerCase().includes(input.toLowerCase())
+    item.companyName.toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   function RadioCard(props) {

@@ -34,17 +34,21 @@ import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardProdutos } from "./ProdutosCard";
+import { useContext } from "react";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const ProdutosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
   // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const [productsList, setProductsList] = useState(null);
+  const [productsList, setProductsList] = useState([]);
 
   const { token } = useToken();
 
   const { categoriasOptions } = useSelectValues();
+
+  const { inputSearch } = useContext(DashFilterContext);
 
   const getProductsList = () => {
     api
@@ -53,7 +57,13 @@ export const ProdutosPage = () => {
       .catch((err) => err);
   };
 
-  console.log(productsList);
+  const filteredProductsList = productsList.filter(
+    (item) =>
+      item.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.description.toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   useEffect(() => {
     getProductsList();
   }, []);
@@ -121,8 +131,6 @@ export const ProdutosPage = () => {
         ingredients: [...productIngredientsList],
         rating: 5,
       };
-
-      console.log(dataProducts);
 
       api
         .post(`/products`, dataProducts, {
@@ -364,7 +372,7 @@ export const ProdutosPage = () => {
                     },
                   }}
                 >
-                  {productsList?.map((ele) => (
+                  {filteredProductsList?.map((ele) => (
                     <CardProdutos
                       product={ele}
                       setProductsList={setProductsList}
