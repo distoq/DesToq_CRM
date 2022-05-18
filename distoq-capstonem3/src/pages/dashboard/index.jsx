@@ -22,7 +22,7 @@ const Dashboard = () => {
   const isLoggedIn = token && !isExpired;
   const isAdmin = decodedToken?.sub;
  
-  console.log("dec", typeof decodedToken?.sub);
+
 
 
   if (!isLoggedIn) {

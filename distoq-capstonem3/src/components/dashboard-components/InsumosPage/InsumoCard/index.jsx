@@ -18,7 +18,8 @@ export const CardInsumo = ({ supply }) => {
 
   useEffect(() => {
     api.get(`/providers/${+provider}?_embed=supplies`).then((res) => {
-      console.log(res.data);
+  
+      
       setProviderData(res.data);
     });
   }, []);

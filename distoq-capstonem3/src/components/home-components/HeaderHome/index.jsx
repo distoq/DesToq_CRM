@@ -29,13 +29,14 @@ import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
 import { useToken } from "../../../Providers/Token";
-import { useUser } from "../../../Providers/Users";
+import { ShowcaseContext } from "../../../Providers/showcase";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
   const { cart, deleteCart, setCart } = useContext(CartContext);
+ 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const toast = useToast();
@@ -74,7 +75,6 @@ const HeaderHome = () => {
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
     cartItems.map((ele) => (ele.user = user));
-    console.log(cartItems);
     if (!token) {
       toast({
         description: "Usuário não está logado!",
@@ -83,26 +83,26 @@ const HeaderHome = () => {
         isClosable: true,
         position: "top",
       });
+      onClose()
       navigate("/login");
     }
     if (cartItems?.length === 0) {
       toast({
         description: "Carrinho vazio !",
         status: "error",
-        duration: 4000,
+        duration: 1000,
         isClosable: true,
         position: "top",
       });
+      onClose()
     }
     if (token && cartItems.length !== 0) {
       api
         .post("tickets/", cartItems, {
           headers: { Authorization: `Bearer ${token}` },
         })
-
         .then((res) => {
           if (token) {
-            onClose();
             localStorage.removeItem("@DEStoq:cart");
             setCart([]);
             toast({
@@ -112,9 +112,8 @@ const HeaderHome = () => {
               isClosable: true,
               position: "top",
             });
+            onClose();
           }
-
-          onClose();
         })
         .catch((err) => {
           toast({
@@ -125,7 +124,9 @@ const HeaderHome = () => {
             position: "top",
           });
         });
+        onClose()
     }
+    onClose()
   };
 
   return (
@@ -175,18 +176,20 @@ const HeaderHome = () => {
               ref={btnRef}
               onClick={onOpen}
             >
-              <AiOutlineShoppingCart fontSize={35} color="#ffff" />
+              <AiOutlineShoppingCart fontSize={35}  color="#ffff" />
             </Button>
             <Drawer
               isOpen={isOpen}
-              placement="right"
               onClose={onClose}
-              finalFocusRef={btnRef}
+              placement="right"
+              blockScrollOnMount={false}
+            
+              closeOnOverlayClick={false}
               size="lg"
             >
               <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
+              <DrawerContent >
+                
                 <DrawerHeader>Carrinho</DrawerHeader>
                 <DrawerBody>
                   <Flex direction="center" align="center" justify="center">
@@ -237,7 +240,7 @@ const HeaderHome = () => {
                   </Flex>
                 </DrawerBody>
                 <DrawerFooter alignSelf="center">
-                  <Flex
+                   <Flex
                     bg="#E2E8F0"
                     justify={"space-around"}
                     borderRadius="5px"

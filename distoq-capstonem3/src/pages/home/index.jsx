@@ -14,11 +14,11 @@ const Home = () => {
   const token = localStorage.getItem("@DEStoq:token");
   const { isExpired } = useJwt(token);
 
-  const isLoggedIn = token && !isExpired;
+  // const isLoggedIn = token && !isExpired;
 
-  if (!isLoggedIn) {
-    navigate("/login");
-  }
+  // if (!isLoggedIn) {
+  //   navigate("/login");
+  // }
 
   return (
     <>

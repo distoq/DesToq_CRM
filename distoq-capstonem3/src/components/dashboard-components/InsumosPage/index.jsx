@@ -39,6 +39,7 @@ export const InsumosPage = () => {
   const [suppliesList, setSupliesList] = useState([]);
   const [input, setInput] = useState("");
 
+  
   const filteredSuppliesList = suppliesList.filter((item) =>
     item.name.toLowerCase().includes(input.toLowerCase())
   );
@@ -61,17 +62,16 @@ export const InsumosPage = () => {
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
-      console.log(res.data);
+     
       setSupliesList(res.data);
     });
   }, []);
 
-  console.log(suppliesList);
-  console.log(providersList);
+
 
   const getApi = () => {
     api.get(`/supplies`).then((resp) => {
-      console.log(resp.data);
+ 
       setSupliesList(resp.data);
     });
   };
@@ -100,7 +100,7 @@ export const InsumosPage = () => {
   });
 
   const onSubmitFunction = (data) => {
-    console.log(data);
+
     api
       .post(
         "/supplies",
@@ -121,7 +121,7 @@ export const InsumosPage = () => {
       .then((_) => getApi());
   };
 
-  console.log(errors);
+
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
