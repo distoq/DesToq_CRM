@@ -112,7 +112,6 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
                     getListStock();
                   });
               }
-
               setSelectValue(e.target.value);
             }}
           >
