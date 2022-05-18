@@ -22,14 +22,16 @@ import DEStoq from "../../assets/imgs/DEStoq-white.png";
 import React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-import { BsBoxArrowInRight } from "react-icons/bs";
+import { BsBoxArrowInRight, BsHouse } from "react-icons/bs";
+
 import { useActivePage } from "../../Providers/DashboardPageController";
 import { GoSearch } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  
+  const navigate = useNavigate();
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
@@ -40,6 +42,11 @@ const DashboardHeader = () => {
   });
 
   const group = getRootProps();
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   function RadioCard(props) {
     const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -53,13 +60,11 @@ const DashboardHeader = () => {
         <Flex
           {...checkbox}
           cursor="pointer"
-          //   borderWidth="1px"
           borderRadius="md"
           fontWeight="bold"
           fontSize="26px"
           color="white"
           alignItems="center"
-          //   boxShadow="md"
           _checked={{
             bg: "#F4BF39",
             color: "#434343",
@@ -96,7 +101,6 @@ const DashboardHeader = () => {
           h="100%"
           alignItems="center"
           justifyContent="space-between"
-        
         >
           <Button
             width="45px"
@@ -138,16 +142,28 @@ const DashboardHeader = () => {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <Button
-            backgroundColor="#101010"
-            display={ "inline-block"}
-            _hover={{
-              backgroundColor: "#F4BF39",
-            }}
-
-          >
-            <BsBoxArrowInRight fontSize={35} color="white" />
-          </Button>
+          <Flex w={["28%", "28%", "20%", "13%"]} justify="space-around">
+            <Button
+              backgroundColor="#101010"
+              display={"inline-block"}
+              _hover={{
+                backgroundColor: "#F4BF39",
+              }}
+              onClick={() => navigate("/")}
+            >
+              <BsHouse fontSize={35} color="white" />
+            </Button>
+            <Button
+              backgroundColor="#101010"
+              display={"inline-block"}
+              _hover={{
+                backgroundColor: "#F4BF39",
+              }}
+              onClick={() => handleLogOut()}
+            >
+              <BsBoxArrowInRight fontSize={35} color="white" />
+            </Button>
+          </Flex>
         </Flex>
       </Flex>
       <Drawer
