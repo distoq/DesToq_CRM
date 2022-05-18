@@ -31,9 +31,11 @@ import { useEffect, useState } from "react";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 
+
 export const ComprasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
-    useActivePage();
+  useActivePage();
+  
   
   const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
   const [ordersList, setOrdersList] = useState([]);
@@ -121,13 +123,14 @@ export const ComprasPage = () => {
     );
     const dataOC = {
       ...data,
+      ownerId: 1,
+      userId: 1,
       purchasePrice: selectedSupplyPrice,
       totalValue: orderTotalValue,
       supplyData: selectedSupply[0],
       providerData: providerFilter[0],
       status: "Emitido",
     };
-    console.log(dataOC);
     data = "";
     inputFornecedor.value = "";
     handleInputs();
@@ -319,7 +322,7 @@ export const ComprasPage = () => {
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}
-                  justfyContent={"center"}
+                 
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{
