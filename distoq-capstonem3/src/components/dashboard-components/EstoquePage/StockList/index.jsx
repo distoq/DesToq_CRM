@@ -19,7 +19,7 @@ import {
 
 export const StockList = ({ list, min  }) => {
   const valueStock = list.totalValue
-  console.log(list.supplyData)
+
   return (
     <>
       <ListItem

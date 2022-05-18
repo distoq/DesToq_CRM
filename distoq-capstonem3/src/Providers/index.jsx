@@ -8,27 +8,32 @@ import { CartProvider } from "./cart";
 import { ProvidersListProvider } from "./ProvidersList";
 import { StockProvider } from "./Stock";
 import { DashFilterProvider } from "./DashboardFilter";
+import { UserProvider } from "./Users";
 
 const Providers = ({ children }) => {
   return (
     <TokenProvider>
-      <DashFilterProvider>
-        <DashboardPageControllerProvider>
-          <StockProvider>
-            <ProvidersListProvider>
-              <ShowcaseProvider>
-                <IsLoggedProvider>
-                  <CartProvider>
-                    <SearchHomeProvider>
-                      <SelectValuesProvider>{children}</SelectValuesProvider>
-                    </SearchHomeProvider>
-                  </CartProvider>
-                </IsLoggedProvider>
-              </ShowcaseProvider>
-            </ProvidersListProvider>
-          </StockProvider>
-        </DashboardPageControllerProvider>
-      </DashFilterProvider>
+      <UserProvider>
+        <DashFilterProvider>
+          <DashboardPageControllerProvider>
+            <StockProvider>
+              <ProvidersListProvider>
+                <ShowcaseProvider>
+                  <IsLoggedProvider>
+                    <CartProvider>
+                      <SearchHomeProvider>
+                        <SelectValuesProvider>
+                          {children}
+                        </SelectValuesProvider>
+                      </SearchHomeProvider>
+                    </CartProvider>
+                  </IsLoggedProvider>
+                </ShowcaseProvider>
+              </ProvidersListProvider>
+            </StockProvider>
+          </DashboardPageControllerProvider>
+        </DashFilterProvider>
+      </UserProvider>
     </TokenProvider>
   );
 };

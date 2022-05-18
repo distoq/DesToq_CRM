@@ -29,13 +29,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardProdutos } from "./ProdutosCard";
 import { useContext } from "react";
 import { DashFilterContext } from "../../../Providers/DashboardFilter";
+import { ShowcaseContext } from "../../../Providers/showcase";
 
 export const ProdutosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -81,7 +82,7 @@ export const ProdutosPage = () => {
   const [inputSelect, setInputSelect] = useState("");
   const [inputQty, setInputQty] = useState("");
   const [showError, setShowError] = useState(false);
-
+  const { getProducts } = useContext(ShowcaseContext);
   const handleInputsFields = () => {
     setProductNameValue("");
     setCategoryValue("");
@@ -139,7 +140,10 @@ export const ProdutosPage = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(() => getProductsList());
+
+        .then(() => {
+          getProducts()
+          getProductsList()});
 
       handleInputsFields();
     }
@@ -530,7 +534,7 @@ export const ProdutosPage = () => {
                               width={"15px"}
                               height={"15px"}
                               onClick={(e) => {
-                                console.log(e.target.value);
+                               
                                 setProductIngredientsList(
                                   productIngredientsList.filter(
                                     (ele) => ele.id != e.target.value

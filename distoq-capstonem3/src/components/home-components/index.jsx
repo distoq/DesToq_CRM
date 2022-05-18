@@ -51,7 +51,7 @@ const CardSC = () => {
   return (
     <Flex w="100%" align="center" justify="center">
       <UnorderedList w="80%" maxW="1300px" display="flex" direction={"column"}>
-        <Wrap align="center" justify="center" h="100%" maxH={"1440px"}>
+        <Wrap align="center" justify="center" h="100%">
           {searchFilter.map((product, index) => (
             <ListItem
               w="257px"

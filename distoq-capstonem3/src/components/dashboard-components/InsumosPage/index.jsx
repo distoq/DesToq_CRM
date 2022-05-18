@@ -40,6 +40,7 @@ export const InsumosPage = () => {
   const [suppliesList, setSupliesList] = useState([]);
   const { inputSearch } = useContext(DashFilterContext);
 
+  
   const filteredSuppliesList = suppliesList.filter((item) =>
     item.name.toLowerCase().includes(inputSearch.toLowerCase())
   );
@@ -62,14 +63,14 @@ export const InsumosPage = () => {
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
-      console.log(res.data);
+     
       setSupliesList(res.data);
     });
   }, []);
 
   const getApi = () => {
     api.get(`/supplies`).then((resp) => {
-      console.log(resp.data);
+ 
       setSupliesList(resp.data);
     });
   };
@@ -98,6 +99,7 @@ export const InsumosPage = () => {
   });
 
   const onSubmitFunction = (data) => {
+
     api
       .post(
         "/supplies",
@@ -118,7 +120,7 @@ export const InsumosPage = () => {
       .then((_) => getApi());
   };
 
-  console.log(errors);
+
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -448,5 +450,4 @@ export const InsumosPage = () => {
     </Flex>
   );
 };
-
 export default InsumosPage;
