@@ -285,41 +285,47 @@ export const ProdutosPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              backgroundColor={"#434343"}
+           
               borderRadius={"20px"}
             >
               <TabList mb="1em">
                 <Tab
-                  color={"#fff"}
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    borderColor: "#F4BF39",
-                    borderTopLeftRadius: "18px",
-                    border: "2px",
-                  }}
+                 color="#101010"
+                 fontWeight={"bold"}
+                 fontSize={"26px"}
+                 _selected={{
+                   color: "#FFFF",
+                   borderBottomColor: "#14213d",
+                   background: "#14213d",
+                   borderBottomWidth: "2px",
+                 }}
+                 _focus={{
+                   color: "#FFFF",
+
+                   borderTopLeftRadius: "18px",
+                   borderTopRightRadius: "18px",
+                   border: "2px solid #14213d",
+                 }}
                 >
                   Produtos
                 </Tab>
                 <Tab
-                  color={"#fff"}
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    borderColor: "#F4BF39",
-                    borderTopRightRadius: "18px",
-                    border: "2px",
-                  }}
+             color="#101010"
+             fontWeight={"bold"}
+             fontSize={"26px"}
+             _selected={{
+               color: "#FFFF",
+               borderBottomColor: "#14213d",
+               background: "#14213d",
+               borderBottomWidth: "2px",
+             }}
+             _focus={{
+               color: "#FFFF",
+
+               borderTopLeftRadius: "18px",
+               borderTopRightRadius: "18px",
+               border: "2px solid #14213d",
+             }}
                 >
                   Adicionar Novo Produto
                 </Tab>

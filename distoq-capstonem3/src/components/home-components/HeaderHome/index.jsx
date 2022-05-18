@@ -8,7 +8,6 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   Text,
   UnorderedList,
@@ -29,17 +28,28 @@ import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
 import { useToken } from "../../../Providers/Token";
-import { ShowcaseContext } from "../../../Providers/showcase";
+import { useUser } from "../../../Providers/Users";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
+  const { userLogin } = useUser();
   const { cart, deleteCart, setCart } = useContext(CartContext);
- 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [userData, setUserData] = useState({});
   const btnRef = React.useRef();
   const toast = useToast();
+  const { token } = useToken();
+
+  const getUserData = () => {
+    api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const sum = cart.reduce((previous, current) => {
     return previous + current.price * current.quantity;
@@ -69,12 +79,16 @@ const HeaderHome = () => {
     });
   };
 
-  const { token } = useToken();
-  const user = JSON.parse(localStorage.getItem("@DEStoq:user"));
-
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
-    cartItems.map((ele) => (ele.user = user));
+    const ticketData = {
+      clientInfo: { ...userData },
+      ownerId: 1,
+      userId: 1,
+      ticketProducts: [...cartItems],
+      status: "Pedido realizado",
+    };
+    console.log(ticketData);
     if (!token) {
       toast({
         description: "Usuário não está logado!",
@@ -83,7 +97,7 @@ const HeaderHome = () => {
         isClosable: true,
         position: "top",
       });
-      onClose()
+      onClose();
       navigate("/login");
     }
     if (cartItems?.length === 0) {
@@ -94,11 +108,11 @@ const HeaderHome = () => {
         isClosable: true,
         position: "top",
       });
-      onClose()
+      onClose();
     }
     if (token && cartItems.length !== 0) {
       api
-        .post("tickets/", cartItems, {
+        .post("tickets/", ticketData, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -124,13 +138,107 @@ const HeaderHome = () => {
             position: "top",
           });
         });
-        onClose()
+      onClose();
     }
-    onClose()
+    onClose();
   };
-
+  const closeDrawer = () => {
+    toast({
+      position: "absolute",
+      top: "-50px",
+      description: "Saiu!",
+      status: "success",
+      duration: 300,
+      isClosable: true,
+    });
+    onClose();
+  };
   return (
     <>
+      <Drawer
+        isOpen={isOpen}
+        onClose={onClose}
+        placement="right"
+        blockScrollOnMount={false}
+        closeOnOverlayClick={false}
+        size="lg"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>Carrinho</DrawerHeader>
+          <DrawerBody>
+            <Flex direction="center" align="center" justify="center">
+              <UnorderedList m="0">
+                {cart.map((product, index) => {
+                  const sumProduct = product.price * product.quantity;
+                  return (
+                    <ListItem
+                      key={index}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      width={["280px", "300px", "600px"]}
+                      h="85px"
+                      m="10px"
+                      p="10px"
+                      border="1px solid black"
+                      borderRadius="10px"
+                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                    >
+                      <Avatar
+                        w="57px"
+                        h="57px"
+                        src={product.image}
+                        alt={product.name}
+                      />
+                      <Text w={"100px"} maxW={"100px"}>
+                        {product.name}
+                      </Text>
+                      <Text w={"100px"} maxW={"100px"}>
+                        Qtd: {product.quantity}
+                      </Text>
+                      <Text>
+                        {sumProduct.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
+                      </Text>
+                      <Button onClick={() => deleteFromCart(product.uniqueId)}>
+                        <DeleteIcon />
+                      </Button>
+                    </ListItem>
+                  );
+                })}
+              </UnorderedList>
+            </Flex>
+          </DrawerBody>
+          <DrawerFooter alignSelf="center">
+            <Flex
+              bg="#E2E8F0"
+              justify={"space-around"}
+              borderRadius="5px"
+              p="5px"
+              h="43px"
+              align="center"
+              w="150px"
+            >
+              <Text variant="primary">Total:</Text>
+              <Text variant="primary">
+                {sum.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </Text>
+            </Flex>
+            <Button w="100%" variant="primary" onClick={getOrder}>
+              finalizar compra
+            </Button>
+            <Button w="100%" colorScheme={"red"} onClick={closeDrawer}>
+              Sair
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
       <Flex
         w="100%"
         h="150px"
@@ -176,93 +284,9 @@ const HeaderHome = () => {
               ref={btnRef}
               onClick={onOpen}
             >
-              <AiOutlineShoppingCart fontSize={35}  color="#ffff" />
+              <AiOutlineShoppingCart fontSize={35} color="#ffff" />
             </Button>
-            <Drawer
-              isOpen={isOpen}
-              onClose={onClose}
-              placement="right"
-              blockScrollOnMount={false}
-            
-              closeOnOverlayClick={false}
-              size="lg"
-            >
-              <DrawerOverlay />
-              <DrawerContent >
-                
-                <DrawerHeader>Carrinho</DrawerHeader>
-                <DrawerBody>
-                  <Flex direction="center" align="center" justify="center">
-                    <UnorderedList m="0">
-                      {cart.map((product, index) => {
-                        const sumProduct = product.price * product.quantity;
-                        return (
-                          <ListItem
-                            key={index}
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            width={["280px", "300px", "600px"]}
-                            h="85px"
-                            m="10px"
-                            p="10px"
-                            border="1px solid black"
-                            borderRadius="10px"
-                            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                          >
-                            <Avatar
-                              w="57px"
-                              h="57px"
-                              src={product.image}
-                              alt={product.name}
-                            />
-                            <Text w={"100px"} maxW={"100px"}>
-                              {product.name}
-                            </Text>
-                            <Text w={"100px"} maxW={"100px"}>
-                              Qtd: {product.quantity}
-                            </Text>
-                            <Text>
-                              {sumProduct.toLocaleString("pt-br", {
-                                style: "currency",
-                                currency: "BRL",
-                              })}
-                            </Text>
-                            <Button
-                              onClick={() => deleteFromCart(product.uniqueId)}
-                            >
-                              <DeleteIcon />
-                            </Button>
-                          </ListItem>
-                        );
-                      })}
-                    </UnorderedList>
-                  </Flex>
-                </DrawerBody>
-                <DrawerFooter alignSelf="center">
-                   <Flex
-                    bg="#E2E8F0"
-                    justify={"space-around"}
-                    borderRadius="5px"
-                    p="5px"
-                    h="43px"
-                    align="center"
-                    w="150px"
-                  >
-                    <Text variant="primary">Total:</Text>
-                    <Text variant="primary">
-                      {sum.toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      })}
-                    </Text>
-                  </Flex>
-                  <Button variant="primary" w="350px" onClick={getOrder}>
-                    finalizar compra
-                  </Button>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
+
             <Button
               bg="transparent"
               _hover={{ bg: "transparent" }}

@@ -1,18 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import api from "../../services/api";
 
 
 export const UserContext = createContext({})
 
 export const UserProvider = ({children}) => {
-    const [user,setUser] = useState(JSON.parse(localStorage.getItem("@DEStoq:user")) || {})
 
-    const addUser = (userInfo) => {
+    const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user"));
 
-        setUser(userInfo)
-    }
 
+  
+
+    
     return(
-        <UserContext.Provider value={{user,addUser}}>
+        <UserContext.Provider value={{userLogin}}>
             {children}
         </UserContext.Provider>
     )

@@ -1,6 +1,20 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
 
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Button,
+  Flex,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import api from "../../../../dataBase/db";
 import { useToken } from "../../../../Providers/Token";
 
@@ -29,7 +43,7 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
       id={id}
       width={"100%"}
       maxWidth={"335px"}
-      height={"fit-content"}
+      height={"590px"}
       borderRadius={"10px"}
       margin={"10px 10px"}
       padding={"10px"}
@@ -40,7 +54,7 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
       flexWrap={["wrap", "wrap", "wrap", "wrap", "wrap"]}
       color={"#000"}
       _hover={{
-        boxShadow: "0 0 15px #eeeeee",
+        boxShadow: "0 0 15px #101010",
         cursor: "pointer",
       }}
     >
@@ -102,10 +116,22 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           Categoria:
           <span>{category}</span>
         </Text>
-        <Text width={"100%"} fontWeight={"bold"}>
-          Descrição:
-          <Text fontWeight={"400"}>{description}</Text>
-        </Text>
+        <Popover >
+          <Flex w="100%" justify="flex-end" >
+            <PopoverTrigger>
+              <Button  bg="transparent">
+                descrição <AddIcon ml="10px" cursor="pointer" />
+              </Button>
+            </PopoverTrigger>
+          </Flex>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
+            <PopoverBody>{description}</PopoverBody>
+          </PopoverContent>
+        </Popover>
+
         <Text width={"100%"} fontWeight={"bold"}>
           Preço: R$
           <span fontWeight={"400"}>{price.toFixed(2)}</span>
