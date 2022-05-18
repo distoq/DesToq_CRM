@@ -21,7 +21,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { GoSearch } from "react-icons/go";
+
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,12 +29,14 @@ import { useActivePage } from "../../../Providers/DashboardPageController";
 import { CardCompras } from "./ComprasCard";
 import { useEffect, useState } from "react";
 import api from "../../../dataBase/db";
+import { useToken } from "../../../Providers/Token";
+
 
 export const ComprasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
-    useActivePage();
-  // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
-
+  useActivePage();
+  
+  
   const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
   const [ordersList, setOrdersList] = useState([]);
   const [input, setInput] = useState("");
@@ -52,6 +54,8 @@ export const ComprasPage = () => {
       item.supplyData.name.toLowerCase().includes(input.toLowerCase())
   );
 
+  const { token } = useToken();
+
   const getOrdersList = () => {
     api
       .get("/orders?_sort=id&_order=desc")
@@ -59,7 +63,6 @@ export const ComprasPage = () => {
       .catch((err) => err);
   };
 
-  console.log(ordersList);
   useEffect(() => {
     getOrdersList();
   }, []);
@@ -117,13 +120,14 @@ export const ComprasPage = () => {
     );
     const dataOC = {
       ...data,
+      ownerId: 1,
+      userId: 1,
       purchasePrice: selectedSupplyPrice,
       totalValue: orderTotalValue,
       supplyData: selectedSupply[0],
       providerData: providerFilter[0],
       status: "Emitido",
     };
-    console.log(dataOC);
     data = "";
     inputFornecedor.value = "";
     handleInputs();
@@ -132,7 +136,7 @@ export const ComprasPage = () => {
       .post(`/orders`, dataOC, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc3RvcUBwcm90b24ubWUiLCJpYXQiOjE2NTI2NjE2MDcsImV4cCI6MTY1MjY2NTIwNywic3ViIjoiMSJ9.7zidteSlVxMEnlS_eWJdGoLU4PQS8O4s9uZKa1TJPP4`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((ele) => getOrdersList());
@@ -309,7 +313,7 @@ export const ComprasPage = () => {
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}
-                  justfyContent={"center"}
+                 
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{
@@ -339,6 +343,7 @@ export const ComprasPage = () => {
                       order={ele}
                       getOrdersList={getOrdersList}
                       setOrdersList={setOrdersList}
+                      token={token}
                     />
                   ))}
                 </TabPanel>

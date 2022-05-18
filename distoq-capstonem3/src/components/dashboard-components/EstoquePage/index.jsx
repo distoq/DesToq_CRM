@@ -9,8 +9,6 @@ import {
   FormLabel,
   Heading,
   Input,
-  InputGroup,
-  InputRightElement,
   Tab,
   TabList,
   TabPanel,
@@ -23,7 +21,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { GoSearch } from "react-icons/go";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useStockList } from "../../../Providers/Stock";
 import { StockList } from "./StockList";
@@ -73,13 +70,11 @@ export const EstoquePage = () => {
         <Flex
           {...checkbox}
           cursor="pointer"
-          //   borderWidth="1px"
           borderRadius="md"
           fontWeight="bold"
           fontSize="26px"
           color="white"
           alignItems="center"
-          //   boxShadow="md"
           _checked={{
             bg: "#F4BF39",
             color: "#434343",
@@ -102,7 +97,6 @@ export const EstoquePage = () => {
     );
   }
   return (
-    //FULL CONTAINER
     <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}

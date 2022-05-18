@@ -18,8 +18,8 @@ import {
 } from "@chakra-ui/react";
 
 export const StockList = ({ list, min  }) => {
-    console.log(min)
-  const valueStock = +list.purchasePrice * +list.quantity;
+  const valueStock = list.totalValue
+  console.log(list.supplyData)
   return (
     <>
       <ListItem
@@ -36,7 +36,7 @@ export const StockList = ({ list, min  }) => {
           align={["center"]}
           justify="space-between"
         >
-          <Tooltip label={list.name}>
+          <Tooltip label={list.supplyData.name}>
             <Heading
               maxW="18ch"
               overflow="hidden"
@@ -47,17 +47,17 @@ export const StockList = ({ list, min  }) => {
               variant="dashboard"
             >
               {" "}
-              {list.name}
+              {list.supplyData.name}
             </Heading>
           </Tooltip>
 
           <Text w={["", "", "220px"]} variant="bold">
-            Fornecedor {list.supplier}
+            Fornecedor {list.providerData.companyName}
           </Text>
           <Flex direction="column" align={["center"]} justify="center">
             <Text variant="bold">Categoria:</Text>
             <Badge alignSelf="center" variant="solid" colorScheme="purple">
-              {list.category}
+              {list.supplyData.category}
             </Badge>
           </Flex>
           <Popover>
@@ -92,7 +92,7 @@ export const StockList = ({ list, min  }) => {
                       colorScheme="purple"
                       ml="5px"
                     >
-                      {list.metricUnity}
+                      {list.supplyData.measurementUnit}
                     </Badge>
                   </Flex>
                 </Flex>
@@ -103,7 +103,7 @@ export const StockList = ({ list, min  }) => {
                     variant="solid"
                     colorScheme="purple"
                   >
-                    {list.purchasePrice.toLocaleString("pt-br", {
+                    {list.supplyData.purchasePrice.toLocaleString("pt-br", {
                       style: "currency",
                       currency: "BRL",
                       minimumFractionDigits: 2,
