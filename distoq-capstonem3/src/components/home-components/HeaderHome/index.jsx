@@ -34,7 +34,7 @@ const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
-  const { cart, deleteCart } = useContext(CartContext);
+  const { cart, deleteCart, setCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const toast = useToast();
@@ -68,11 +68,10 @@ const HeaderHome = () => {
   };
 
   const { token } = useToken();
-
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
 
-    if ( cartItems?.length === 0) {
+    if (cartItems?.length === 0) {
       toast({
         description: "Carrinho vazio !",
         status: "error",
@@ -86,10 +85,12 @@ const HeaderHome = () => {
         .post("tickets/", cartItems, {
           headers: { Authorization: `Bearer ${token}` },
         })
+
         .then((res) => {
           if (token) {
             onClose();
             localStorage.removeItem("@DEStoq:cart");
+            setCart([]);
             toast({
               description: "Seu pedido foi feito!",
               status: "success",
