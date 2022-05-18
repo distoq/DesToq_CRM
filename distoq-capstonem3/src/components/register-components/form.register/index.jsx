@@ -68,7 +68,6 @@ const FormRegister = () => {
     number,
     cep,
   }) => {
-    console.log("oi");
     const user = {
       name,
       email,

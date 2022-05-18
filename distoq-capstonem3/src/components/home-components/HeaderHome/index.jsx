@@ -34,7 +34,7 @@ const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
-  const { cart, deleteCart } = useContext(CartContext);
+  const { cart, deleteCart, setCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const toast = useToast();
@@ -48,7 +48,7 @@ const HeaderHome = () => {
     navigate("/login");
 
     toast({
-      description: "deslogado",
+      description: "deslogado com sucesso",
       status: "success",
       duration: 4000,
       isClosable: true,
@@ -68,23 +68,50 @@ const HeaderHome = () => {
   };
 
   const { token } = useToken();
-
-
   const getOrder = () => {
-    const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart"));
-    if (token) {
+    const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
+    if(!token){
+      toast({
+        description: "Usuário não está logado!",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/login")
+    }
+    if (cartItems?.length === 0) {
+      toast({
+        description: "Carrinho vazio !",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    if (token && cartItems.length !== 0) {
       api
         .post("tickets/", cartItems, {
           headers: { Authorization: `Bearer ${token}` },
         })
+
         .then((res) => {
-          toast({
-            description: "adicionado!",
-            status: "success",
-            duration: 4000,
-            isClosable: true,
-            position: "top",
-          });
+          if (token) {
+            onClose();
+            localStorage.removeItem("@DEStoq:cart");
+            setCart([]);
+            toast({
+              description: "Seu pedido foi feito!",
+              status: "success",
+              duration: 4000,
+              isClosable: true,
+              position: "top",
+            });
+          }
+          
+        
+          
+          onClose();
         })
         .catch((err) => {
           toast({
@@ -113,7 +140,7 @@ const HeaderHome = () => {
           <Flex w={["151px", "200px", "300px"]}>
             <Button
               disabled={decodedToken?.sub !== "1"}
-              display={decodedToken?.sub !== "1" ? "flex" : "none"}
+              display={decodedToken?.sub !== "1" && "none"}
               bg="transparent"
               _hover={{ bg: "transparent" }}
               onClick={() => navigate("/dashboard")}
