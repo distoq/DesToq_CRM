@@ -20,10 +20,11 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useStockList } from "../../../Providers/Stock";
 import { StockList } from "./StockList";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const EstoquePage = () => {
   const [minValue, setMinValue] = useState(
@@ -32,6 +33,15 @@ export const EstoquePage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
   const { stockList } = useStockList();
+  const { inputSearch } = useContext(DashFilterContext);
+
+  const filteredStockList = stockList.filter((item) =>
+    item.supplyData.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    item.supplyData.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    item.providerData.companyName.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    item.providerData.fantasyName.toLowerCase().includes(inputSearch.toLowerCase()) 
+  );
+
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
@@ -189,7 +199,7 @@ export const EstoquePage = () => {
               <TabPanels>
                 <TabPanel>
                   <UnorderedList m="0">
-                    {stockList?.map((stockItem) => (
+                    {filteredStockList?.map((stockItem) => (
                       <StockList key={stockItem.id} list={stockItem} />
                     ))}
                   </UnorderedList>
@@ -201,8 +211,10 @@ export const EstoquePage = () => {
                     justify={"center"}
                     align="flex-end"
                   >
-                    <Flex justify={"flex-start"} >
-                      <FormLabel color="#101010">Defina o estoque mínimo</FormLabel>
+                    <Flex justify={"flex-start"}>
+                      <FormLabel color="#101010">
+                        Defina o estoque mínimo
+                      </FormLabel>
                       {errors.min && (
                         <Text color="red.500">{errors.min.message}</Text>
                       )}
@@ -211,12 +223,12 @@ export const EstoquePage = () => {
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                       <FormControl>
                         <Input
-                         borderColor={" #101010"}
-                         color="#101010"
+                          borderColor={" #101010"}
+                          color="#101010"
                           type="number"
                           maxW="120px"
                           placeholder="Qtd Mínima"
-                          _placeholder={{color:"#434343"}}
+                          _placeholder={{ color: "#434343" }}
                           errorBorderColor={errors.min && "red.300"}
                           {...register("min")}
                         />

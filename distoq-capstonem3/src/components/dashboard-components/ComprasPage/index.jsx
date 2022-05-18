@@ -30,31 +30,28 @@ import { CardCompras } from "./ComprasCard";
 import { useEffect, useState } from "react";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
-
+import { useContext } from "react";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const ComprasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
-  useActivePage();
-  
-  
+    useActivePage();
+
   const [providersAndSuppliesList, setProvidersAndSuppliesList] = useState([]);
   const [ordersList, setOrdersList] = useState([]);
-  const [input, setInput] = useState("");
+  const { inputSearch } = useContext(DashFilterContext);
 
-  const filteredOrdersList = ordersList.filter((item) => 
-    item.status.toLowerCase().includes(input.toLowerCase()) ||
+  const filteredOrdersList = ordersList.filter(
+    (item) =>
+      item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
       item.providerData.companyName
         .toLowerCase()
-        .includes(input.toLowerCase()) ||
+        .includes(inputSearch.toLowerCase()) ||
       item.providerData.fantasyName
         .toLowerCase()
-        .includes(input.toLowerCase()) ||
-      item.supplyData.category
-        .toLowerCase()
-        .includes(input.toLowerCase()) ||
-      item.supplyData.name
-        .toLowerCase()
-        .includes(input.toLowerCase())  
+        .includes(inputSearch.toLowerCase()) ||
+      item.supplyData.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.supplyData.name.toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   const { token } = useToken();
@@ -249,13 +246,7 @@ export const ComprasPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            <Tabs
-              isFitted
-              variant="enclosed"
-              w={"100%"}
-             
-              borderRadius={"20px"}
-            >
+            <Tabs isFitted variant="enclosed" w={"100%"} borderRadius={"20px"}>
               <TabList mb="1em">
                 <Tab
                   color="#101010"
@@ -264,12 +255,12 @@ export const ComprasPage = () => {
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
@@ -284,12 +275,12 @@ export const ComprasPage = () => {
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
@@ -322,7 +313,6 @@ export const ComprasPage = () => {
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}
-                 
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{

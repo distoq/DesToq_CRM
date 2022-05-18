@@ -34,6 +34,8 @@ import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardProdutos } from "./ProdutosCard";
+import { useContext } from "react";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 import { ShowcaseContext } from "../../../Providers/showcase";
 
 export const ProdutosPage = () => {
@@ -41,11 +43,13 @@ export const ProdutosPage = () => {
     useActivePage();
   // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const [productsList, setProductsList] = useState(null);
+  const [productsList, setProductsList] = useState([]);
 
   const { token } = useToken();
 
   const { categoriasOptions } = useSelectValues();
+
+  const { inputSearch } = useContext(DashFilterContext);
 
   const getProductsList = () => {
     api
@@ -54,7 +58,13 @@ export const ProdutosPage = () => {
       .catch((err) => err);
   };
 
-  
+  const filteredProductsList = productsList.filter(
+    (item) =>
+      item.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.description.toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   useEffect(() => {
     getProductsList();
   }, []);
@@ -366,7 +376,7 @@ export const ProdutosPage = () => {
                     },
                   }}
                 >
-                  {productsList?.map((ele) => (
+                  {filteredProductsList?.map((ele) => (
                     <CardProdutos
                       product={ele}
                       setProductsList={setProductsList}

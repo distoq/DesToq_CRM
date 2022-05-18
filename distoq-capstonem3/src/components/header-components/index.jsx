@@ -19,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import DEStoq from "../../assets/imgs/DEStoq-white.png";
-import React from "react";
+import React, { useContext } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 import { BsBoxArrowInRight, BsHouse } from "react-icons/bs";
@@ -27,11 +27,13 @@ import { BsBoxArrowInRight, BsHouse } from "react-icons/bs";
 import { useActivePage } from "../../Providers/DashboardPageController";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import { DashFilterContext } from "../../Providers/DashboardFilter";
 
 const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const navigate = useNavigate();
+  const { inputSearch, setInputSearch } = useContext(DashFilterContext);
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
@@ -131,6 +133,8 @@ const DashboardHeader = () => {
               _focus={{
                 boxShadow: "0 0 10px grey",
               }}
+              value={inputSearch}
+              onChange={(e) => setInputSearch(e.target.value)}
             />
             <InputRightElement width="4.5rem">
               <Button
