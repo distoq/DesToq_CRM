@@ -8,23 +8,16 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-
+import { useState } from "react";
 
 import api from "../../../../dataBase/db";
 import { useStockList } from "../../../../Providers/Stock";
 
 export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
-  const {
-    id,
-    providerData,
-    quantity,
-    status,
-    supplyData,
-    totalValue,
-  } = order;
+  const { id, providerData, quantity, status, supplyData, totalValue } = order;
+  const [selectValue, setSelectValue] = useState("");
 
-
-  const {getListStock} = useStockList()
+  const { getListStock } = useStockList();
   return (
     <Flex
       key={id}
@@ -95,25 +88,32 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
                     },
                   }
                 )
-                .then((rep) => getOrdersList());
+                .then((rep) => {
+                  getOrdersList();
+                });
 
               if (e.target.value === "Finalizado") {
-               
-                api.post("/stock", {
-                  ...order, ownerId: 1, userId:1
-                },{
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                  },
-                }).then((res)=>{
-                  console.log(res.data)
-                  getListStock()
-
-                })
+                api
+                  .post(
+                    "/stock",
+                    {
+                      ...order,
+                      ownerId: 1,
+                      userId: 1,
+                    },
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    getListStock();
+                  });
               }
 
-             
+              setSelectValue(e.target.value);
             }}
           >
             <option value="Emitido">Emitido</option>
