@@ -77,7 +77,8 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
           />
           <Select
             disabled={status === "Finalizado"}
-            placeholder="Status"
+            placeholder="status"
+            _placeholder={{ color: "#434343" }}
             backgroundColor={"#fff"}
             defaultValue={status}
             onChange={(e) => {
@@ -97,9 +98,9 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
               console.log(order);
             }}
           >
-            <option value="Emitido">Emitido</option>
-            <option value="Faturado">Faturado</option>
-            <option value="Finalizado">Finalizado</option>
+            <option value="Emitido">emitido</option>
+            <option value="Faturado">faturado</option>
+            <option value="Finalizado">finalizado</option>
           </Select>
         </Flex>
       </Flex>
@@ -122,7 +123,7 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
       </Flex>
       <Flex flexDirection={"column"} justifyContent={"center"} margin={"5px"}>
         <Text fontWeight={"bold"} fontSize={"20px"}>
-          Qty
+          Qtd.
         </Text>
 
         <Input
@@ -152,7 +153,7 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList }) => {
 
       <Flex flexDirection={"column"} justifyContent={"center"} margin={"5px"}>
         <Button colorScheme="red" disabled={status === "Finalizado"}>
-          Cancelar
+          cancelar
         </Button>
       </Flex>
     </Flex>

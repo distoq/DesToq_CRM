@@ -102,13 +102,14 @@ export const PedidosPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Pedidos Page
+          Pedidos
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
             pr="4.5rem"
             type={"text"}
-            placeholder="Faça sua pesquisa..."
+            placeholder="pesquisar"
+            _placeholder={{ color: "#434343" }}
             backgroundColor={"white"}
             fontWeight={"bold"}
             boxShadow={"0 0 5px grey"}

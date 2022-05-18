@@ -44,11 +44,11 @@ export const EstoquePage = () => {
   const group = getRootProps();
   const formSchema = yup.object().shape({
     min: yup
-      .number("Deve ser um número.")
+      .number("deve ser um número")
       .nullable(true)
-      .typeError("Campo obrigatório")
-      .required("Campo obrigatório.")
-      .positive("Deve ser um número positivo."),
+      .typeError("campo obrigatório")
+      .required("campo obrigatório")
+      .positive("deve ser um número positivo"),
   });
   const {
     register,
@@ -167,7 +167,7 @@ export const EstoquePage = () => {
                   w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
-                    Estoque Mínimo
+                    Estoque mínimo
                   </Heading>
                 </Tab>
                 <Tab
@@ -188,7 +188,7 @@ export const EstoquePage = () => {
                   w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
-                    Estoque Mínimo
+                    Estoque
                   </Heading>
                 </Tab>
               </TabList>
@@ -207,8 +207,10 @@ export const EstoquePage = () => {
                     justify={"center"}
                     align="flex-end"
                   >
-                    <Flex justify={"flex-start"} >
-                      <FormLabel color="#101010">Defina o estoque mínimo</FormLabel>
+                    <Flex justify={"flex-start"}>
+                      <FormLabel color="#101010">
+                        Definir estoque mínimo:
+                      </FormLabel>
                       {errors.min && (
                         <Text color="red.500">{errors.min.message}</Text>
                       )}
@@ -217,17 +219,17 @@ export const EstoquePage = () => {
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                       <FormControl>
                         <Input
-                         borderColor={" #101010"}
-                         color="#101010"
+                          borderColor={" #101010"}
+                          color="#101010"
                           type="number"
                           maxW="120px"
-                          placeholder="Qtd Mínima"
-                          _placeholder={{color:"#434343"}}
+                          placeholder="qtd. mínima"
+                          _placeholder={{ color: "#434343" }}
                           errorBorderColor={errors.min && "red.300"}
                           {...register("min")}
                         />
                         <Button type="submit" ml="10px" colorScheme={"green"}>
-                          ALTERAR
+                          alterar
                         </Button>
                       </FormControl>
                     </form>

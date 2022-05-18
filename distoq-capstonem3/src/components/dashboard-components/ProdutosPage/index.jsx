@@ -1,12 +1,4 @@
-import {
-  Box,
-
-  Flex,
-
-  useRadio,
-  useRadioGroup,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Flex, useRadio, useRadioGroup, VStack } from "@chakra-ui/react";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
@@ -91,7 +83,6 @@ export const ProdutosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        
         <Flex
           width={"100%"}
           height={"100%"}

@@ -35,7 +35,7 @@ export const InsumosPage = () => {
     useActivePage();
   const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const { providersList} = useProvidersList();
+  const { providersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
   const [input, setInput] = useState("");
 
@@ -63,18 +63,16 @@ export const InsumosPage = () => {
   const { token, setToken } = useToken();
 
   const formSchema = yup.object().shape({
-    name: yup.string().required("Nome obrigatório!"),
-    category: yup.string().required("Selecione a categoria!"),
-    provider: yup.string().required("Selecione o fornecedor!"),
+    name: yup.string().required("nome obrigatório"),
+    category: yup.string().required("selecione a categoria"),
+    provider: yup.string().required("selecione o fornecedor"),
     purchasePrice: yup
       .number()
-      .typeError("*** Valor obrigatório!")
-      .positive("Proíbido valor negativo!")
+      .typeError("valor obrigatório")
+      .positive("proibido valor negativo")
       .nullable(true)
-      .required("*** Valor obrigaório!"),
-    measurementUnit: yup
-      .string()
-      .required("*** Selecione uma unidade de medida!"),
+      .required("valor obrigatório"),
+    measurementUnit: yup.string().required("selecione uma unidade de medida"),
   });
 
   const {
@@ -157,7 +155,6 @@ export const InsumosPage = () => {
     );
   }
   return (
-
     <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
@@ -186,8 +183,6 @@ export const InsumosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
- 
-       
         <Flex
           width={"100%"}
           height={"100%"}
@@ -204,22 +199,16 @@ export const InsumosPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            <Tabs
-              isFitted
-              variant="enclosed"
-              w={"100%"}
-             
-              borderRadius={"20px"}
-            >
+            <Tabs isFitted variant="enclosed" w={"100%"} borderRadius={"20px"}>
               <TabList mb="1em">
                 <Tab
-                   fontWeight={"bold"}
-                   fontSize={"26px"}
-                   color="#101010"
+                  fontWeight={"bold"}
+                  fontSize={"26px"}
+                  color="#101010"
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
@@ -229,27 +218,27 @@ export const InsumosPage = () => {
                     border: "2px solid #14213d",
                   }}
                 >
-                  Insumos Cadastrados
+                  Insumos cadastrados
                 </Tab>
                 <Tab
-                 color="#101010"
+                  color="#101010"
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
                   }}
                 >
-                  Adicionar Insumos
+                  Adicionar insumos
                 </Tab>
               </TabList>
               <TabPanels
@@ -335,9 +324,10 @@ export const InsumosPage = () => {
                       boxShadow="0 0 10px grey"
                       color={"black"}
                     >
-                      <Heading fontSize={"30px"}> Cadastro novo insumo</Heading>
+                      <Heading fontSize={"30px"}>Cadastrar novo insumo</Heading>
                       <Input
-                        placeholder="Nome do insumo..."
+                        placeholder="nome do insumo"
+                        _placeholder={{ color: "#434343" }}
                         size="md"
                         minHeight={"40px"}
                         {...register("name")}
@@ -350,7 +340,8 @@ export const InsumosPage = () => {
                         </Text>
                       )}
                       <Select
-                        placeholder="Categoria"
+                        placeholder="categoria"
+                        _placeholder={{ color: "#434343" }}
                         {...register("category")}
                         borderColor={errors.category && "#ff0000"}
                         border={errors.category && "2px"}
@@ -365,7 +356,8 @@ export const InsumosPage = () => {
                         </Text>
                       )}
                       <Select
-                        placeholder="Fornecedor"
+                        placeholder="fornecedor"
+                        _placeholder={{ color: "#434343" }}
                         {...register("provider")}
                         borderColor={errors.provider && "#ff0000"}
                         border={errors.provider && "2px"}
@@ -387,7 +379,8 @@ export const InsumosPage = () => {
                           children="$"
                         />
                         <Input
-                          placeholder="Preço de compra..."
+                          placeholder="preço de compra"
+                          _placeholder={{ color: "#434343" }}
                           type={"number"}
                           {...register("purchasePrice")}
                           borderColor={errors.purchasePrice && "#ff0000"}
@@ -395,7 +388,8 @@ export const InsumosPage = () => {
                         />
 
                         <Select
-                          placeholder="Un. de Medida"
+                          placeholder="unidade de medida"
+                          _placeholder={{ color: "#434343" }}
                           {...register("measurementUnit")}
                           borderColor={errors.measurementUnit && "#ff0000"}
                           border={errors.measurementUnit && "2px"}
@@ -420,7 +414,7 @@ export const InsumosPage = () => {
                         minHeight={"40px"}
                         onClick={handleSubmit(onSubmitFunction)}
                       >
-                        Cadastrar Insumo
+                        cadastrar insumo
                       </Button>
                     </Stack>
                   </Flex>

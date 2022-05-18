@@ -39,20 +39,17 @@ export const ComprasPage = () => {
   const [ordersList, setOrdersList] = useState([]);
   const [input, setInput] = useState("");
 
-  const filteredOrdersList = ordersList.filter((item) => 
-    item.status.toLowerCase().includes(input.toLowerCase()) ||
+  const filteredOrdersList = ordersList.filter(
+    (item) =>
+      item.status.toLowerCase().includes(input.toLowerCase()) ||
       item.providerData.companyName
         .toLowerCase()
         .includes(input.toLowerCase()) ||
       item.providerData.fantasyName
         .toLowerCase()
         .includes(input.toLowerCase()) ||
-      item.supplyData.category
-        .toLowerCase()
-        .includes(input.toLowerCase()) ||
-      item.supplyData.name
-        .toLowerCase()
-        .includes(input.toLowerCase())  
+      item.supplyData.category.toLowerCase().includes(input.toLowerCase()) ||
+      item.supplyData.name.toLowerCase().includes(input.toLowerCase())
   );
 
   const getOrdersList = () => {
@@ -83,21 +80,21 @@ export const ComprasPage = () => {
   const formSchema = yup.object().shape({
     supplyId: yup
       .number()
-      .typeError("*** Preço obrigatório!")
+      .typeError("preço obrigatório")
       .nullable(true)
-      .required("*** Preço obrigatória!"),
+      .required("preço obrigatório"),
     providerId: yup
       .number()
-      .typeError("*** Preço obrigatório!")
+      .typeError("preço obrigatório")
       .nullable(true)
-      .required("*** Preço obrigatória!"),
+      .required("preço obrigatório"),
 
     quantity: yup
       .number()
-      .typeError("*** Quantidade obrigatória!")
-      .positive("Proíbido valor negativo!")
+      .typeError("quantidade obrigatória")
+      .positive("proibido valor negativo")
       .nullable(true)
-      .required("*** Quantidade obrigatória!"),
+      .required("quantidade obrigatória"),
   });
 
   useEffect(() => {
@@ -245,13 +242,7 @@ export const ComprasPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            <Tabs
-              isFitted
-              variant="enclosed"
-              w={"100%"}
-             
-              borderRadius={"20px"}
-            >
+            <Tabs isFitted variant="enclosed" w={"100%"} borderRadius={"20px"}>
               <TabList mb="1em">
                 <Tab
                   color="#101010"
@@ -260,18 +251,18 @@ export const ComprasPage = () => {
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
                   }}
                 >
-                  Ordens de Compra
+                  Ordens de compras
                 </Tab>
                 <Tab
                   color="#101010"
@@ -280,18 +271,18 @@ export const ComprasPage = () => {
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
                   }}
                 >
-                  Adicionar Ordem de Compra
+                  Adicionar ordem de compra
                 </Tab>
               </TabList>
               <TabPanels
@@ -383,11 +374,12 @@ export const ComprasPage = () => {
                     >
                       <Heading fontSize={"30px"}>
                         {" "}
-                        Criar Ordem de Compra
+                        Criar ordem de compra
                       </Heading>
                       <Select
                         className="inputFornecedor"
                         placeholder="Fornecedores"
+                        _placeholder={{ color: "#434343" }}
                         borderColor={errors.provider && "#ff0000"}
                         border={errors.provider && "2px"}
                         {...register("providerId")}
@@ -414,6 +406,7 @@ export const ComprasPage = () => {
                       )}
                       <Select
                         placeholder="Insumo"
+                        _placeholder={{ color: "#434343" }}
                         borderColor={errors.supply && "#ff0000"}
                         border={errors.supply && "2px"}
                         {...register("supplyId")}
@@ -451,11 +444,12 @@ export const ComprasPage = () => {
                           pointerEvents="none"
                           color="gray.300"
                           fontSize="1.2em"
-                          children="$"
+                          children="R$"
                         />
                         <Input
                           readOnly
-                          placeholder="Preço"
+                          placeholder="preço"
+                          _placeholder={{ color: "#434343" }}
                           type={"number"}
                           borderColor={errors.purchasePrice && "#ff0000"}
                           border={errors.purchasePrice && "2px"}
@@ -464,7 +458,8 @@ export const ComprasPage = () => {
                         />
                         <InputRightAddon children={selectedSupplyUnt} />
                         <Input
-                          placeholder="Qty"
+                          placeholder="Qtd."
+                          _placeholder={{ color: "#434343" }}
                           type={"number"}
                           borderColor={errors.quantity && "#ff0000"}
                           border={errors.quantity && "2px"}
@@ -476,7 +471,7 @@ export const ComprasPage = () => {
                           }}
                           value={orderQty}
                         />
-                        <InputRightAddon children="Qty" />
+                        <InputRightAddon children="Qtd." />
                       </InputGroup>
                       {errors.purchasePrice && (
                         <Text color={"#ff0000"} width={"95%"}>
@@ -489,13 +484,13 @@ export const ComprasPage = () => {
                         </Text>
                       )}
                       <InputGroup>
-                        <InputLeftAddon children="Valor da Ordem" />
+                        <InputLeftAddon children="Valor da ordem" />
                         <InputLeftElement
                           pointerEvents="none"
                           color="gray.300"
                           fontSize="1.2em"
                           left={"150px"}
-                          children="$"
+                          children="R$"
                         />
                         <Input
                           disabled
@@ -516,7 +511,7 @@ export const ComprasPage = () => {
                         colorScheme="blue"
                         onClick={handleSubmit(onSubmitFunction)}
                       >
-                        Cadastrar Ordem de Compra
+                        cadastrar ordem de compra
                       </Button>
                     </Stack>
                   </Flex>

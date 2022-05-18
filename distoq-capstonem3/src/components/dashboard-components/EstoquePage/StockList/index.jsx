@@ -72,7 +72,7 @@ export const StockList = ({ list, min  }) => {
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader color="#101010">
-                Informações Financeiras
+                Informações financeiras
               </PopoverHeader>
               <PopoverBody>
                 <Flex direction="column" align={["center"]}>
@@ -97,7 +97,7 @@ export const StockList = ({ list, min  }) => {
                   </Flex>
                 </Flex>
                 <Flex direction="column" align={["center"]}>
-                  <Text variant="bold">Valor de compra:</Text>
+                  <Text variant="bold">Valor da compra:</Text>
                   <Badge
                     alignSelf="center"
                     variant="solid"

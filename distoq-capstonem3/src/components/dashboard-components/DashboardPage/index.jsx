@@ -102,13 +102,13 @@ export const DashboardPage = () => {
           margin={["0px", "0px", "0px", "0px", "20px 0px"]}
           textAlign="center"
         >
-          Dashboard Page
+          Dashboard
         </Heading>
         <InputGroup size="md" width={"90%"} maxW={"500px"}>
           <Input
             pr="4.5rem"
             type={"text"}
-            placeholder="Faça sua pesquisa..."
+            placeholder="Fazer pesquisa"
             backgroundColor={"white"}
             fontWeight={"bold"}
             boxShadow={"0 0 5px grey"}

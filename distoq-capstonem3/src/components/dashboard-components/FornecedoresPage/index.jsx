@@ -145,30 +145,29 @@ export const FornecedoresPage = () => {
             >
               <TabList>
                 <Tab
-                     _selected={{
-                      color: "#FFFF",
-                      background:"#14213d",
-                      borderBottomColor: "#14213d",
-                      borderBottomWidth: "2px",
-                    }}
-                    _focus={{
-                      color: "#FFFF",
-                      borderColor: "",
-                      borderTopLeftRadius: "18px",
-                      borderTopRightRadius: "18px",
-                      border: "2px solid #14213d",
-                    }}
-                    w="100%"
+                  _selected={{
+                    color: "#FFFF",
+                    background: "#14213d",
+                    borderBottomColor: "#14213d",
+                    borderBottomWidth: "2px",
+                  }}
+                  _focus={{
+                    color: "#FFFF",
+                    borderColor: "",
+                    borderTopLeftRadius: "18px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
+                  }}
+                  w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
-                    Listar Fornecedores
+                    Listar fornecedores
                   </Heading>
                 </Tab>
                 <Tab
                   _selected={{
-                   
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
@@ -181,7 +180,7 @@ export const FornecedoresPage = () => {
                   w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
-                    Cadastrar Fornecedor
+                    Cadastrar fornecedor
                   </Heading>
                 </Tab>
               </TabList>
