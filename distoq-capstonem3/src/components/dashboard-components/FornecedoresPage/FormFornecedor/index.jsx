@@ -145,7 +145,7 @@ export const FormProviders = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-  console.log(errors.companyName);
+  
 
   return (
     <>

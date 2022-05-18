@@ -10,8 +10,6 @@ import { useJwt } from "react-jwt";
 
 const Home = () => {
   const { cart } = useContext(CartContext);
-  console.log("cart na Homepage", cart);
-
   const navigate = useNavigate();
   const token = localStorage.getItem("@DEStoq:token");
   const { isExpired } = useJwt(token);
@@ -33,5 +31,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;

@@ -29,7 +29,7 @@ import { GoSearch } from "react-icons/go";
 const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
+  
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
@@ -144,6 +144,7 @@ const DashboardHeader = () => {
             _hover={{
               backgroundColor: "#F4BF39",
             }}
+
           >
             <BsBoxArrowInRight fontSize={35} color="white" />
           </Button>

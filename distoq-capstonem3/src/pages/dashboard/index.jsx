@@ -10,6 +10,7 @@ import ComprasPage from "../../components/dashboard-components/ComprasPage";
 import { useActivePage } from "../../Providers/DashboardPageController";
 import { useNavigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
+import { motion } from 'framer-motion';
 
 const Dashboard = () => {
   const { activeDashboardPage } = useActivePage();
@@ -63,10 +64,16 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    
+    >
       <DashboardHeader />
       {handlePageRender(activeDashboardPage)}
-    </>
+    </motion.div>
   );
 };
 export default Dashboard;
