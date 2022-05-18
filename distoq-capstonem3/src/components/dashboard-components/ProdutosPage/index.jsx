@@ -34,7 +34,6 @@ import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardProdutos } from "./ProdutosCard";
-import { useContext } from "react";
 import { DashFilterContext } from "../../../Providers/DashboardFilter";
 import { ShowcaseContext } from "../../../Providers/showcase";
 
