@@ -1,11 +1,6 @@
 import {
   Box,
-  Button,
   Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
   Tab,
   TabList,
   TabPanel,
