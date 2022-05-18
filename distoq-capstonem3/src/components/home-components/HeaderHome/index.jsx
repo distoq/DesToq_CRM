@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
 import { useToken } from "../../../Providers/Token";
+import { useUser } from "../../../Providers/Users";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
@@ -68,9 +69,13 @@ const HeaderHome = () => {
   };
 
   const { token } = useToken();
+  const user = JSON.parse(localStorage.getItem("@DEStoq:user"));
+
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
-    if(!token){
+    cartItems.map((ele) => (ele.user = user));
+    console.log(cartItems);
+    if (!token) {
       toast({
         description: "Usuário não está logado!",
         status: "error",
@@ -78,7 +83,7 @@ const HeaderHome = () => {
         isClosable: true,
         position: "top",
       });
-      navigate("/login")
+      navigate("/login");
     }
     if (cartItems?.length === 0) {
       toast({
@@ -108,9 +113,7 @@ const HeaderHome = () => {
               position: "top",
             });
           }
-          
-        
-          
+
           onClose();
         })
         .catch((err) => {
