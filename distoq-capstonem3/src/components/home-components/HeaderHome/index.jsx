@@ -70,7 +70,16 @@ const HeaderHome = () => {
   const { token } = useToken();
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
-
+    if(!token){
+      toast({
+        description: "Usuário não está logado!",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/login")
+    }
     if (cartItems?.length === 0) {
       toast({
         description: "Carrinho vazio !",
@@ -98,15 +107,10 @@ const HeaderHome = () => {
               isClosable: true,
               position: "top",
             });
-          } else {
-            toast({
-              description: "Usuário não está logado!",
-              status: "error",
-              duration: 4000,
-              isClosable: true,
-              position: "top",
-            });
           }
+          
+        
+          
           onClose();
         })
         .catch((err) => {
