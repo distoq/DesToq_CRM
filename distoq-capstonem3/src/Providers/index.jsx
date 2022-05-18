@@ -7,10 +7,12 @@ import { ShowcaseProvider } from "./showcase";
 import { CartProvider } from "./cart";
 import { ProvidersListProvider } from "./ProvidersList";
 import { StockProvider } from "./Stock";
+import { UserProvider } from "./Users";
 
 const Providers = ({ children }) => {
   return (
     <TokenProvider>
+      <UserProvider>
       <DashboardPageControllerProvider>
         <StockProvider>
         <ProvidersListProvider>
@@ -28,6 +30,7 @@ const Providers = ({ children }) => {
         </ProvidersListProvider>
         </StockProvider>
       </DashboardPageControllerProvider>
+      </UserProvider>
     </TokenProvider>
   );
 };

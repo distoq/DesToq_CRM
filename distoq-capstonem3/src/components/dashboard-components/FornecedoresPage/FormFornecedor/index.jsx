@@ -334,7 +334,7 @@ export const FormProviders = () => {
                   {...register("city")}
                   placeholder="Digite a cidade."
                   _placeholder={{ color: "#101010" }}
-                  borderColor={errors.city && console.log("oi")}
+                  borderColor={errors.city && "red.500"}
                   variant="outline"
                 />
               </Flex>
