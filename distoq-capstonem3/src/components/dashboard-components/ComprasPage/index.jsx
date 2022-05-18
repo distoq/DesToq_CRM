@@ -262,7 +262,7 @@ export const ComprasPage = () => {
                     border: "2px solid #14213d",
                   }}
                 >
-                  Ordens de compras
+                  Ordens de compra
                 </Tab>
                 <Tab
                   color="#101010"
