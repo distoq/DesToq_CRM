@@ -6,17 +6,20 @@ const HomeFilter = () => {
 
   return (
     <Flex>
+      <Button m={3} onClick={() => addInputSearch("")}>
+        Todos
+      </Button>
       <Button m={3} onClick={() => addInputSearch("sanduiches")}>
-        lanches
+        Lanches
       </Button>
       <Button m={3} onClick={() => addInputSearch("bebidas")}>
-        bebidas
+        Bebidas
       </Button>
       <Button m={3} onClick={() => addInputSearch("porcoes")}>
-        porções
+        Porções
       </Button>
       <Button m={3} onClick={() => addInputSearch("milkshake")}>
-        milkshakes
+        Milkshakes
       </Button>
     </Flex>
   );
