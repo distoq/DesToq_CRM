@@ -35,7 +35,7 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
-        return navigate("/")
+        return navigate("/");
       })
       .catch((err) => {
         toast({
@@ -102,7 +102,7 @@ const FormLogin = () => {
                 maxW: "300px",
                 margin: "auto",
                 _placeholder: {
-                  color: "black",
+                  color: "#716C6C",
                   borderColor: "black",
                 },
               },

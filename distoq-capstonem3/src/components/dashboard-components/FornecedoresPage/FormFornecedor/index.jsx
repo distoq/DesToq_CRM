@@ -145,7 +145,6 @@ export const FormProviders = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-  
 
   return (
     <>
@@ -177,7 +176,7 @@ export const FormProviders = () => {
               type="text"
               {...register("companyName")}
               placeholder="digite o nome da empresa"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.companyName && "#ff0000"}
               variant="outline"
             />
@@ -194,7 +193,7 @@ export const FormProviders = () => {
               type="text"
               {...register("fantasyName")}
               placeholder="digite o nome fantasia"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.fantasyName && "#ff0000"}
               variant="outline"
             />
@@ -211,7 +210,7 @@ export const FormProviders = () => {
               type="number"
               {...register("cnpj")}
               placeholder="digite o CNPJ"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.cnpj && "#ff0000"}
               variant="outline"
             />
@@ -228,7 +227,7 @@ export const FormProviders = () => {
               type="number"
               {...register("ie")}
               placeholder="digite a Inscrição Estadual"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.number && "#ff0000"}
               variant="outline"
             />
@@ -245,7 +244,7 @@ export const FormProviders = () => {
               type="number"
               {...register("cep")}
               placeholder="digite o CEP"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.cep && "#ff0000"}
               variant="outline"
             />
@@ -261,8 +260,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("street")}
-              placeholder="digite o nome da rua"
-              _placeholder={{ color: "#434343" }}
+              placeholder="digite a rua"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.street && "#ff0000"}
               variant="outline"
             />
@@ -279,7 +278,7 @@ export const FormProviders = () => {
               type="number"
               {...register("number")}
               placeholder="digite o número"
-              _placeholder={{ color: "#434343" }}
+              _placeholder={{ color: "#716C6C" }}
               border="1px"
               borderColor={errors.number && "#ff0000"}
               variant="outline"
@@ -296,8 +295,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("complement")}
-              placeholder="digite o complemento"
-              _placeholder={{ color: "#434343" }}
+              placeholder="digite o complemento se houver"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.complement && "#ff0000"}
               variant="outline"
             />
@@ -313,8 +312,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("district")}
-              placeholder="digite o nome do bairro"
-              _placeholder={{ color: "#434343" }}
+              placeholder="digite o bairro"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.district && "#ff0000"}
               variant="outline"
             />
@@ -333,7 +332,7 @@ export const FormProviders = () => {
                   type="text"
                   {...register("city")}
                   placeholder="digite a cidade"
-                  _placeholder={{ color: "#434343" }}
+                  _placeholder={{ color: "#716C6C" }}
                   borderColor={errors.city && console.log("oi")}
                   variant="outline"
                 />
@@ -348,7 +347,7 @@ export const FormProviders = () => {
                   w="120px"
                   {...register("state")}
                   placeholder="Estados"
-                  _placeholder={{ color: "#434343" }}
+                  _placeholder={{ color: "#716C6C" }}
                   borderColor={errors.state ? "#ff0000" : "#101010"}
                   h="28px"
                   color="#101010"

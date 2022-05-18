@@ -218,7 +218,7 @@ export const EstoquePage = () => {
                           type="number"
                           maxW="120px"
                           placeholder="qtd. mínima"
-                          _placeholder={{ color: "#434343" }}
+                          _placeholder={{ color: "#716C6C" }}
                           errorBorderColor={errors.min && "red.300"}
                           {...register("min")}
                         />

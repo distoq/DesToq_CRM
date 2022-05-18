@@ -342,7 +342,7 @@ export const InsumosPage = () => {
                       <Heading fontSize={"30px"}>Cadastrar novo insumo</Heading>
                       <Input
                         placeholder="nome do insumo"
-                        _placeholder={{ color: "#434343" }}
+                        _placeholder={{ color: "#716C6C" }}
                         size="md"
                         minHeight={"40px"}
                         {...register("name")}
@@ -358,7 +358,7 @@ export const InsumosPage = () => {
                       )}
                       <Select
                         placeholder="categoria"
-                        _placeholder={{ color: "#434343" }}
+                        _placeholder={{ color: "#716C6C" }}
                         {...register("category")}
                         borderColor={errors.category && "#ff0000"}
                         border={errors.category && "2px"}
@@ -376,7 +376,7 @@ export const InsumosPage = () => {
                       )}
                       <Select
                         placeholder="fornecedor"
-                        _placeholder={{ color: "#434343" }}
+                        _placeholder={{ color: "#716C6C" }}
                         {...register("provider")}
                         borderColor={errors.provider && "#ff0000"}
                         border={errors.provider && "2px"}
@@ -401,7 +401,7 @@ export const InsumosPage = () => {
                         />
                         <Input
                           placeholder="preço de compra"
-                          _placeholder={{ color: "#434343" }}
+                          _placeholder={{ color: "#716C6C" }}
                           type={"number"}
                           {...register("purchasePrice")}
                           borderColor={errors.purchasePrice && "#ff0000"}
@@ -414,7 +414,7 @@ export const InsumosPage = () => {
 
                         <Select
                           placeholder="unidade de medida"
-                          _placeholder={{ color: "#434343" }}
+                          _placeholder={{ color: "#716C6C" }}
                           {...register("measurementUnit")}
                           borderColor={errors.measurementUnit && "#ff0000"}
                           border={errors.measurementUnit && "2px"}

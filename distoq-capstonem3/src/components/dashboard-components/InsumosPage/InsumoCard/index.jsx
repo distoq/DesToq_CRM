@@ -72,7 +72,7 @@ export const CardInsumo = ({ supply }) => {
         alignItems={"center"}
         margin={"5px"}
       >
-        <Text fontWeight={"bold"}>Categoria:</Text>
+        <Text fontWeight={"bold"}>categoria:</Text>
         <Badge colorScheme={"green"} maxW={"fit-content"}>
           {category}
         </Badge>
@@ -100,7 +100,7 @@ export const CardInsumo = ({ supply }) => {
         alignItems={"center"}
         margin={"5px"}
       >
-        <Text fontWeight={"bold"}>Unidade de Medida:</Text>
+        <Text fontWeight={"bold"}>unidade de medida:</Text>
         <Badge colorScheme={"green"} maxW={"fit-content"}>
           {measurementUnit}
         </Badge>

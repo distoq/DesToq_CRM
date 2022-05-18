@@ -57,14 +57,14 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           padding={"5px 10px 0px 10px"}
           boxShadow={"0 0 5px #202020"}
         >
-          P.Id: #{id}
+          id: #{id}
         </Text>
         <Button
           colorScheme={"red"}
           size={"sm"}
           onClick={() => removeProduct(id)}
         >
-          Remover
+          remover
         </Button>
       </Flex>
       <Flex alignItems={"center"}>

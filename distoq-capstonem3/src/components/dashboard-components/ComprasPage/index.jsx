@@ -384,7 +384,7 @@ export const ComprasPage = () => {
                       <Select
                         className="inputFornecedor"
                         placeholder="Fornecedores"
-                        _placeholder={{ color: "#434343" }}
+                        _placeholder={{ color: "#716C6C" }}
                         borderColor={errors.provider && "#ff0000"}
                         border={errors.provider && "2px"}
                         {...register("providerId")}
@@ -411,7 +411,7 @@ export const ComprasPage = () => {
                       )}
                       <Select
                         placeholder="Insumo"
-                        _placeholder={{ color: "#434343" }}
+                        _placeholder={{ color: "#716C6C" }}
                         borderColor={errors.supply && "#ff0000"}
                         border={errors.supply && "2px"}
                         {...register("supplyId")}
@@ -454,7 +454,7 @@ export const ComprasPage = () => {
                         <Input
                           readOnly
                           placeholder="preço"
-                          _placeholder={{ color: "#434343" }}
+                          _placeholder={{ color: "#716C6C" }}
                           type={"number"}
                           borderColor={errors.purchasePrice && "#ff0000"}
                           border={errors.purchasePrice && "2px"}
@@ -464,7 +464,7 @@ export const ComprasPage = () => {
                         <InputRightAddon children={selectedSupplyUnt} />
                         <Input
                           placeholder="Qtd."
-                          _placeholder={{ color: "#434343" }}
+                          _placeholder={{ color: "#716C6C" }}
                           type={"number"}
                           borderColor={errors.quantity && "#ff0000"}
                           border={errors.quantity && "2px"}

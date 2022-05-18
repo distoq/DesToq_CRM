@@ -74,7 +74,7 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
           <Select
             disabled={status === "Finalizado"}
             placeholder="status"
-            _placeholder={{ color: "#434343" }}
+            _placeholder={{ color: "#716C6C" }}
             backgroundColor={"#fff"}
             defaultValue={status}
             onChange={(e) => {

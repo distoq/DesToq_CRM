@@ -240,7 +240,8 @@ export const ProdutosPage = () => {
           <Input
             pr="4.5rem"
             type={"text"}
-            placeholder="Faça sua pesquisa..."
+            placeholder="pesquisar"
+            _placeholder={{ color: "#716C6C" }}
             backgroundColor={"white"}
             fontWeight={"bold"}
             boxShadow={"0 0 5px grey"}
@@ -310,7 +311,7 @@ export const ProdutosPage = () => {
                     border: "2px",
                   }}
                 >
-                  Adicionar Novo Produto
+                  Adicionar novo produto
                 </Tab>
               </TabList>
               <TabPanels
@@ -425,10 +426,11 @@ export const ProdutosPage = () => {
                     >
                       <Heading fontSize={"30px"} marginTop={"20px"}>
                         {" "}
-                        Criar Produto
+                        Criar produto
                       </Heading>
                       <Input
-                        placeholder={"Nome do Produto"}
+                        placeholder={"nome do produto..."}
+                        _placeholder={{ color: "#716C6C" }}
                         minH={"40px"}
                         marginTop={"40px"}
                         {...register("name")}
@@ -451,7 +453,8 @@ export const ProdutosPage = () => {
                       >
                         <Select
                           value={inputSelect}
-                          placeholder="Ingredientes..."
+                          placeholder="ingredientes"
+                          _placeholder={{ color: "#716C6C" }}
                           margin={"5px 0"}
                           backgroundColor={"#ffffff"}
                           onChange={(e) => {
@@ -470,7 +473,7 @@ export const ProdutosPage = () => {
                           margin={"5px 0"}
                           backgroundColor={"#ffffff"}
                         >
-                          <InputLeftAddon children={"Qty."} />
+                          <InputLeftAddon children={"Qtd."} />
                           <Input
                             value={inputQty}
                             type={"number"}
@@ -503,7 +506,7 @@ export const ProdutosPage = () => {
                             setShowError(false);
                           }}
                         >
-                          Adicionar
+                          adicionar
                         </Button>
                         {productIngredientsList?.map((ele, index) => (
                           <Text
@@ -537,11 +540,12 @@ export const ProdutosPage = () => {
                       </Flex>
                       {showError && (
                         <Text color={"#ff0000"} width={"95%"}>
-                          Adicione ao menos um ingrediente!
+                          adicione ao menos um ingrediente!
                         </Text>
                       )}
                       <Select
-                        placeholder="Categoria"
+                        placeholder="categoria"
+                        _placeholder={{ color: "#716C6C" }}
                         {...register("category")}
                         value={categoryValue}
                         onChange={(e) => setCategoryValue(e.target.value)}
@@ -558,13 +562,14 @@ export const ProdutosPage = () => {
                       <InputGroup>
                         <InputLeftAddon children={"R$"} />
                         <Input
-                          placeholder="Preço de Venda"
+                          placeholder="0,00"
+                          _placeholder={{ color: "#716C6C" }}
                           type={"number"}
                           {...register("price")}
                           value={salePriceValue}
                           onChange={(e) => setSalePriceValue(e.target.value)}
                         />
-                        <InputRightAddon children={"Preço de Venda"} />
+                        <InputRightAddon children={"preço de venda"} />
                       </InputGroup>
                       {errors.price && (
                         <Text color={"#ff0000"} width={"95%"}>
@@ -574,7 +579,8 @@ export const ProdutosPage = () => {
                       <InputGroup>
                         <InputLeftAddon children={"URL"} />
                         <Input
-                          placeholder="Imagem do Produto..."
+                          placeholder="https:// ..."
+                          _placeholder={{ color: "#716C6C" }}
                           {...register("image")}
                           value={imgUrlValue}
                           onChange={(e) => setImgUrlValue(e.target.value)}
@@ -587,7 +593,8 @@ export const ProdutosPage = () => {
                       )}
 
                       <Textarea
-                        placeholder="Descrição do produto..."
+                        placeholder="descrição do produto..."
+                        _placeholder={{ color: "#716C6C" }}
                         {...register("description")}
                         value={descriptionValue}
                         onChange={(e) => setDescriptionValue(e.target.value)}
@@ -603,7 +610,7 @@ export const ProdutosPage = () => {
                         marginBottom={"20px"}
                         onClick={handleSubmit(onSubmitFunction)}
                       >
-                        Cadastrar Produto
+                        cadastrar produto
                       </Button>
                     </Stack>
                   </Flex>

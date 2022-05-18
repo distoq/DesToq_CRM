@@ -17,10 +17,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../../../services/api";
 
-
 const FormRegister = () => {
   const history = useNavigate();
-  const toast = useToast()
+  const toast = useToast();
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
@@ -83,20 +82,24 @@ const FormRegister = () => {
 
     api
       .post("/register", user)
-      .then((_) => toast({
-        description: "Registrado!",
-        status: "success",
-        duration: 4000,
-        isClosable: true,
-        position: "top",
-      }))
-      .catch((_) => toast({
-        description: "Registrado!",
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-        position: "top",
-      }));
+      .then((_) =>
+        toast({
+          description: "Registrado!",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        })
+      )
+      .catch((_) =>
+        toast({
+          description: "Registrado!",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        })
+      );
   };
 
   const cepSearch = (e) => {
@@ -303,7 +306,7 @@ const FormRegister = () => {
             </Button>
             <Text>
               Já possui cadastro?
-              <Link onClick={() => history("/login")}> clique aqui </Link>
+              <Link onClick={() => history("/login")}> Clique aqui</Link>
             </Text>
           </FormControl>
         </Box>
