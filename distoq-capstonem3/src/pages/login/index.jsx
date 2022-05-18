@@ -34,7 +34,6 @@ const LoginPage = () => {
             "none",
           ]}
         />
-
         <FormLogin />
 
         <ImageLogin />
