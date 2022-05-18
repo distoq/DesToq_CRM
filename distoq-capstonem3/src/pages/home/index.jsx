@@ -5,10 +5,20 @@ import { CartContext } from "../../Providers/cart";
 import CardSC from "../../components/home-components";
 import { Flex } from "@chakra-ui/react";
 import HomeFilter from "../../components/home-components/HomeFilter";
+import { useNavigate } from "react-router-dom";
+import { useJwt } from "react-jwt";
 
 const Home = () => {
   const { cart } = useContext(CartContext);
-  console.log("cart na Homepage", cart);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("@DEStoq:token");
+  const { isExpired } = useJwt(token);
+
+  const isLoggedIn = token && !isExpired;
+
+  if (!isLoggedIn) {
+    navigate("/login");
+  }
 
   return (
     <>
@@ -21,5 +31,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;

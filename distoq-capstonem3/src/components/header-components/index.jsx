@@ -32,7 +32,6 @@ const DashboardHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const navigate = useNavigate();
-
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
@@ -61,13 +60,11 @@ const DashboardHeader = () => {
         <Flex
           {...checkbox}
           cursor="pointer"
-          //   borderWidth="1px"
           borderRadius="md"
           fontWeight="bold"
           fontSize="26px"
           color="white"
           alignItems="center"
-          //   boxShadow="md"
           _checked={{
             bg: "#F4BF39",
             color: "#434343",
