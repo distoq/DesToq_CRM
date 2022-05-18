@@ -86,7 +86,7 @@ const HeaderHome = () => {
       ownerId: 1,
       userId: 1,
       ticketProducts: [...cartItems],
-      status: "Pedido realizado",
+      status: "Realizado",
     };
     console.log(ticketData);
     if (!token) {
