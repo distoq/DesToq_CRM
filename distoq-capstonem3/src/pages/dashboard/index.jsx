@@ -24,7 +24,6 @@ const Dashboard = () => {
  
   console.log("dec", typeof decodedToken?.sub);
 
-
   if (!isLoggedIn) {
     return navigate("/login");
   }
