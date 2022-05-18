@@ -8,10 +8,30 @@ import FinanceiroPage from "../../components/dashboard-components/FinanceiroPage
 import DashboardHeader from "../../components/header-components";
 import ComprasPage from "../../components/dashboard-components/ComprasPage";
 import { useActivePage } from "../../Providers/DashboardPageController";
+import { useNavigate } from "react-router-dom";
+import { useJwt } from "react-jwt";
 import { motion } from 'framer-motion';
 
 const Dashboard = () => {
   const { activeDashboardPage } = useActivePage();
+
+  const token = localStorage.getItem("@DEStoq:token");
+  const { decodedToken, isExpired } = useJwt(token);
+
+  const navigate = useNavigate();
+  const isLoggedIn = token && !isExpired;
+  const isAdmin = decodedToken?.sub;
+ 
+  console.log("dec", typeof decodedToken?.sub);
+
+
+  if (!isLoggedIn) {
+    return navigate("/login");
+  }
+
+  if (isAdmin !== "1") {
+    return navigate("/");
+  }
 
   const handlePageRender = (value) => {
     switch (value) {
