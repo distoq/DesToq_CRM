@@ -5,6 +5,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, LineChart, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { motion } from "framer-motion";
 
 export const CardChart = () => {
 
