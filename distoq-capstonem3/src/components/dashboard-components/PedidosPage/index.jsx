@@ -22,7 +22,7 @@ import {
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
@@ -30,6 +30,7 @@ import { useActivePage } from "../../../Providers/DashboardPageController";
 
 import api from "../../../services/api";
 import { CardPedidos } from "./TicketCard";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -50,6 +51,12 @@ export const PedidosPage = () => {
   const [ticketItemQuantity, setTicketItemQuantity] = useState("");
 
   const [ticketsList, setTicketList] = useState([]);
+
+  const { inputSearch } = useContext(DashFilterContext);
+  const filteredTicketsList = ticketsList.filter((item) =>
+    item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    item.id.toString().toLowerCase().includes(inputSearch.toLowerCase())
+  );
 
   const [stockList, setStockList] = useState([]);
 
@@ -122,8 +129,8 @@ export const PedidosPage = () => {
         ticketProducts: [...ticketItensList],
         status: "Realizado",
       };
-      console.log(data);
-      console.log(ticketData);
+      //console.log(data);
+      //console.log(ticketData);
 
       api
         .post(`/tickets`, ticketData, {
@@ -315,7 +322,7 @@ export const PedidosPage = () => {
                       maxH={"80vh"}
                       display={"flex"}
                       flexDir={"column"}
-                      alignItems={"center"}
+                      alignItens={"center"}
                       overflowY={"auto"}
                       sx={{
                         "&::-webkit-scrollbar": {
@@ -339,7 +346,7 @@ export const PedidosPage = () => {
                         },
                       }}
                     >
-                      {ticketsList?.map((ele) => (
+                      {filteredTicketsList?.map((ele) => (
                         <CardPedidos
                           key={ele.id}
                           ticket={ele}
@@ -438,7 +445,6 @@ export const PedidosPage = () => {
                               margin={"5px 0"}
                               colorScheme="blue"
                               onClick={() => {
-                                console.log(ticketItem);
                                 api
                                   .get(`products/${ticketItemId}`)
                                   .then((resp) => {
@@ -476,7 +482,6 @@ export const PedidosPage = () => {
                                   width={"15px"}
                                   height={"15px"}
                                   onClick={(e) => {
-                                    console.log(e.target.value);
                                   }}
                                 >
                                   x
