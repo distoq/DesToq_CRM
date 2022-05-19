@@ -8,21 +8,12 @@ import { motion } from "framer-motion";
 import HomeFilter from "../../components/home-components/HomeFilter";
 import { useNavigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
-import { IconButton } from '@chakra-ui/react'
-import { PhoneIcon } from "@chakra-ui/icons";
-
 
 const Home = () => {
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
   const token = localStorage.getItem("@DEStoq:token");
   const { isExpired } = useJwt(token);
-
-  // const isLoggedIn = token && !isExpired;
-
-  // if (!isLoggedIn) {
-  //   navigate("/login");
-  // }
 
   return (
     <motion.div

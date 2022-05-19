@@ -75,7 +75,6 @@ export const CardChart = () => {
   ];
 
   return (
-
     <>
       <Flex
         w={"100%"}
@@ -221,6 +220,5 @@ export const CardChart = () => {
         </Stack>
       </Flex>
     </>
-    
   );
 };

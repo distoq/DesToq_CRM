@@ -128,9 +128,6 @@ export const PedidosPage = () => {
         ticketProducts: [...ticketItensList],
         status: "Realizado",
       };
-      //console.log(data);
-      //console.log(ticketData);
-
       api
         .post(`/tickets`, ticketData, {
           headers: {
@@ -164,13 +161,11 @@ export const PedidosPage = () => {
         <Flex
           {...checkbox}
           cursor="pointer"
-          //   borderWidth="1px"
           borderRadius="md"
           fontWeight="bold"
           fontSize="26px"
           color="white"
           alignItems="center"
-          //   boxShadow="md"
           _checked={{
             bg: "#F4BF39",
             color: "#434343",
@@ -301,7 +296,6 @@ export const PedidosPage = () => {
                     sx={{
                       minWidth: "100%",
                       height: "100%",
-                      // maxHeight: "calc(100% - 75px)",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -315,7 +309,6 @@ export const PedidosPage = () => {
                     ]}
                   >
                     <TabPanel
-                      // backgroundColor={"#feffce"}
                       width={"90%"}
                       height={"100%"}
                       maxH={"80vh"}
