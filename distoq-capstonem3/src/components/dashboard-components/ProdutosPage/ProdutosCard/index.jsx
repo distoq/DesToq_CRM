@@ -8,10 +8,8 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Flex,
   Image,
@@ -50,7 +48,7 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
         key={id}
         id={id}
         width={"100%"}
-        maxWidth={"335px"}
+        maxWidth={"290px"}
         height={"fit-content"}
         borderRadius={"10px"}
         margin={"10px 10px"}
@@ -71,40 +69,10 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-        <Text>
-          Categoria:
-          <span>{category}</span>
-        </Text>
-        <Popover >
-          <Flex w="100%" justify="flex-end" >
-            <PopoverTrigger>
-              <Button  bg="transparent">
-                descrição <AddIcon ml="10px" cursor="pointer" />
-              </Button>
-            </PopoverTrigger>
-          </Flex>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
-            <PopoverBody>{description}</PopoverBody>
-          </PopoverContent>
-        </Popover>
-        <Text width={"100%"} fontWeight={"bold"}>
-          Preço: R$
-          <span fontWeight={"400"}>{price.toFixed(2)}</span>
-        </Text>
-          <Text
-            fontWeight={"bold"}
-            fontSize={"22px"}
-            backgroundColor={"#fff"}
-            borderRadius={"20px"}
-            padding={"5px 10px 0px 10px"}
-            boxShadow={"0 0 5px #202020"}
-          >
-            P.Id: #{id}
-          </Text>
+       
+          
           <Button
+         
             colorScheme={"red"}
             size={"sm"}
             onClick={() => removeProduct(id)}
@@ -147,10 +115,21 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
             Categoria:
             <span>{category}</span>
           </Text>
-          <Text width={"100%"} fontWeight={"bold"}>
-            Descrição:
-            <Text fontWeight={"400"}>{description}</Text>
-          </Text>
+          <Popover >
+          <Flex w="100%" justify="flex-end" >
+            <PopoverTrigger>
+              <Button  bg="transparent">
+                descrição <AddIcon ml="10px" cursor="pointer" />
+              </Button>
+            </PopoverTrigger>
+          </Flex>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
+            <PopoverBody>{description}</PopoverBody>
+          </PopoverContent>
+        </Popover>
           <Text width={"100%"} fontWeight={"bold"}>
             Preço: R$
             <span fontWeight={"400"}>{price.toFixed(2)}</span>

@@ -21,7 +21,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useStockList } from "../../../Providers/Stock";
 import { StockList } from "./StockList";
@@ -33,7 +33,7 @@ export const EstoquePage = () => {
   );
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
-  const { stockList } = useStockList();
+  const { stockList, getListStock } = useStockList();
   const { inputSearch } = useContext(DashFilterContext);
 
   const filteredStockList = stockList.filter(
@@ -49,12 +49,15 @@ export const EstoquePage = () => {
         .toLowerCase()
         .includes(inputSearch.toLowerCase())
   );
-
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
     onChange: setActiveDashboardPage,
   });
+
+  useEffect(() => {
+    getListStock();
+  }, []);
 
   const group = getRootProps();
   const formSchema = yup.object().shape({
