@@ -8,10 +8,8 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Button,
   Flex,
   Image,
@@ -71,8 +69,6 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-       
-          
           <Button
          
             colorScheme={"red"}

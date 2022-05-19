@@ -7,8 +7,6 @@ import {
   InputGroup,
   InputLeftAddon,
   InputLeftElement,
-  InputRightAddon,
-  InputRightElement,
   Select,
   Stack,
   Tab,
@@ -26,11 +24,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-import { useToken } from "../../../Providers/Token";
+
 import api from "../../../services/api";
 import { CardPedidos } from "./TicketCard";
 import { DashFilterContext } from "../../../Providers/DashboardFilter";
@@ -39,7 +36,7 @@ export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
-  const { token } = useToken();
+    const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
 
   const [clientsList, setClientsList] = useState([]);
   const [productsList, setProductsList] = useState([]);
@@ -66,8 +63,6 @@ export const PedidosPage = () => {
   const getStockList = () => {
     api.get(`/stock`).then((resp) => setStockList(resp.data));
   };
-
-  //console.log(stockList);
 
   const getProductsList = () => {
     api
@@ -141,7 +136,7 @@ export const PedidosPage = () => {
         .post(`/tickets`, ticketData, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${userToken}`,
           },
         })
         .then(() => getTicketsList());
@@ -358,7 +353,6 @@ export const PedidosPage = () => {
                           getTicketsList={getTicketsList}
                           setTicketList={setTicketList}
                           token={token}
-                          // stockList={stockList}
                         />
                       ))}
                     </TabPanel>
@@ -451,7 +445,6 @@ export const PedidosPage = () => {
                               margin={"5px 0"}
                               colorScheme="blue"
                               onClick={() => {
-                                //console.log(ticketItem);
                                 api
                                   .get(`products/${ticketItemId}`)
                                   .then((resp) => {
@@ -489,7 +482,6 @@ export const PedidosPage = () => {
                                   width={"15px"}
                                   height={"15px"}
                                   onClick={(e) => {
-                                    //console.log(e.target.value);
                                   }}
                                 >
                                   x
