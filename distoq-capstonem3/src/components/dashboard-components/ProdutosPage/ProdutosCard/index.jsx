@@ -1,6 +1,6 @@
 import { AddIcon, StarIcon } from "@chakra-ui/icons";
-import { StarIcon } from "@chakra-ui/icons";
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+// import { StarIcon } from "@chakra-ui/icons";
+// import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
   Popover,
@@ -71,6 +71,7 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
+        <Text>
           Categoria:
           <span>{category}</span>
         </Text>
