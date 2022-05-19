@@ -55,7 +55,7 @@ export const CardPedidos = ({
           },
         }
       )
-      .then((res) => console.log(res));
+      .then((res) => getListStock());
   };
 
   return (
@@ -148,7 +148,7 @@ export const CardPedidos = ({
                 console.log(names);
                 console.log(ticketProducts);
 
-                ticketProducts.forEach((product) => {
+                ticketProducts.forEach((product, index) => {
                   product.ingredients.forEach((ingredients) => {
                     const itemData = stockList.filter(
                       (ele) => ele.supplyData.name === ingredients.name
@@ -156,7 +156,9 @@ export const CardPedidos = ({
                     console.log(product);
                     console.log(ingredients);
                     console.log(itemData);
-                    reduceStock(itemData[0].id, ingredients.qty);
+                    const totalToReduce =
+                      ingredients.qty * ticketProducts[index].quantity;
+                    reduceStock(itemData[0].id, totalToReduce);
                     getListStock();
                   });
                 });
