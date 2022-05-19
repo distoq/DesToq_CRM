@@ -28,8 +28,6 @@ import { CartContext } from "../../../Providers/cart";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
-import { useToken } from "../../../Providers/Token";
-import { useUser } from "../../../Providers/Users";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -37,13 +35,12 @@ const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
-  const { userLogin } = useUser();
+  const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
   const { cart, deleteCart, setCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [userData, setUserData] = useState({});
   const btnRef = React.useRef();
   const toast = useToast();
-  const { token } = useToken();
 
   const getUserData = () => {
     if (userLogin) {
@@ -52,7 +49,6 @@ const HeaderHome = () => {
   };
   useEffect(() => {
     getUserData();
-    
   }, []);
 
   const sum = cart.reduce((previous, current) => {
@@ -82,7 +78,6 @@ const HeaderHome = () => {
       position: "top",
     });
   };
-
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
     const ticketData = {
@@ -92,19 +87,20 @@ const HeaderHome = () => {
       ticketProducts: [...cartItems],
       status: "Realizado",
     };
-    if (!token) {
-      toast({
-        description: "Usuário não está logado!",
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-        position: "top",
-      }); 
-      onClose();
+    if (!tokenUser) {
+        toast({
+          description: "Usuário não está logado!",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+        onClose();
       navigate("/login");
     }
 
-    if (cartItems?.length === 0) {
+    if (tokenUser && cartItems?.length === 0) {
+      console.log("carrinho vazio !")
       toast({
         description: "Carrinho vazio !",
         status: "error",
@@ -114,13 +110,14 @@ const HeaderHome = () => {
       });
       onClose();
     }
-    if (token && cartItems.length !== 0) {
+    if (tokenUser && cartItems.length !== 0) {
+     
       api
         .post("tickets/", ticketData, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${tokenUser}` },
         })
         .then((res) => {
-          if (token) {
+          if (tokenUser) {
             localStorage.removeItem("@DEStoq:cart");
             setCart([]);
             toast({
@@ -144,8 +141,6 @@ const HeaderHome = () => {
         });
       onClose();
     }
-  
-    onClose();
   };
   const closeDrawer = () => {
     toast({
@@ -160,15 +155,10 @@ const HeaderHome = () => {
   };
   return (
     <>
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement="right"
-        size="lg"
-      >
+      <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="lg">
         <DrawerOverlay />
         <DrawerContent>
-        <DrawerCloseButton />
+          <DrawerCloseButton />
           <DrawerHeader>Carrinho</DrawerHeader>
           <DrawerBody>
             <Flex direction="center" align="center" justify="center">
