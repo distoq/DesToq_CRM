@@ -36,11 +36,18 @@ export const EstoquePage = () => {
   const { stockList } = useStockList();
   const { inputSearch } = useContext(DashFilterContext);
 
-  const filteredStockList = stockList.filter((item) =>
-    item.supplyData.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
-    item.supplyData.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
-    item.providerData.companyName.toLowerCase().includes(inputSearch.toLowerCase()) ||
-    item.providerData.fantasyName.toLowerCase().includes(inputSearch.toLowerCase()) 
+  const filteredStockList = stockList.filter(
+    (item) =>
+      item.supplyData.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.supplyData.category
+        .toLowerCase()
+        .includes(inputSearch.toLowerCase()) ||
+      item.providerData.companyName
+        .toLowerCase()
+        .includes(inputSearch.toLowerCase()) ||
+      item.providerData.fantasyName
+        .toLowerCase()
+        .includes(inputSearch.toLowerCase())
   );
 
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -152,7 +159,7 @@ export const EstoquePage = () => {
             backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
-            height={["100%", "100%", "100%", "100%", "90%"]}
+            height={["100%", "100%", "100%", "100%", "95%"]}
             marginTop={["20px", "20px", "20px", "20px", "0px"]}
             borderTopRadius={"15px"}
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
@@ -204,7 +211,36 @@ export const EstoquePage = () => {
                 </Tab>
               </TabList>
               <TabPanels>
-                <TabPanel>
+                <TabPanel
+                  width={"90%"}
+                  height={"100%"}
+                  maxH={"80vh"}
+                  display={"flex"}
+                  flexDir={"column"}
+                  alignItens={"center"}
+                  overflowY={"auto"}
+                  sx={{
+                    "&::-webkit-scrollbar": {
+                      width: "5px",
+                      height: "50px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "#7a7a7a",
+                      marginTop: "25px",
+                      marginBottom: "25px",
+                      borderRadius: "5px",
+                      boxShadow: "inset 0 0 3px black",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "#505050",
+                      boxShadow: "inset 0 0 5px #e7e7e7dd",
+                      borderRadius: "5px",
+                    },
+                    "&::-webkit-scrollbar-thumb:hover": {
+                      background: "#555",
+                    },
+                  }}
+                >
                   <UnorderedList m="0">
                     {filteredStockList?.map((stockItem) => (
                       <StockList key={stockItem.id} list={stockItem} />
@@ -214,6 +250,7 @@ export const EstoquePage = () => {
                 <TabPanel>
                   <Flex
                     mr="10px"
+                    mb="15px"
                     direction="column"
                     justify={"center"}
                     align="flex-end"
@@ -246,7 +283,37 @@ export const EstoquePage = () => {
                     </form>
                   </Flex>
 
-                  <UnorderedList m="0">
+                  <UnorderedList
+                    width={"100%"}
+                    height={"90%"}
+                    maxH={"70vh"}
+                    display={"flex"}
+                    flexDir={"column"}
+                    alignItens={"center"}
+                    overflowY={"auto"}
+                    sx={{
+                      "&::-webkit-scrollbar": {
+                        width: "5px",
+                        height: "50px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        background: "#7a7a7a",
+                        marginTop: "25px",
+                        marginBottom: "25px",
+                        borderRadius: "5px",
+                        boxShadow: "inset 0 0 3px black",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "#505050",
+                        boxShadow: "inset 0 0 5px #e7e7e7dd",
+                        borderRadius: "5px",
+                      },
+                      "&::-webkit-scrollbar-thumb:hover": {
+                        background: "#555",
+                      },
+                    }}
+                    m="0"
+                  >
                     {stockList?.map((stockItem) => (
                       <StockList
                         key={stockItem.id}

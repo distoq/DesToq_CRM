@@ -1,7 +1,22 @@
+import { AddIcon, StarIcon } from "@chakra-ui/icons";
 import { StarIcon } from "@chakra-ui/icons";
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Button,
+  Flex,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import api from "../../../../dataBase/db";
 import { useToken } from "../../../../Providers/Token";
 
@@ -56,6 +71,28 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
+          Categoria:
+          <span>{category}</span>
+        </Text>
+        <Popover >
+          <Flex w="100%" justify="flex-end" >
+            <PopoverTrigger>
+              <Button  bg="transparent">
+                descrição <AddIcon ml="10px" cursor="pointer" />
+              </Button>
+            </PopoverTrigger>
+          </Flex>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
+            <PopoverBody>{description}</PopoverBody>
+          </PopoverContent>
+        </Popover>
+        <Text width={"100%"} fontWeight={"bold"}>
+          Preço: R$
+          <span fontWeight={"400"}>{price.toFixed(2)}</span>
+        </Text>
           <Text
             fontWeight={"bold"}
             fontSize={"22px"}
