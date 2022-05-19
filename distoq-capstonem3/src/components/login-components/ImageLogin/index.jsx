@@ -1,4 +1,4 @@
-import { Avatar, Flex, Image } from "@chakra-ui/react";
+import { Avatar, Flex, Image, Text } from "@chakra-ui/react";
 import DEStoq from "../../../assets/imgs/DEStoq.png";
 
 const ImageLogin = () => {
@@ -17,7 +17,7 @@ const ImageLogin = () => {
       backgroundSize="100% 90%"
       display={["none", "none", "none", "none", "flex"]}
     >
-      <Flex h="500px">
+      <Flex ml={"50px"} alignItems={"center"}justify={"center"} flexDirection={"column"}>
         <Avatar
           w="200px"
           h="200px"
@@ -27,10 +27,13 @@ const ImageLogin = () => {
           top="200px"
           src={DEStoq}
           alt="logo da empresa"
-        />
+          />
+        <Text mr={"80px"} mt={"250px"} color={"#ccc"} fontFamily={"rubik"} fontSize={"1.5rem"}>Descomplicando seu estoque!</Text>
+      {/* <Flex>
+
+      </Flex> */}
       </Flex>
     </Flex>
   );
 };
-
 export default ImageLogin;
