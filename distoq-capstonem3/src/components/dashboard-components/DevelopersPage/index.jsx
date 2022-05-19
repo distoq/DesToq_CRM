@@ -37,6 +37,7 @@ import { ShowcaseContext } from "../../../Providers/showcase";
 import { AiFillGithub } from "react-icons/ai";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { FaHeartbeat } from "react-icons/fa";
+import { GiBrain, GiBrainstorm } from "react-icons/gi";
 
 export const DevelopersPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -181,7 +182,7 @@ export const DevelopersPage = () => {
             >
               <Heading fontSize={"1.8rem"} color={"#111"} mt={"70px"} width={"100%"} textAlign={"center"}>
                 <Flex justify={"center"} align={"center"}>
-                  Developed with <Box m={"10px"}><FaHeartbeat/></Box> by :
+                  Developed with <Box m={"10px"}><GiBrainstorm /></Box> and <Box m={"10px"}><FaHeartbeat/></Box>, by :
                 </Flex>
               </Heading>
               <Flex 
