@@ -138,7 +138,6 @@ export const ProdutosPage = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-
         .then(() => {
           getProducts()
           getProductsList()});
