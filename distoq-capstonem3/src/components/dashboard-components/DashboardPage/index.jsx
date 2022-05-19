@@ -2,16 +2,13 @@ import {
   Box,
   Flex,
   Heading,
-  Stack,
   Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { GoSearch } from "react-icons/go";
 import { useActivePage } from "../../../Providers/DashboardPageController";
-import { useUser } from "../../../Providers/Users";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Example from "../../lottie/lottie";
@@ -20,7 +17,7 @@ AOS.init();
 export const DashboardPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
-  const { userLogin } = useUser();
+    const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || ""
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -105,14 +102,6 @@ export const DashboardPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
-          textAlign="center"
-        >
-          Dashboard Page
-        </Heading>
         <Flex
           width={"100%"}
           height={"100%"}
