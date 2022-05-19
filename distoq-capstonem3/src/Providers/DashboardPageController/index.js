@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { AiFillBank, AiOutlineDropbox } from "react-icons/ai";
-import { MdDeveloperMode } from "react-icons/md";
+import { MdDeliveryDining, MdDeveloperMode } from "react-icons/md";
 import {
   FaBoxes,
   FaFileInvoiceDollar,
@@ -43,6 +43,9 @@ export const DashboardPageControllerProvider = ({ children }) => {
       case "Developers":
         return <MdDeveloperMode />;
 
+      case "Entregas":
+        return <MdDeliveryDining />;
+
       default:
         break;
     }
@@ -57,6 +60,7 @@ export const DashboardPageControllerProvider = ({ children }) => {
     "Produtos",
     "Estoque",
     "Financeiro",
+    "Entregas",
     "Developers",
   ];
 
