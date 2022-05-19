@@ -1,22 +1,26 @@
 import {
   Box,
-  Button,
   Flex,
   Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
+  Stack,
+  Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { GoSearch } from "react-icons/go";
-
 import { useActivePage } from "../../../Providers/DashboardPageController";
+import { useUser } from "../../../Providers/Users";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import Example from "../../lottie/lottie";
+AOS.init();
 
 export const DashboardPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
+  const { userLogin } = useUser();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -67,8 +71,13 @@ export const DashboardPage = () => {
     );
   }
   return (
-    //FULL CONTAINER
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -104,24 +113,6 @@ export const DashboardPage = () => {
         >
           Dashboard Page
         </Heading>
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
         <Flex
           width={"100%"}
           height={"100%"}
@@ -129,7 +120,7 @@ export const DashboardPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
+            backgroundColor={"#aeaeae4e"}
             boxShadow={"0 0 15px #464646"}
             width={["100%", "100%", "100%", "100%", "90%"]}
             height={["100%", "100%", "100%", "100%", "90%"]}
@@ -138,11 +129,33 @@ export const DashboardPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            CONTEUDO AQUI!!!!
+            <Flex w="100%" direction={"column"} align="center">
+              <Heading mt="40px" variant={"primary"}>
+                Bem vindo, {userLogin.name}
+              </Heading>
+              <Flex mt="10px" w="100%" justify={"center"}>
+                <Text
+                  p="10px"
+                  borderRadius="10px"
+                  border="1px solid black"
+             
+                  variant="primary"
+                  boxShadow="0 0 10px gray"
+                  _hover={{ boxShadow: "0 0 10px #101010" }}
+                >
+                  Tudo aqui foi feito para você fazer sua gestão de forma
+                  simples e descomplicada.
+                </Text>
+              </Flex>
+              <Box ml="40px" w="38%" maxW="600px">
+                <Example/>
+              </Box>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
 

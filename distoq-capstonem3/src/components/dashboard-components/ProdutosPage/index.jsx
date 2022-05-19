@@ -1,13 +1,11 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   Heading,
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
   InputRightAddon,
   InputRightElement,
   Select,
@@ -23,28 +21,33 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { GoSearch } from "react-icons/go";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardProdutos } from "./ProdutosCard";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
+import { ShowcaseContext } from "../../../Providers/showcase";
 
 export const ProdutosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
   // const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const [productsList, setProductsList] = useState(null);
+  const [productsList, setProductsList] = useState([]);
 
   const { token } = useToken();
 
   const { categoriasOptions } = useSelectValues();
+
+  const { inputSearch } = useContext(DashFilterContext);
 
   const getProductsList = () => {
     api
@@ -53,7 +56,13 @@ export const ProdutosPage = () => {
       .catch((err) => err);
   };
 
-  console.log(productsList);
+  const filteredProductsList = productsList.filter(
+    (item) =>
+      item.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.category.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.description.toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   useEffect(() => {
     getProductsList();
   }, []);
@@ -71,7 +80,7 @@ export const ProdutosPage = () => {
   const [inputSelect, setInputSelect] = useState("");
   const [inputQty, setInputQty] = useState("");
   const [showError, setShowError] = useState(false);
-
+  const { getProducts } = useContext(ShowcaseContext);
   const handleInputsFields = () => {
     setProductNameValue("");
     setCategoryValue("");
@@ -122,8 +131,6 @@ export const ProdutosPage = () => {
         rating: 5,
       };
 
-      console.log(dataProducts);
-
       api
         .post(`/products`, dataProducts, {
           headers: {
@@ -131,7 +138,9 @@ export const ProdutosPage = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(() => getProductsList());
+        .then(() => {
+          getProducts()
+          getProductsList()});
 
       handleInputsFields();
     }
@@ -187,7 +196,13 @@ export const ProdutosPage = () => {
   }
   return (
     //FULL CONTAINER
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -274,41 +289,47 @@ export const ProdutosPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              backgroundColor={"#434343"}
+           
               borderRadius={"20px"}
             >
               <TabList mb="1em">
                 <Tab
-                  color={"#fff"}
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    borderColor: "#F4BF39",
-                    borderTopLeftRadius: "18px",
-                    border: "2px",
-                  }}
+                 color="#101010"
+                 fontWeight={"bold"}
+                 fontSize={"26px"}
+                 _selected={{
+                   color: "#FFFF",
+                   borderBottomColor: "#14213d",
+                   background: "#14213d",
+                   borderBottomWidth: "2px",
+                 }}
+                 _focus={{
+                   color: "#FFFF",
+
+                   borderTopLeftRadius: "18px",
+                   borderTopRightRadius: "18px",
+                   border: "2px solid #14213d",
+                 }}
                 >
                   Produtos
                 </Tab>
                 <Tab
-                  color={"#fff"}
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    borderColor: "#F4BF39",
-                    borderTopRightRadius: "18px",
-                    border: "2px",
-                  }}
+             color="#101010"
+             fontWeight={"bold"}
+             fontSize={"26px"}
+             _selected={{
+               color: "#FFFF",
+               borderBottomColor: "#14213d",
+               background: "#14213d",
+               borderBottomWidth: "2px",
+             }}
+             _focus={{
+               color: "#FFFF",
+
+               borderTopLeftRadius: "18px",
+               borderTopRightRadius: "18px",
+               border: "2px solid #14213d",
+             }}
                 >
                   Adicionar Novo Produto
                 </Tab>
@@ -364,7 +385,7 @@ export const ProdutosPage = () => {
                     },
                   }}
                 >
-                  {productsList?.map((ele) => (
+                  {filteredProductsList?.map((ele) => (
                     <CardProdutos
                       product={ele}
                       setProductsList={setProductsList}
@@ -522,7 +543,7 @@ export const ProdutosPage = () => {
                               width={"15px"}
                               height={"15px"}
                               onClick={(e) => {
-                                console.log(e.target.value);
+                               
                                 setProductIngredientsList(
                                   productIngredientsList.filter(
                                     (ele) => ele.id != e.target.value
@@ -613,8 +634,8 @@ export const ProdutosPage = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
-
 export default ProdutosPage;

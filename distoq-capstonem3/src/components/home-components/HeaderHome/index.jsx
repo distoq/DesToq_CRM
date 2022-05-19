@@ -8,13 +8,13 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   Text,
   UnorderedList,
   ListItem,
   Avatar,
   useToast,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
@@ -28,16 +28,28 @@ import { CartContext } from "../../../Providers/cart";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
-import { useToken } from "../../../Providers/Token";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
+  const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
   const { cart, deleteCart, setCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [userData, setUserData] = useState({});
   const btnRef = React.useRef();
   const toast = useToast();
+
+  const getUserData = () => {
+    if (userLogin) {
+      api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+    }
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const sum = cart.reduce((previous, current) => {
     return previous + current.price * current.quantity;
@@ -66,38 +78,46 @@ const HeaderHome = () => {
       position: "top",
     });
   };
-
-  const { token } = useToken();
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
-    if(!token){
-      toast({
-        description: "Usuário não está logado!",
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-        position: "top",
-      });
-      navigate("/login")
+    const ticketData = {
+      clientInfo: { ...userData },
+      ownerId: 1,
+      userId: 1,
+      ticketProducts: [...cartItems],
+      status: "Realizado",
+    };
+    if (!tokenUser) {
+        toast({
+          description: "Usuário não está logado!",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+        onClose();
+      navigate("/login");
     }
-    if (cartItems?.length === 0) {
+
+    if (tokenUser && cartItems?.length === 0) {
+      console.log("carrinho vazio !")
       toast({
         description: "Carrinho vazio !",
         status: "error",
-        duration: 4000,
+        duration: 1000,
         isClosable: true,
         position: "top",
       });
+      onClose();
     }
-    if (token && cartItems.length !== 0) {
+    if (tokenUser && cartItems.length !== 0) {
+     
       api
-        .post("tickets/", cartItems, {
-          headers: { Authorization: `Bearer ${token}` },
+        .post("tickets/", ticketData, {
+          headers: { Authorization: `Bearer ${tokenUser}` },
         })
-
         .then((res) => {
-          if (token) {
-            onClose();
+          if (tokenUser) {
             localStorage.removeItem("@DEStoq:cart");
             setCart([]);
             toast({
@@ -107,11 +127,8 @@ const HeaderHome = () => {
               isClosable: true,
               position: "top",
             });
+            onClose();
           }
-          
-        
-          
-          onClose();
         })
         .catch((err) => {
           toast({
@@ -122,11 +139,100 @@ const HeaderHome = () => {
             position: "top",
           });
         });
+      onClose();
     }
   };
-
+  const closeDrawer = () => {
+    toast({
+      position: "absolute",
+      top: "-50px",
+      description: "Saiu!",
+      status: "success",
+      duration: 300,
+      isClosable: true,
+    });
+    onClose();
+  };
   return (
     <>
+      <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="lg">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Carrinho</DrawerHeader>
+          <DrawerBody>
+            <Flex direction="center" align="center" justify="center">
+              <UnorderedList m="0">
+                {cart.map((product, index) => {
+                  const sumProduct = product.price * product.quantity;
+                  return (
+                    <ListItem
+                      key={index}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      width={["280px", "300px", "600px"]}
+                      h="85px"
+                      m="10px"
+                      p="10px"
+                      border="1px solid black"
+                      borderRadius="10px"
+                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                    >
+                      <Avatar
+                        w="57px"
+                        h="57px"
+                        src={product.image}
+                        alt={product.name}
+                      />
+                      <Text w={"100px"} maxW={"100px"}>
+                        {product.name}
+                      </Text>
+                      <Text w={"100px"} maxW={"100px"}>
+                        Qtd: {product.quantity}
+                      </Text>
+                      <Text>
+                        {sumProduct.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
+                      </Text>
+                      <Button onClick={() => deleteFromCart(product.uniqueId)}>
+                        <DeleteIcon />
+                      </Button>
+                    </ListItem>
+                  );
+                })}
+              </UnorderedList>
+            </Flex>
+          </DrawerBody>
+          <DrawerFooter alignSelf="center">
+            <Flex
+              bg="#E2E8F0"
+              justify={"space-around"}
+              borderRadius="5px"
+              p="5px"
+              h="43px"
+              align="center"
+              w="250px"
+            >
+              <Text variant="primary">Total:</Text>
+              <Text variant="primary">
+                {sum.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </Text>
+            </Flex>
+            <Button w="100%" variant="primary" onClick={getOrder}>
+              finalizar compra
+            </Button>
+            <Button w="40%" colorScheme={"red"} onClick={closeDrawer}>
+              sair
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
       <Flex
         w="100%"
         h="150px"
@@ -174,89 +280,7 @@ const HeaderHome = () => {
             >
               <AiOutlineShoppingCart fontSize={35} color="#ffff" />
             </Button>
-            <Drawer
-              isOpen={isOpen}
-              placement="right"
-              onClose={onClose}
-              finalFocusRef={btnRef}
-              size="lg"
-            >
-              <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader>Carrinho</DrawerHeader>
-                <DrawerBody>
-                  <Flex direction="center" align="center" justify="center">
-                    <UnorderedList m="0">
-                      {cart.map((product, index) => {
-                        const sumProduct = product.price * product.quantity;
-                        return (
-                          <ListItem
-                            key={index}
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            width={["280px", "300px", "600px"]}
-                            h="85px"
-                            m="10px"
-                            p="10px"
-                            border="1px solid black"
-                            borderRadius="10px"
-                            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                          >
-                            <Avatar
-                              w="57px"
-                              h="57px"
-                              src={product.image}
-                              alt={product.name}
-                            />
-                            <Text w={"100px"} maxW={"100px"}>
-                              {product.name}
-                            </Text>
-                            <Text w={"100px"} maxW={"100px"}>
-                              Qtd: {product.quantity}
-                            </Text>
-                            <Text>
-                              {sumProduct.toLocaleString("pt-br", {
-                                style: "currency",
-                                currency: "BRL",
-                              })}
-                            </Text>
-                            <Button
-                              onClick={() => deleteFromCart(product.uniqueId)}
-                            >
-                              <DeleteIcon />
-                            </Button>
-                          </ListItem>
-                        );
-                      })}
-                    </UnorderedList>
-                  </Flex>
-                </DrawerBody>
-                <DrawerFooter alignSelf="center">
-                  <Flex
-                    bg="#E2E8F0"
-                    justify={"space-around"}
-                    borderRadius="5px"
-                    p="5px"
-                    h="43px"
-                    align="center"
-                    w="150px"
-                  >
-                    <Text variant="primary">Total:</Text>
-                    <Text variant="primary">
-                      {sum.toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      })}
-                    </Text>
-                  </Flex>
-                  <Button variant="primary" w="350px" onClick={getOrder}>
-                    finalizar compra
-                  </Button>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
+
             <Button
               bg="transparent"
               _hover={{ bg: "transparent" }}

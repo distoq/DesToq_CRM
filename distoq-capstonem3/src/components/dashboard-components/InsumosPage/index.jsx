@@ -18,6 +18,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardInsumo } from "./InsumoCard";
@@ -27,20 +28,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useProvidersList } from "../../../Providers/ProvidersList";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const InsumosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
   const { unidadesDeMedidaOptions, categoriasOptions } = useSelectValues();
 
-  const { providersList} = useProvidersList();
+  const { providersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
-  const [input, setInput] = useState("");
+  const { inputSearch } = useContext(DashFilterContext);
 
+  
   const filteredSuppliesList = suppliesList.filter((item) =>
-    item.name.toLowerCase().includes(input.toLowerCase())
+    item.name.toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   const [supplyName, setSupplyName] = useState("");
@@ -61,17 +64,14 @@ export const InsumosPage = () => {
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
-      console.log(res.data);
+     
       setSupliesList(res.data);
     });
   }, []);
 
-  console.log(suppliesList);
-  console.log(providersList);
-
   const getApi = () => {
     api.get(`/supplies`).then((resp) => {
-      console.log(resp.data);
+ 
       setSupliesList(resp.data);
     });
   };
@@ -100,7 +100,7 @@ export const InsumosPage = () => {
   });
 
   const onSubmitFunction = (data) => {
-    console.log(data);
+
     api
       .post(
         "/supplies",
@@ -121,7 +121,7 @@ export const InsumosPage = () => {
       .then((_) => getApi());
   };
 
-  console.log(errors);
+
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -172,8 +172,13 @@ export const InsumosPage = () => {
     );
   }
   return (
-
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -201,8 +206,6 @@ export const InsumosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
- 
-       
         <Flex
           width={"100%"}
           height={"100%"}
@@ -219,22 +222,16 @@ export const InsumosPage = () => {
             borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
             color={"white"}
           >
-            <Tabs
-              isFitted
-              variant="enclosed"
-              w={"100%"}
-             
-              borderRadius={"20px"}
-            >
+            <Tabs isFitted variant="enclosed" w={"100%"} borderRadius={"20px"}>
               <TabList mb="1em">
                 <Tab
-                   fontWeight={"bold"}
-                   fontSize={"26px"}
-                   color="#101010"
+                  fontWeight={"bold"}
+                  fontSize={"26px"}
+                  color="#101010"
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
@@ -247,18 +244,18 @@ export const InsumosPage = () => {
                   Insumos Cadastrados
                 </Tab>
                 <Tab
-                 color="#101010"
+                  color="#101010"
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
                     color: "#FFFF",
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
                     color: "#FFFF",
-              
+
                     borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
                     border: "2px solid #14213d",
@@ -457,8 +454,8 @@ export const InsumosPage = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
-
 export default InsumosPage;

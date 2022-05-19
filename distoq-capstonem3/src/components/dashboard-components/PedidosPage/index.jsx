@@ -25,6 +25,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
@@ -190,8 +192,13 @@ export const PedidosPage = () => {
     );
   }
   return (
-    //FULL CONTAINER
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -520,8 +527,8 @@ export const PedidosPage = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
-
 export default PedidosPage;

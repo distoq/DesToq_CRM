@@ -80,8 +80,7 @@ export const FinanceiroPage = () => {
       exit={{opacity:0}}
       transition={{duration:1}}
     >
-    
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -259,7 +258,7 @@ export const FinanceiroPage = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
     </motion.div>
   );
 };

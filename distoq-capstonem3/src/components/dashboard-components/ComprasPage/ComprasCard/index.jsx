@@ -16,8 +16,8 @@ import { useStockList } from "../../../../Providers/Stock";
 export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
   const { id, providerData, quantity, status, supplyData, totalValue } = order;
   const [selectValue, setSelectValue] = useState("");
-
   const { stockList, getListStock } = useStockList();
+
   return (
     <Flex
       key={id}
