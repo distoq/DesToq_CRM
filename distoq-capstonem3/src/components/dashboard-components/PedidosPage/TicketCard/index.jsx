@@ -31,10 +31,6 @@ export const CardPedidos = ({
   const [selectValue, setSelectValue] = useState("");
 
   const { stockList, getListStock } = useStockList();
-  console.log(id);
-  console.log(ticket);
-  console.log(ticketProducts);
-  console.log(stockList);
 
   const reduceStock = (id, quantity) => {
     console.log(id);
