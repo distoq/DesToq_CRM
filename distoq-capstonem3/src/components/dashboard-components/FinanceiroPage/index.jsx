@@ -131,40 +131,44 @@ export const FinanceiroPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              backgroundColor={"#434343"}
+              // backgroundColor={"#434343"}
               borderRadius={"20px"}
             >
               <TabList mb="1em">
                 <Tab
-                  color={"#fff"}
+                  color={"#101010"}
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
                     borderTopLeftRadius: "18px",
-                    border: "2px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Gráficos
                 </Tab>
                 <Tab
-                  color={"#fff"}
+                  color={"#101010"}
                   fontWeight={"bold"}
                   fontSize={"26px"}
                   _selected={{
-                    color: "#F4BF39",
-                    borderBottomColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderBottomColor: "#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
-                    borderColor: "#F4BF39",
+                    color: "#FFFF",
+                    borderTopLeftRadius: "18px",
                     borderTopRightRadius: "18px",
-                    border: "2px",
+                    border: "2px solid #14213d",
                   }}
                 >
                   Resumo
