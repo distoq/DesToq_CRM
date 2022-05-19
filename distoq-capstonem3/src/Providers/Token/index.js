@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const TokenContext = createContext("");
 
@@ -7,6 +7,9 @@ export const TokenProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
   );
 
+  useEffect(()=>{
+    setToken(JSON.parse(localStorage.getItem("@DEStoq:token")))
+  },[])
   return (
     <TokenContext.Provider
       value={{

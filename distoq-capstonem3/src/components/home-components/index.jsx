@@ -94,7 +94,6 @@ const CardSC = () => {
                       />
                     ))}
                 </Flex>
-
                 <Popover placement='top'>
                   <Flex justify="flex-end">
                     <PopoverTrigger>

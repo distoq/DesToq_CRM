@@ -14,6 +14,7 @@ import {
   ListItem,
   Avatar,
   useToast,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
@@ -27,8 +28,6 @@ import { CartContext } from "../../../Providers/cart";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import api from "../../../services/api";
-import { useToken } from "../../../Providers/Token";
-import { useUser } from "../../../Providers/Users";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -36,16 +35,17 @@ const HeaderHome = () => {
   const tokenUser = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
   const decodedToken = decodeToken(tokenUser);
   const navigate = useNavigate();
-  const { userLogin } = useUser();
+  const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
   const { cart, deleteCart, setCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [userData, setUserData] = useState({});
   const btnRef = React.useRef();
   const toast = useToast();
-  const { token } = useToken();
 
   const getUserData = () => {
-    api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+    if (userLogin) {
+      api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+    }
   };
   useEffect(() => {
     getUserData();
@@ -78,7 +78,6 @@ const HeaderHome = () => {
       position: "top",
     });
   };
-
   const getOrder = () => {
     const cartItems = JSON.parse(localStorage.getItem("@DEStoq:cart")) || [];
     const ticketData = {
@@ -88,19 +87,20 @@ const HeaderHome = () => {
       ticketProducts: [...cartItems],
       status: "Realizado",
     };
-    console.log(ticketData);
-    if (!token) {
-      toast({
-        description: "Usuário não está logado!",
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-        position: "top",
-      });
-      onClose();
+    if (!tokenUser) {
+        toast({
+          description: "Usuário não está logado!",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+        onClose();
       navigate("/login");
     }
-    if (cartItems?.length === 0) {
+
+    if (tokenUser && cartItems?.length === 0) {
+      console.log("carrinho vazio !")
       toast({
         description: "Carrinho vazio !",
         status: "error",
@@ -110,13 +110,14 @@ const HeaderHome = () => {
       });
       onClose();
     }
-    if (token && cartItems.length !== 0) {
+    if (tokenUser && cartItems.length !== 0) {
+     
       api
         .post("tickets/", ticketData, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${tokenUser}` },
         })
         .then((res) => {
-          if (token) {
+          if (tokenUser) {
             localStorage.removeItem("@DEStoq:cart");
             setCart([]);
             toast({
@@ -140,7 +141,6 @@ const HeaderHome = () => {
         });
       onClose();
     }
-    onClose();
   };
   const closeDrawer = () => {
     toast({
@@ -155,16 +155,10 @@ const HeaderHome = () => {
   };
   return (
     <>
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement="right"
-        blockScrollOnMount={false}
-        closeOnOverlayClick={false}
-        size="lg"
-      >
+      <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="lg">
         <DrawerOverlay />
         <DrawerContent>
+          <DrawerCloseButton />
           <DrawerHeader>Carrinho</DrawerHeader>
           <DrawerBody>
             <Flex direction="center" align="center" justify="center">
@@ -220,7 +214,7 @@ const HeaderHome = () => {
               p="5px"
               h="43px"
               align="center"
-              w="150px"
+              w="250px"
             >
               <Text variant="primary">Total:</Text>
               <Text variant="primary">
@@ -233,8 +227,8 @@ const HeaderHome = () => {
             <Button w="100%" variant="primary" onClick={getOrder}>
               finalizar compra
             </Button>
-            <Button w="100%" colorScheme={"red"} onClick={closeDrawer}>
-              Sair
+            <Button w="40%" colorScheme={"red"} onClick={closeDrawer}>
+              sair
             </Button>
           </DrawerFooter>
         </DrawerContent>
