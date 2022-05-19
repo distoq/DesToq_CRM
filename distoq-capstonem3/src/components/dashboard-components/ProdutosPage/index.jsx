@@ -1,13 +1,11 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   Heading,
   Input,
   InputGroup,
   InputLeftAddon,
-  InputLeftElement,
   InputRightAddon,
   InputRightElement,
   Select,
