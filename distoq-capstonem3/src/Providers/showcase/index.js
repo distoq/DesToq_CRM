@@ -5,7 +5,7 @@ export const ShowcaseContext = createContext([]);
 
 export const ShowcaseProvider = ({ children }) => {
   const [listProducts, setListProducts] = useState([]);
-
+ 
   useEffect(() => {
     getProducts();
   }, []);
@@ -17,7 +17,7 @@ export const ShowcaseProvider = ({ children }) => {
   };
 
   return (
-    <ShowcaseContext.Provider value={{ listProducts }}>
+    <ShowcaseContext.Provider value={{ listProducts,getProducts }}>
       {children}
     </ShowcaseContext.Provider>
   );

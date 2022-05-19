@@ -82,18 +82,19 @@ const FormRegister = () => {
 
     api
       .post("/register", user)
-      .then((_) =>
+      .then((_) => {
         toast({
           description: "Registrado!",
           status: "success",
           duration: 4000,
           isClosable: true,
           position: "top",
-        })
-      )
+        });
+        history("/login");
+      })
       .catch((_) =>
         toast({
-          description: "Registrado!",
+          description: "Algo deu errado!",
           status: "error",
           duration: 4000,
           isClosable: true,

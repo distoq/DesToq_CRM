@@ -12,6 +12,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import api from "../../../../services/api";
+import { motion } from "framer-motion";
 import { useProvidersList } from "../../../../Providers/ProvidersList";
 import { useContext } from "react";
 import { TokenContext } from "../../../../Providers/Token";
@@ -95,7 +96,7 @@ export const FormProviders = () => {
       .then((res) => {
         getApi();
         toast({
-          description: "Fornecedor cadastrado com sucesso!",
+          description: "cadastrado com sucesso",
           status: "success",
           duration: 2500,
           isClosable: true,
@@ -104,7 +105,7 @@ export const FormProviders = () => {
       })
       .catch((err) => {
         toast({
-          description: "Ops, algo deu errado!",
+          description: "Ops! Algo deu errado",
           status: "error",
           duration: 2000,
           isClosable: true,
@@ -147,7 +148,12 @@ export const FormProviders = () => {
   });
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <Flex direction="column">
           <FormControl
@@ -333,7 +339,7 @@ export const FormProviders = () => {
                   {...register("city")}
                   placeholder="digite a cidade"
                   _placeholder={{ color: "#716C6C" }}
-                  borderColor={errors.city && console.log("oi")}
+                  borderColor={errors.city && "red.500"}
                   variant="outline"
                 />
               </Flex>
@@ -370,6 +376,6 @@ export const FormProviders = () => {
           </Button>
         </Flex>
       </form>
-    </>
+    </motion.div>
   );
 };

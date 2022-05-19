@@ -35,6 +35,8 @@ const FormLogin = () => {
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
         );
+        localStorage.setItem("@DEStoq:user", JSON.stringify(res.data.user));
+
         return navigate("/");
       })
       .catch((err) => {

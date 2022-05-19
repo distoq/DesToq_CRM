@@ -18,6 +18,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardInsumo } from "./InsumoCard";
@@ -27,8 +28,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useProvidersList } from "../../../Providers/ProvidersList";
 import api from "../../../dataBase/db";
 import { useToken } from "../../../Providers/Token";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const InsumosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -37,10 +39,10 @@ export const InsumosPage = () => {
 
   const { providersList } = useProvidersList();
   const [suppliesList, setSupliesList] = useState([]);
-  const [input, setInput] = useState("");
+  const { inputSearch } = useContext(DashFilterContext);
 
   const filteredSuppliesList = suppliesList.filter((item) =>
-    item.name.toLowerCase().includes(input.toLowerCase())
+    item.name.toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   const [supplyName, setSupplyName] = useState("");
@@ -61,17 +63,12 @@ export const InsumosPage = () => {
 
   useEffect(() => {
     api.get("/supplies").then((res) => {
-      console.log(res.data);
       setSupliesList(res.data);
     });
   }, []);
 
-  console.log(suppliesList);
-  console.log(providersList);
-
   const getApi = () => {
     api.get(`/supplies`).then((resp) => {
-      console.log(resp.data);
       setSupliesList(resp.data);
     });
   };
@@ -98,7 +95,6 @@ export const InsumosPage = () => {
   });
 
   const onSubmitFunction = (data) => {
-    console.log(data);
     api
       .post(
         "/supplies",
@@ -118,8 +114,6 @@ export const InsumosPage = () => {
       .then((_) => handleInputsValue())
       .then((_) => getApi());
   };
-
-  console.log(errors);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -170,289 +164,302 @@ export const InsumosPage = () => {
     );
   }
   return (
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
-      <VStack
-        {...group}
-        alignItems="flex-start"
-        backgroundColor={"#434343"}
-        display={["none", "none", "none", "none", "flex"]}
-      >
-        {options.map((value) => {
-          const radio = getRadioProps({ value });
-          return (
-            <RadioCard key={value} {...radio}>
-              {handleIcons(value)} {value}
-            </RadioCard>
-          );
-        })}
-      </VStack>
-      <Flex
-        className="contentContainer"
-        width="100%"
-        minHeight="100%"
-        flexDir="column"
-        alignItems={"center"}
-        backgroundImage={
-          "https://www.jeronimoburger.com.br/img/home/banner-sobre-desk.png"
-        }
-        bgRepeat="no-repeat"
-        backgroundSize="100% 100%"
-      >
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+        <VStack
+          {...group}
+          alignItems="flex-start"
+          backgroundColor={"#434343"}
+          display={["none", "none", "none", "none", "flex"]}
+        >
+          {options.map((value) => {
+            const radio = getRadioProps({ value });
+            return (
+              <RadioCard key={value} {...radio}>
+                {handleIcons(value)} {value}
+              </RadioCard>
+            );
+          })}
+        </VStack>
         <Flex
-          width={"100%"}
-          height={"100%"}
+          className="contentContainer"
+          width="100%"
+          minHeight="100%"
+          flexDir="column"
           alignItems={"center"}
-          justifyContent={"center"}
+          backgroundImage={
+            "https://www.jeronimoburger.com.br/img/home/banner-sobre-desk.png"
+          }
+          bgRepeat="no-repeat"
+          backgroundSize="100% 100%"
         >
           <Flex
-            backgroundColor={"#aeaeae4e"}
-            boxShadow={"0 0 15px #464646"}
-            width={["100%", "100%", "100%", "100%", "90%"]}
-            height={["100%", "100%", "100%", "100%", "90%"]}
-            marginTop={["20px", "20px", "20px", "20px", "0px"]}
-            borderTopRadius={"15px"}
-            borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
-            color={"white"}
+            width={"100%"}
+            height={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            <Tabs isFitted variant="enclosed" w={"100%"} borderRadius={"20px"}>
-              <TabList mb="1em">
-                <Tab
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  color="#101010"
-                  _selected={{
-                    color: "#FFFF",
-                    borderBottomColor: "#14213d",
-                    background: "#14213d",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    color: "#FFFF",
-                    borderTopLeftRadius: "18px",
-                    borderTopRightRadius: "18px",
-                    border: "2px solid #14213d",
-                  }}
-                >
-                  Insumos cadastrados
-                </Tab>
-                <Tab
-                  color="#101010"
-                  fontWeight={"bold"}
-                  fontSize={"26px"}
-                  _selected={{
-                    color: "#FFFF",
-                    borderBottomColor: "#14213d",
-                    background: "#14213d",
-                    borderBottomWidth: "2px",
-                  }}
-                  _focus={{
-                    color: "#FFFF",
-
-                    borderTopLeftRadius: "18px",
-                    borderTopRightRadius: "18px",
-                    border: "2px solid #14213d",
-                  }}
-                >
-                  Adicionar insumos
-                </Tab>
-              </TabList>
-              <TabPanels
-                sx={{
-                  minWidth: "100%",
-                  height: "100%",
-                  // maxHeight: "calc(100% - 75px)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                maxHeight={[
-                  "calc(100% - 115px)",
-                  "calc(100% - 110px)",
-                  "calc(100% - 110px)",
-                  "calc(100% - 110px)",
-                  "calc(100% - 80px)",
-                ]}
+            <Flex
+              backgroundColor={"#aeaeae4e"}
+              boxShadow={"0 0 15px #464646"}
+              width={["100%", "100%", "100%", "100%", "90%"]}
+              height={["100%", "100%", "100%", "100%", "90%"]}
+              marginTop={["20px", "20px", "20px", "20px", "0px"]}
+              borderTopRadius={"15px"}
+              borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
+              color={"white"}
+            >
+              <Tabs
+                isFitted
+                variant="enclosed"
+                w={"100%"}
+                borderRadius={"20px"}
               >
-                <TabPanel
-                  // backgroundColor={"#feffce"}
-                  width={"90%"}
-                  height={"100%"}
-                  maxH={"80vh"}
-                  display={"flex"}
-                  justfyContent={"center"}
-                  alignItens={"center"}
-                  flexDirection={"column"}
-                  overflowY={"auto"}
-                  sx={{
-                    "&::-webkit-scrollbar": {
-                      width: "5px",
-                      height: "50px",
-                    },
-                    "&::-webkit-scrollbar-track": {
-                      background: "#7a7a7a",
-                      marginTop: "25px",
-                      marginBottom: "25px",
-                      borderRadius: "5px",
-                      boxShadow: "inset 0 0 3px black",
-                    },
-                    "&::-webkit-scrollbar-thumb": {
-                      background: "#505050",
-                      boxShadow: "inset 0 0 5px #e7e7e7dd",
-                      borderRadius: "5px",
-                    },
-                    "&::-webkit-scrollbar-thumb:hover": {
-                      background: "#555",
-                    },
-                  }}
-                >
-                  {filteredSuppliesList?.map((resp) => (
-                    <CardInsumo supply={resp} />
-                  ))}
-                </TabPanel>
-                <TabPanel
-                  width={"100%"}
-                  height={"100%"}
-                  maxH={"100%"}
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  sx={{}}
-                >
-                  <Flex
-                    w={"100%"}
-                    maxWidth={"700px"}
-                    height={"100%"}
-                    justifyContent={"center"}
+                <TabList mb="1em">
+                  <Tab
+                    fontWeight={"bold"}
+                    fontSize={"26px"}
+                    color="#101010"
+                    _selected={{
+                      color: "#FFFF",
+                      borderBottomColor: "#14213d",
+                      background: "#14213d",
+                      borderBottomWidth: "2px",
+                    }}
+                    _focus={{
+                      color: "#FFFF",
+                      borderTopLeftRadius: "18px",
+                      borderTopRightRadius: "18px",
+                      border: "2px solid #14213d",
+                    }}
                   >
-                    <Stack
-                      spacing={3}
-                      width="400px"
-                      maxWidth={"90%"}
-                      height={"100%"}
-                      display="flex"
-                      flexDir={"column"}
-                      alignItems="center"
-                      justifyContent={"center"}
-                      padding={"0 30px"}
-                      backgroundColor={"#fff"}
-                      borderRadius={"10px"}
-                      boxShadow="0 0 10px grey"
-                      color={"black"}
-                    >
-                      <Heading fontSize={"30px"}>Cadastrar novo insumo</Heading>
-                      <Input
-                        placeholder="nome do insumo"
-                        _placeholder={{ color: "#716C6C" }}
-                        size="md"
-                        minHeight={"40px"}
-                        {...register("name")}
-                        borderColor={errors.name && "#ff0000"}
-                        border={errors.name && "2px"}
-                        value={supplyName}
-                        onChange={(e) => setSupplyName(e.target.value)}
-                      />
-                      {errors.name && (
-                        <Text color={"#ff0000"} width={"95%"}>
-                          {errors.name.message}
-                        </Text>
-                      )}
-                      <Select
-                        placeholder="categoria"
-                        _placeholder={{ color: "#716C6C" }}
-                        {...register("category")}
-                        borderColor={errors.category && "#ff0000"}
-                        border={errors.category && "2px"}
-                        value={supplyCategory}
-                        onChange={(e) => setSupplyCategory(e.target.value)}
-                      >
-                        {categoriasOptions.map((e) => (
-                          <option value={e}>{e}</option>
-                        ))}
-                      </Select>
-                      {errors.category && (
-                        <Text color={"#ff0000"} width={"95%"}>
-                          {errors.category.message}
-                        </Text>
-                      )}
-                      <Select
-                        placeholder="fornecedor"
-                        _placeholder={{ color: "#716C6C" }}
-                        {...register("provider")}
-                        borderColor={errors.provider && "#ff0000"}
-                        border={errors.provider && "2px"}
-                        value={supplyProvider}
-                        onChange={(e) => setSupplyProvider(e.target.value)}
-                      >
-                        {providersList?.map((ele) => (
-                          <option value={ele.id}>{ele.fantasyName}</option>
-                        ))}
-                      </Select>
-                      {errors.provider && (
-                        <Text color={"#ff0000"} width={"95%"}>
-                          {errors.provider.message}
-                        </Text>
-                      )}
-                      <InputGroup>
-                        <InputLeftElement
-                          pointerEvents="none"
-                          color="gray.300"
-                          fontSize="1.2em"
-                          children="$"
-                        />
-                        <Input
-                          placeholder="preço de compra"
-                          _placeholder={{ color: "#716C6C" }}
-                          type={"number"}
-                          {...register("purchasePrice")}
-                          borderColor={errors.purchasePrice && "#ff0000"}
-                          border={errors.purchasePrice && "2px"}
-                          value={supplyPurchasePrice}
-                          onChange={(e) =>
-                            setSupplyPurchasePrice(e.target.value)
-                          }
-                        />
+                    Insumos cadastrados
+                  </Tab>
+                  <Tab
+                    color="#101010"
+                    fontWeight={"bold"}
+                    fontSize={"26px"}
+                    _selected={{
+                      color: "#FFFF",
+                      borderBottomColor: "#14213d",
+                      background: "#14213d",
+                      borderBottomWidth: "2px",
+                    }}
+                    _focus={{
+                      color: "#FFFF",
 
-                        <Select
-                          placeholder="unidade de medida"
+                      borderTopLeftRadius: "18px",
+                      borderTopRightRadius: "18px",
+                      border: "2px solid #14213d",
+                    }}
+                  >
+                    Adicionar insumos
+                  </Tab>
+                </TabList>
+                <TabPanels
+                  sx={{
+                    minWidth: "100%",
+                    height: "100%",
+                    // maxHeight: "calc(100% - 75px)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  maxHeight={[
+                    "calc(100% - 115px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 80px)",
+                  ]}
+                >
+                  <TabPanel
+                    // backgroundColor={"#feffce"}
+                    width={"90%"}
+                    height={"100%"}
+                    maxH={"80vh"}
+                    display={"flex"}
+                    justfyContent={"center"}
+                    alignItens={"center"}
+                    flexDirection={"column"}
+                    overflowY={"auto"}
+                    sx={{
+                      "&::-webkit-scrollbar": {
+                        width: "5px",
+                        height: "50px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        background: "#7a7a7a",
+                        marginTop: "25px",
+                        marginBottom: "25px",
+                        borderRadius: "5px",
+                        boxShadow: "inset 0 0 3px black",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "#505050",
+                        boxShadow: "inset 0 0 5px #e7e7e7dd",
+                        borderRadius: "5px",
+                      },
+                      "&::-webkit-scrollbar-thumb:hover": {
+                        background: "#555",
+                      },
+                    }}
+                  >
+                    {filteredSuppliesList?.map((resp) => (
+                      <CardInsumo supply={resp} />
+                    ))}
+                  </TabPanel>
+                  <TabPanel
+                    width={"100%"}
+                    height={"100%"}
+                    maxH={"100%"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    sx={{}}
+                  >
+                    <Flex
+                      w={"100%"}
+                      maxWidth={"700px"}
+                      height={"100%"}
+                      justifyContent={"center"}
+                    >
+                      <Stack
+                        spacing={3}
+                        width="400px"
+                        maxWidth={"90%"}
+                        height={"100%"}
+                        display="flex"
+                        flexDir={"column"}
+                        alignItems="center"
+                        justifyContent={"center"}
+                        padding={"0 30px"}
+                        backgroundColor={"#fff"}
+                        borderRadius={"10px"}
+                        boxShadow="0 0 10px grey"
+                        color={"black"}
+                      >
+                        <Heading fontSize={"30px"}>
+                          Cadastrar novo insumo
+                        </Heading>
+                        <Input
+                          placeholder="nome do insumo"
                           _placeholder={{ color: "#716C6C" }}
-                          {...register("measurementUnit")}
-                          borderColor={errors.measurementUnit && "#ff0000"}
-                          border={errors.measurementUnit && "2px"}
-                          value={supplyUnt}
-                          onChange={(e) => setSupplyUnt(e.target.value)}
+                          size="md"
+                          minHeight={"40px"}
+                          {...register("name")}
+                          borderColor={errors.name && "#ff0000"}
+                          border={errors.name && "2px"}
+                          value={supplyName}
+                          onChange={(e) => setSupplyName(e.target.value)}
+                        />
+                        {errors.name && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.name.message}
+                          </Text>
+                        )}
+                        <Select
+                          placeholder="categoria"
+                          _placeholder={{ color: "#716C6C" }}
+                          {...register("category")}
+                          borderColor={errors.category && "#ff0000"}
+                          border={errors.category && "2px"}
+                          value={supplyCategory}
+                          onChange={(e) => setSupplyCategory(e.target.value)}
                         >
-                          {unidadesDeMedidaOptions.map((e) => (
+                          {categoriasOptions.map((e) => (
                             <option value={e}>{e}</option>
                           ))}
                         </Select>
-                      </InputGroup>
-                      {errors.purchasePrice && (
-                        <Text color={"#ff0000"} width={"95%"}>
-                          {errors.purchasePrice.message}
-                        </Text>
-                      )}
-                      {errors.measurementUnit && (
-                        <Text color={"#ff0000"} width={"95%"}>
-                          {errors.measurementUnit.message}
-                        </Text>
-                      )}
-                      <Button
-                        colorScheme="blue"
-                        minHeight={"40px"}
-                        onClick={handleSubmit(onSubmitFunction)}
-                      >
-                        cadastrar insumo
-                      </Button>
-                    </Stack>
-                  </Flex>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+                        {errors.category && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.category.message}
+                          </Text>
+                        )}
+                        <Select
+                          placeholder="fornecedor"
+                          _placeholder={{ color: "#716C6C" }}
+                          {...register("provider")}
+                          borderColor={errors.provider && "#ff0000"}
+                          border={errors.provider && "2px"}
+                          value={supplyProvider}
+                          onChange={(e) => setSupplyProvider(e.target.value)}
+                        >
+                          {providersList?.map((ele) => (
+                            <option value={ele.id}>{ele.fantasyName}</option>
+                          ))}
+                        </Select>
+                        {errors.provider && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.provider.message}
+                          </Text>
+                        )}
+                        <InputGroup>
+                          <InputLeftElement
+                            pointerEvents="none"
+                            color="gray.300"
+                            fontSize="1.2em"
+                            children="$"
+                          />
+                          <Input
+                            placeholder="preço de compra"
+                            _placeholder={{ color: "#716C6C" }}
+                            type={"number"}
+                            {...register("purchasePrice")}
+                            borderColor={errors.purchasePrice && "#ff0000"}
+                            border={errors.purchasePrice && "2px"}
+                            value={supplyPurchasePrice}
+                            onChange={(e) =>
+                              setSupplyPurchasePrice(e.target.value)
+                            }
+                          />
+
+                          <Select
+                            placeholder="unidade de medida"
+                            _placeholder={{ color: "#716C6C" }}
+                            {...register("measurementUnit")}
+                            borderColor={errors.measurementUnit && "#ff0000"}
+                            border={errors.measurementUnit && "2px"}
+                            value={supplyUnt}
+                            onChange={(e) => setSupplyUnt(e.target.value)}
+                          >
+                            {unidadesDeMedidaOptions.map((e) => (
+                              <option value={e}>{e}</option>
+                            ))}
+                          </Select>
+                        </InputGroup>
+                        {errors.purchasePrice && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.purchasePrice.message}
+                          </Text>
+                        )}
+                        {errors.measurementUnit && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.measurementUnit.message}
+                          </Text>
+                        )}
+                        <Button
+                          colorScheme="blue"
+                          minHeight={"40px"}
+                          onClick={handleSubmit(onSubmitFunction)}
+                        >
+                          cadastrar insumo
+                        </Button>
+                      </Stack>
+                    </Flex>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </motion.div>
   );
 };
-
 export default InsumosPage;

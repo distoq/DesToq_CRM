@@ -51,9 +51,15 @@ const CardSC = () => {
   return (
     <Flex w="100%" align="center" justify="center">
       <UnorderedList w="80%" maxW="1300px" display="flex" direction={"column"}>
-        <Wrap align="center" justify="center" h="100%">
+        <Wrap p={"15px"} align="center" justify="center" h="100%">
           {searchFilter.map((product, index) => (
             <ListItem
+              _hover={{
+                transform: "scale(1.02)",
+                boxShadow: " 0px 20px 40px rgba(0, 0, 0, 0.25)",
+                border: "solid 1px #de9e36",
+              }}
+              transition="all ease .5s"
               w="257px"
               h="507px"
               border="1px solid #E5E5E5"
@@ -87,17 +93,16 @@ const CardSC = () => {
                       />
                     ))}
                 </Flex>
-
-                <Popover>
+                <Popover placement="top">
                   <Flex justify="flex-end">
                     <PopoverTrigger>
-                      <Button bg="transparent">
+                      <Button bg="transparent" mr={"10px"}>
                         descrição <AddIcon ml="10px" cursor="pointer" />
                       </Button>
                     </PopoverTrigger>
                   </Flex>
                   <PopoverContent>
-                    <PopoverArrow />
+                    <PopoverArrow position={"absolute"} />
                     <PopoverCloseButton />
                     <PopoverHeader>Descrição:</PopoverHeader>
                     <PopoverBody>{product.description}</PopoverBody>
@@ -127,5 +132,4 @@ const CardSC = () => {
     </Flex>
   );
 };
-
 export default CardSC;
