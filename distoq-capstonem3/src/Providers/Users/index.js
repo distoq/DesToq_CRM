@@ -1,10 +1,13 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const UserContext = createContext({})
 
 export const UserProvider = ({children}) => {
-
-    const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user"));
+    const [userLogin,setUserLogin] = useState(JSON.parse(localStorage.getItem("@DEStoq:user"))|| null)
+    useEffect(()=>{
+        setUserLogin(localStorage.getItem("@DEStoq:user"))
+    },[])
+   
 
     return(
         <UserContext.Provider value={{userLogin}}>
