@@ -20,7 +20,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useStockList } from "../../../Providers/Stock";
 import { StockList } from "./StockList";
@@ -31,12 +31,16 @@ export const EstoquePage = () => {
   );
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
-  const { stockList } = useStockList();
+  const { stockList, getListStock } = useStockList();
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
     defaultValue: activeDashboardPage,
     onChange: setActiveDashboardPage,
   });
+
+  useEffect(() => {
+    getListStock();
+  }, []);
 
   const group = getRootProps();
   const formSchema = yup.object().shape({
@@ -201,8 +205,10 @@ export const EstoquePage = () => {
                     justify={"center"}
                     align="flex-end"
                   >
-                    <Flex justify={"flex-start"} >
-                      <FormLabel color="#101010">Defina o estoque mínimo</FormLabel>
+                    <Flex justify={"flex-start"}>
+                      <FormLabel color="#101010">
+                        Defina o estoque mínimo
+                      </FormLabel>
                       {errors.min && (
                         <Text color="red.500">{errors.min.message}</Text>
                       )}
@@ -211,12 +217,12 @@ export const EstoquePage = () => {
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                       <FormControl>
                         <Input
-                         borderColor={" #101010"}
-                         color="#101010"
+                          borderColor={" #101010"}
+                          color="#101010"
                           type="number"
                           maxW="120px"
                           placeholder="Qtd Mínima"
-                          _placeholder={{color:"#434343"}}
+                          _placeholder={{ color: "#434343" }}
                           errorBorderColor={errors.min && "red.300"}
                           {...register("min")}
                         />

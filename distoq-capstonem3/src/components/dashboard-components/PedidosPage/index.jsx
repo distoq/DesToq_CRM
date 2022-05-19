@@ -5,18 +5,141 @@ import {
   Heading,
   Input,
   InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  InputRightAddon,
   InputRightElement,
+  Select,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { GoSearch } from "react-icons/go";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
+
+import { useToken } from "../../../Providers/Token";
+import api from "../../../services/api";
+import { CardPedidos } from "./TicketCard";
 
 export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
+
+  const { token } = useToken();
+
+  const [clientsList, setClientsList] = useState([]);
+  const [productsList, setProductsList] = useState([]);
+  const [ticketItem, setTicketItem] = useState(null);
+  const [ticketItensList, setTicketItensList] = useState([]);
+  const [ticketTotalPrice, setTicketTotalPrice] = useState(0);
+
+  const [showError, setShowError] = useState(false);
+
+  const [inputClient, setInputClient] = useState("");
+  const [ticketItemId, setTicketItemId] = useState("");
+  const [ticketItemQuantity, setTicketItemQuantity] = useState("");
+
+  const [ticketsList, setTicketList] = useState([]);
+
+  const [stockList, setStockList] = useState([]);
+
+  const getStockList = () => {
+    api.get(`/stock`).then((resp) => setStockList(resp.data));
+  };
+
+  console.log(stockList);
+
+  const getProductsList = () => {
+    api
+      .get("/products")
+      .then((res) => setProductsList(res.data))
+      .catch((err) => err);
+  };
+  const getClientsList = () => {
+    api
+      .get("/users")
+      .then((res) => {
+        setClientsList(res.data.filter((client) => client.id !== 1));
+      })
+      .catch((err) => err);
+  };
+
+  const getTicketsList = () => {
+    api
+      .get("/tickets?_sort=id&_order=desc")
+      .then((res) => setTicketList(res.data))
+      .catch((err) => err);
+  };
+
+  useEffect(() => {
+    getProductsList();
+    getClientsList();
+    getTicketsList();
+    getStockList();
+  }, []);
+
+  useEffect(() => {
+    setTicketTotalPrice(
+      ticketItensList.reduce((acc, prod) => acc + prod.quantity * prod.price, 0)
+    );
+  }, [ticketItensList]);
+
+  const handleInputsFields = () => {
+    setInputClient("");
+    setTicketTotalPrice(0);
+    setTicketItensList([]);
+  };
+
+  const formSchema = yup.object().shape({
+    client: yup.string().required("Cliente obrigatório!"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const onSubmitFunction = (data) => {
+    if (ticketItensList.length === 0) {
+      setShowError(true);
+    } else {
+      const clientData = clientsList.filter((ele) => ele.id == data.client);
+      const ticketData = {
+        clientInfo: { ...clientData[0] },
+        ownerId: 1,
+        userId: 1,
+        ticketProducts: [...ticketItensList],
+        status: "Realizado",
+      };
+      console.log(data);
+      console.log(ticketData);
+
+      api
+        .post(`/tickets`, ticketData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => getTicketsList());
+
+      handleInputsFields();
+    }
+  };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -96,32 +219,6 @@ export const PedidosPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
-          textAlign="center"
-        >
-          Pedidos Page
-        </Heading>
-        <InputGroup size="md" width={"90%"} maxW={"500px"}>
-          <Input
-            pr="4.5rem"
-            type={"text"}
-            placeholder="Faça sua pesquisa..."
-            backgroundColor={"white"}
-            fontWeight={"bold"}
-            boxShadow={"0 0 5px grey"}
-            _focus={{
-              boxShadow: "0 0 10px grey",
-            }}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => console.log("teste")}>
-              <GoSearch />
-            </Button>
-          </InputRightElement>
-        </InputGroup>
         <Flex
           width={"100%"}
           height={"100%"}
@@ -129,16 +226,297 @@ export const PedidosPage = () => {
           justifyContent={"center"}
         >
           <Flex
-            backgroundColor={"#dbdbdb"}
-            boxShadow={"0 0 15px #464646"}
-            width={["100%", "100%", "100%", "100%", "90%"]}
-            height={["100%", "100%", "100%", "100%", "90%"]}
-            marginTop={["20px", "20px", "20px", "20px", "0px"]}
-            borderTopRadius={"15px"}
-            borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
-            color={"white"}
+            width={"100%"}
+            height={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
           >
-            CONTEUDO AQUI!!!!
+            <Flex
+              backgroundColor={"#aeaeae4e"}
+              boxShadow={"0 0 15px #464646"}
+              width={["100%", "100%", "100%", "100%", "90%"]}
+              height={["100%", "100%", "100%", "100%", "90%"]}
+              marginTop={["20px", "20px", "20px", "20px", "0px"]}
+              borderTopRadius={"15px"}
+              borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
+              color={"white"}
+            >
+              <Tabs
+                isFitted
+                variant="enclosed"
+                w={"100%"}
+                borderRadius={"20px"}
+              >
+                <TabList mb="1em">
+                  <Tab
+                    color="#101010"
+                    fontWeight={"bold"}
+                    fontSize={"26px"}
+                    _selected={{
+                      color: "#FFFF",
+                      borderBottomColor: "#14213d",
+                      background: "#14213d",
+                      borderBottomWidth: "2px",
+                    }}
+                    _focus={{
+                      color: "#FFFF",
+
+                      borderTopLeftRadius: "18px",
+                      borderTopRightRadius: "18px",
+                      border: "2px solid #14213d",
+                    }}
+                  >
+                    Pedidos
+                  </Tab>
+                  <Tab
+                    color="#101010"
+                    fontWeight={"bold"}
+                    fontSize={"26px"}
+                    _selected={{
+                      color: "#FFFF",
+                      borderBottomColor: "#14213d",
+                      background: "#14213d",
+                      borderBottomWidth: "2px",
+                    }}
+                    _focus={{
+                      color: "#FFFF",
+
+                      borderTopLeftRadius: "18px",
+                      borderTopRightRadius: "18px",
+                      border: "2px solid #14213d",
+                    }}
+                  >
+                    Adicionar Novo Pedido
+                  </Tab>
+                </TabList>
+                <TabPanels
+                  sx={{
+                    minWidth: "100%",
+                    height: "100%",
+                    // maxHeight: "calc(100% - 75px)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  maxHeight={[
+                    "calc(100% - 150px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 110px)",
+                    "calc(100% - 80px)",
+                  ]}
+                >
+                  <TabPanel
+                    // backgroundColor={"#feffce"}
+                    width={"90%"}
+                    height={"100%"}
+                    maxH={"80vh"}
+                    display={"flex"}
+                    flexDir={"column"}
+                    alignItens={"center"}
+                    overflowY={"auto"}
+                    sx={{
+                      "&::-webkit-scrollbar": {
+                        width: "5px",
+                        height: "50px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        background: "#7a7a7a",
+                        marginTop: "25px",
+                        marginBottom: "25px",
+                        borderRadius: "5px",
+                        boxShadow: "inset 0 0 3px black",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "#505050",
+                        boxShadow: "inset 0 0 5px #e7e7e7dd",
+                        borderRadius: "5px",
+                      },
+                      "&::-webkit-scrollbar-thumb:hover": {
+                        background: "#555",
+                      },
+                    }}
+                  >
+                    {ticketsList?.map((ele) => (
+                      <CardPedidos
+                        key={ele.id}
+                        ticket={ele}
+                        getTicketsList={getTicketsList}
+                        setTicketList={setTicketList}
+                        token={token}
+                        // stockList={stockList}
+                      />
+                    ))}
+                  </TabPanel>
+                  <TabPanel
+                    width={"100%"}
+                    height={"100%"}
+                    maxH={"100%"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    sx={{}}
+                  >
+                    <Flex
+                      w={"100%"}
+                      maxWidth={"700px"}
+                      height={"100%"}
+                      justifyContent={"center"}
+                    >
+                      <Stack
+                        spacing={3}
+                        width="400px"
+                        maxWidth={"90%"}
+                        height={"100%"}
+                        display="flex"
+                        flexDir={"column"}
+                        alignItems="center"
+                        justifyContent={"center"}
+                        padding={"0 30px"}
+                        backgroundColor={"#fff"}
+                        borderRadius={"10px"}
+                        boxShadow="0 0 10px grey"
+                        color={"black"}
+                      >
+                        <Heading fontSize={"30px"}> Adicionar Pedido</Heading>
+                        <Select
+                          placeholder="Cliente"
+                          {...register("client")}
+                          value={inputClient}
+                          onChange={(e) => {
+                            setInputClient(e.target.value);
+                          }}
+                        >
+                          {clientsList?.map((client) => (
+                            <option value={client.id}>{client.name} </option>
+                          ))}
+                        </Select>
+                        {errors.client && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            {errors.client.message}
+                          </Text>
+                        )}
+                        <Flex
+                          width={"100%"}
+                          direction={"column"}
+                          backgroundColor={"#f7f7f7"}
+                          boxShadow={"inset 0 0 5px #dbdbdb"}
+                          padding={"10px"}
+                          borderRadius={"5px"}
+                        >
+                          <Select
+                            placeholder="Produtos"
+                            margin={"5px 0"}
+                            backgroundColor={"#ffffff"}
+                            value={ticketItemId}
+                            onChange={(e) => {
+                              setTicketItemId(e.target.value);
+                            }}
+                          >
+                            {productsList?.map((product) => (
+                              <option value={product.id}>
+                                {product.name} - R${product.price.toFixed(2)}
+                              </option>
+                            ))}
+                          </Select>
+                          <InputGroup
+                            margin={"5px 0"}
+                            backgroundColor={"#ffffff"}
+                          >
+                            <InputLeftAddon children={"Qty."} />
+                            <Input
+                              type={"number"}
+                              backgroundColor={"#ffffff"}
+                              value={ticketItemQuantity}
+                              onChange={(e) => {
+                                setTicketItemQuantity(e.target.value);
+                              }}
+                            />
+                          </InputGroup>
+                          <Button
+                            margin={"5px 0"}
+                            colorScheme="blue"
+                            onClick={() => {
+                              console.log(ticketItem);
+                              api
+                                .get(`products/${ticketItemId}`)
+                                .then((resp) => {
+                                  setTicketItensList([
+                                    ...ticketItensList,
+                                    {
+                                      ...resp.data,
+                                      quantity: +ticketItemQuantity,
+                                    },
+                                  ]);
+                                });
+                              setTicketItem("");
+                              setTicketItemId("");
+                              setTicketItemQuantity("");
+                              setShowError(false);
+                            }}
+                          >
+                            Adicionar
+                          </Button>
+                          {ticketItensList?.map((ele, index) => (
+                            <Text
+                              value={ele.id}
+                              display={"flex"}
+                              fontWeight={"bold"}
+                              alignItems={"center"}
+                            >
+                              {index + 1}. {ele.name} - {ele.quantity} un.
+                              Total: R$
+                              {(+ele.quantity * +ele.price).toFixed(2)}
+                              <Button
+                                value={ele.id}
+                                size={"small"}
+                                marginLeft={"10px"}
+                                backgroundColor={"red"}
+                                width={"15px"}
+                                height={"15px"}
+                                onClick={(e) => {
+                                  console.log(e.target.value);
+                                }}
+                              >
+                                x
+                              </Button>
+                            </Text>
+                          ))}
+                        </Flex>
+                        {showError && (
+                          <Text color={"#ff0000"} width={"95%"}>
+                            Adicione ao menos um produto!
+                          </Text>
+                        )}
+                        <InputGroup>
+                          <InputLeftAddon children="Valor da Ordem" />
+                          <InputLeftElement
+                            pointerEvents="none"
+                            color="gray.300"
+                            fontSize="1.2em"
+                            left={"150px"}
+                            children="$"
+                          />
+                          <Input
+                            disabled
+                            type={"number"}
+                            value={ticketTotalPrice.toFixed(2)}
+                          />
+                        </InputGroup>
+
+                        <Button
+                          minHeight={"40px"}
+                          colorScheme="blue"
+                          onClick={handleSubmit(onSubmitFunction)}
+                        >
+                          Cadastrar Ordem de Compra
+                        </Button>
+                      </Stack>
+                    </Flex>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </Flex>
           </Flex>
         </Flex>
       </Flex>

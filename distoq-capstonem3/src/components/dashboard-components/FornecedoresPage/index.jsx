@@ -112,15 +112,6 @@ export const FornecedoresPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
-        <Heading
-          variant="primary"
-          width="100%"
-          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
-          textAlign="center"
-        >
-          Fornecedores
-        </Heading>
-
         <Flex
           width={"100%"}
           height={"100%"}
@@ -145,20 +136,20 @@ export const FornecedoresPage = () => {
             >
               <TabList>
                 <Tab
-                     _selected={{
-                      color: "#FFFF",
-                      background:"#14213d",
-                      borderBottomColor: "#14213d",
-                      borderBottomWidth: "2px",
-                    }}
-                    _focus={{
-                      color: "#FFFF",
-                      borderColor: "",
-                      borderTopLeftRadius: "18px",
-                      borderTopRightRadius: "18px",
-                      border: "2px solid #14213d",
-                    }}
-                    w="100%"
+                  _selected={{
+                    color: "#FFFF",
+                    background: "#14213d",
+                    borderBottomColor: "#14213d",
+                    borderBottomWidth: "2px",
+                  }}
+                  _focus={{
+                    color: "#FFFF",
+                    borderColor: "",
+                    borderTopLeftRadius: "18px",
+                    borderTopRightRadius: "18px",
+                    border: "2px solid #14213d",
+                  }}
+                  w="100%"
                 >
                   <Heading variant={"dashboard"} color="##F4BF39">
                     Listar Fornecedores
@@ -166,9 +157,8 @@ export const FornecedoresPage = () => {
                 </Tab>
                 <Tab
                   _selected={{
-                   
                     borderBottomColor: "#14213d",
-                    background:"#14213d",
+                    background: "#14213d",
                     borderBottomWidth: "2px",
                   }}
                   _focus={{
