@@ -5,25 +5,51 @@ const HomeFilter = () => {
   const { addInputSearch } = useInputHome();
 
   return (
-    <Flex 
+    <Flex
       overflowX={"auto"}
       maxH={"400px"}
       flexWrap={"wrap"}
-
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <Button
+        variant={"primary"}
+        m={["1", "1", "1", "1", "3"]}
+        w={["80px", "80px", "80px", "80px", "100px"]}
+        onClick={() => addInputSearch("")}
       >
-      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("")}>
         Todos
       </Button>
-      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("sanduiches")}>
+      <Button
+        variant={"primary"}
+        m={["1", "1", "1", "1", "3"]}
+        w={["80px", "80px", "80px", "80px", "100px"]}
+        onClick={() => addInputSearch("sanduiches")}
+      >
         Lanches
       </Button>
-      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("bebidas")}>
+      <Button
+        variant={"primary"}
+        m={["1", "1", "1", "1", "3"]}
+        w={["80px", "80px", "80px", "80px", "100px"]}
+        onClick={() => addInputSearch("bebidas")}
+      >
         Bebidas
       </Button>
-      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("porcoes")}>
+      <Button
+        variant={"primary"}
+        m={["1", "1", "1", "1", "3"]}
+        w={["80px", "80px", "80px", "80px", "100px"]}
+        onClick={() => addInputSearch("porcoes")}
+      >
         Porções
       </Button>
-      <Button variant={'primary'} m={3} w={"120px"} onClick={() => addInputSearch("milkshake")}>
+      <Button
+        variant={"primary"}
+        m={["1", "1", "1", "1", "3"]}
+        w={["90px", "90px", "90px", "90px", "110px"]}
+        onClick={() => addInputSearch("milkshake")}
+      >
         Milkshakes
       </Button>
     </Flex>
