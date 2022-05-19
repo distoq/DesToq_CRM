@@ -36,6 +36,7 @@ import { DashFilterContext } from "../../../Providers/DashboardFilter";
 import { ShowcaseContext } from "../../../Providers/showcase";
 import { AiFillGithub } from "react-icons/ai";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { FaHeartbeat } from "react-icons/fa";
 
 export const DevelopersPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -176,8 +177,13 @@ export const DevelopersPage = () => {
               borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
               color={"white"}
               mt={"170px"}
+              direction={"column"}
             >
-                
+              <Heading fontSize={"1.8rem"} color={"#111"} mt={"70px"} width={"100%"} textAlign={"center"}>
+                <Flex justify={"center"} align={"center"}>
+                  Developed with <Box m={"10px"}><FaHeartbeat/></Box> by :
+                </Flex>
+              </Heading>
               <Flex 
                 w="100%" 
                 align="center" 
