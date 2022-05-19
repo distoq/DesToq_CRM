@@ -18,6 +18,7 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useSelectValues } from "../../../Providers/SelectValues";
 import { CardInsumo } from "./InsumoCard";
@@ -171,7 +172,13 @@ export const InsumosPage = () => {
     );
   }
   return (
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -447,7 +454,8 @@ export const InsumosPage = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
 export default InsumosPage;
