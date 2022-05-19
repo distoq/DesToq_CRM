@@ -1,7 +1,7 @@
 # DEStoq - o CRM para descomplicar o seu estoque!
 ## Descrição do projeto:
 <p align="left">DEStoq foi idealizado para descomplicar o gerenciamento de micro e pequenas empresas, trazendo soluções integradas para cadastro e controle de matérias-primas e produtos finais, relatórios sobre entradas e saídas, cadastro de fornecedores, emissão de novos pedidos para clientes internos e externos, entre outras funcionalidades. 
-<strong>Tudo de forma simples, clara e intuitiva. Como todo CRM deve ser! :blink: :finance: :graphic: :rocket:</strong></p>
+<strong>Tudo de forma simples, clara e intuitiva. Como todo CRM deve ser! :rocket:</strong></p>
 
 ## Como usar:
 ### 1. Como pode ficar a gestão do seu negócio com o DEStoq:
