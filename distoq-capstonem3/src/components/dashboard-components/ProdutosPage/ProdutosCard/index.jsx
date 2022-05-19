@@ -69,8 +69,6 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-       
-          
           <Button
          
             colorScheme={"red"}
