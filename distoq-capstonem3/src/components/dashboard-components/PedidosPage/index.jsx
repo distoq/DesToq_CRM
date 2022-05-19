@@ -27,7 +27,6 @@ import { motion } from "framer-motion";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-
 import api from "../../../services/api";
 import { CardPedidos } from "./TicketCard";
 
@@ -35,7 +34,7 @@ export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
-    const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
+  const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
 
   const [clientsList, setClientsList] = useState([]);
   const [productsList, setProductsList] = useState([]);
@@ -345,7 +344,7 @@ export const PedidosPage = () => {
                           ticket={ele}
                           getTicketsList={getTicketsList}
                           setTicketList={setTicketList}
-                          token={token}
+                          token={userToken}
                         />
                       ))}
                     </TabPanel>
