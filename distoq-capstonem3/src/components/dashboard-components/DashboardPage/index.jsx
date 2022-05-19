@@ -118,7 +118,6 @@ export const DashboardPage = () => {
               <Heading mt="40px" variant={"primary"}>
                 Bem vindo, {userLogin.name}
               </Heading>
-
               <Flex mt="10px" w="100%" justify={"center"}>
                 <Text
                   p="10px"
