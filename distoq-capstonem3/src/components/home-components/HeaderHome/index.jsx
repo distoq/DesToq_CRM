@@ -14,6 +14,7 @@ import {
   ListItem,
   Avatar,
   useToast,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
@@ -45,10 +46,13 @@ const HeaderHome = () => {
   const { token } = useToken();
 
   const getUserData = () => {
-    api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+    if (userLogin) {
+      api.get(`/users/${userLogin.id}`).then((res) => setUserData(res.data));
+    }
   };
   useEffect(() => {
     getUserData();
+    
   }, []);
 
   const sum = cart.reduce((previous, current) => {
@@ -88,7 +92,6 @@ const HeaderHome = () => {
       ticketProducts: [...cartItems],
       status: "Realizado",
     };
-    console.log(ticketData);
     if (!token) {
       toast({
         description: "Usuário não está logado!",
@@ -96,10 +99,11 @@ const HeaderHome = () => {
         duration: 4000,
         isClosable: true,
         position: "top",
-      });
+      }); 
       onClose();
       navigate("/login");
     }
+
     if (cartItems?.length === 0) {
       toast({
         description: "Carrinho vazio !",
@@ -140,6 +144,7 @@ const HeaderHome = () => {
         });
       onClose();
     }
+  
     onClose();
   };
   const closeDrawer = () => {
@@ -159,12 +164,11 @@ const HeaderHome = () => {
         isOpen={isOpen}
         onClose={onClose}
         placement="right"
-        blockScrollOnMount={false}
-        closeOnOverlayClick={false}
         size="lg"
       >
         <DrawerOverlay />
         <DrawerContent>
+        <DrawerCloseButton />
           <DrawerHeader>Carrinho</DrawerHeader>
           <DrawerBody>
             <Flex direction="center" align="center" justify="center">
@@ -220,7 +224,7 @@ const HeaderHome = () => {
               p="5px"
               h="43px"
               align="center"
-              w="150px"
+              w="250px"
             >
               <Text variant="primary">Total:</Text>
               <Text variant="primary">
@@ -233,8 +237,8 @@ const HeaderHome = () => {
             <Button w="100%" variant="primary" onClick={getOrder}>
               finalizar compra
             </Button>
-            <Button w="100%" colorScheme={"red"} onClick={closeDrawer}>
-              Sair
+            <Button w="40%" colorScheme={"red"} onClick={closeDrawer}>
+              sair
             </Button>
           </DrawerFooter>
         </DrawerContent>

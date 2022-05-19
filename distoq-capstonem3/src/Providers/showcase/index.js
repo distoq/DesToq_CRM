@@ -5,7 +5,7 @@ export const ShowcaseContext = createContext([]);
 
 export const ShowcaseProvider = ({ children }) => {
   const [listProducts, setListProducts] = useState([]);
-  console.log(listProducts);
+ 
   useEffect(() => {
     getProducts();
   }, []);
