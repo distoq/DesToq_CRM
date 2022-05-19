@@ -1,7 +1,7 @@
 # DEStoq - o CRM para descomplicar o seu estoque!
 ## Descrição do projeto:
-<p align="left">DEStoq foi idealizado para descomplicar o gerenciamento de micro e pequenas empresas, trazendo soluções integradas para cadastro e controle de matérias-primas e produtos finais, relatórios sobre entradas e saídas, cadastro de fornecedores, emissão de novos pedidos para clientes internos e externos, entre outras funcionalidades. 
-<strong>Tudo de forma simples, clara e intuitiva. Como todo CRM deve ser! :rocket:</strong></p>
+<p align="left">DEStoq foi idealizado para descomplicar o gerenciamento de micro e pequenas empresas, trazendo soluções integradas para cadastro e controle de matérias-primas e produtos finais, relatórios sobre entradas e saídas, cadastro de fornecedores, emissão de novos pedidos para clientes internos e externos, entre outras funcionalidades.</p> 
+<p><strong>Tudo de forma simples, clara e intuitiva. Como todo CRM deve ser! :rocket:</strong></p>
 
 ## Como usar:
 ### 1. Como pode ficar a gestão do seu negócio com o DEStoq:
@@ -60,45 +60,35 @@
 
 ## Link:
 <p><a href="destoq-capstonem3.vercel.app">destoq-capstonem3.vercel.app</a></p>
+<h5> Versão:</h5>
+<p>1.0.0</p>
 
-## :zap: Tech Stack
+## :zap: Tech stack:
 <ul>
-	<li>React;</li>
-	<br>
+	<li>React JS;</li>
 	<li>React-Router-Dom;</li>
-	<br>
 	<li>Axios;</li>
-	<br>
 	<li>React-Hook-Form;</li>
-	<br>
 	<li>Resolvers;</li>
-	<br>
 	<li>Yup;</li>
-	<br>
 	<li>JSON-Server;</li>
-	<br>
 	<li>JSON-Server Auth;</li>
-	<br>
 	<li>React-JWT;</li>
-	<br>
 	<li>Nodemon;</li>
-	<br>
 	<li>API Consulta CEP;</li>
-	<br>
 	<li>Recharts;</li>
-	<br>
 	<li>React-Icons;</li>
-	<br>
 	<li>Chakra UI;</li>
-	<br>
 	<li>Frame-Motion;</li>
-	<br>
 	<li>@fontsource.</li>
-	<br>
 </ul>
 
-### Versão:
-<p>1.0.0</p>
+### Serviços:
+<ul>
+	<li>GitHub;</li>
+	<li>Heroku;</li>
+	<li>Vercel.</li>
+</ul>
 
 <h1 align="center">
 	🚧  Em construção...  🚧
