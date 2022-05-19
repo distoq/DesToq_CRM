@@ -16,19 +16,16 @@ import { useToken } from "../../Providers/Token";
 
 const Dashboard = () => {
   const { activeDashboardPage } = useActivePage();
-
+  const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
   const {token} = useToken();
   const { decodedToken, isExpired } = useJwt(token);
 
   const navigate = useNavigate();
-  const isLoggedIn = token && !isExpired;
-  const isAdmin = decodedToken?.sub;
+  const isAdmin = userLogin.userId
  
-  if (!isLoggedIn) {
-    return navigate("/login");
-  }
 
-  if (isAdmin !== "1") {
+
+  if (isAdmin != "1") {
     return navigate("/");
   }
 
