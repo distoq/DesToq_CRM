@@ -24,7 +24,7 @@ import {
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { GoSearch } from "react-icons/go";
 
@@ -33,6 +33,7 @@ import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useToken } from "../../../Providers/Token";
 import api from "../../../services/api";
 import { CardPedidos } from "./TicketCard";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
@@ -54,13 +55,19 @@ export const PedidosPage = () => {
 
   const [ticketsList, setTicketList] = useState([]);
 
+  const { inputSearch } = useContext(DashFilterContext);
+  const filteredTicketsList = ticketsList.filter((item) =>
+    item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
+    item.id.toString().toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   const [stockList, setStockList] = useState([]);
 
   const getStockList = () => {
     api.get(`/stock`).then((resp) => setStockList(resp.data));
   };
 
-  console.log(stockList);
+  //console.log(stockList);
 
   const getProductsList = () => {
     api
@@ -127,8 +134,8 @@ export const PedidosPage = () => {
         ticketProducts: [...ticketItensList],
         status: "Realizado",
       };
-      console.log(data);
-      console.log(ticketData);
+      //console.log(data);
+      //console.log(ticketData);
 
       api
         .post(`/tickets`, ticketData, {
@@ -193,44 +200,38 @@ export const PedidosPage = () => {
   }
   return (
     <motion.div
-      initial={{opacity:0}}
-      animate={{opacity:1}}
-      exit={{opacity:0}}
-      transition={{duration:1}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
     >
       <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
-      <VStack
-        {...group}
-        alignItems="flex-start"
-        backgroundColor={"#434343"}
-        display={["none", "none", "none", "none", "flex"]}
-      >
-        {options.map((value) => {
-          const radio = getRadioProps({ value });
-          return (
-            <RadioCard key={value} {...radio}>
-              {handleIcons(value)} {value}
-            </RadioCard>
-          );
-        })}
-      </VStack>
-      <Flex
-        className="contentContainer"
-        width="100%"
-        minHeight="100%"
-        flexDir="column"
-        alignItems={"center"}
-        backgroundImage={
-          "https://www.jeronimoburger.com.br/img/home/banner-sobre-desk.png"
-        }
-        bgRepeat="no-repeat"
-        backgroundSize="100% 100%"
-      >
+        <VStack
+          {...group}
+          alignItems="flex-start"
+          backgroundColor={"#434343"}
+          display={["none", "none", "none", "none", "flex"]}
+        >
+          {options.map((value) => {
+            const radio = getRadioProps({ value });
+            return (
+              <RadioCard key={value} {...radio}>
+                {handleIcons(value)} {value}
+              </RadioCard>
+            );
+          })}
+        </VStack>
         <Flex
-          width={"100%"}
-          height={"100%"}
+          className="contentContainer"
+          width="100%"
+          minHeight="100%"
+          flexDir="column"
           alignItems={"center"}
-          justifyContent={"center"}
+          backgroundImage={
+            "https://www.jeronimoburger.com.br/img/home/banner-sobre-desk.png"
+          }
+          bgRepeat="no-repeat"
+          backgroundSize="100% 100%"
         >
           <Flex
             width={"100%"}
@@ -239,294 +240,300 @@ export const PedidosPage = () => {
             justifyContent={"center"}
           >
             <Flex
-              backgroundColor={"#aeaeae4e"}
-              boxShadow={"0 0 15px #464646"}
-              width={["100%", "100%", "100%", "100%", "90%"]}
-              height={["100%", "100%", "100%", "100%", "90%"]}
-              marginTop={["20px", "20px", "20px", "20px", "0px"]}
-              borderTopRadius={"15px"}
-              borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
-              color={"white"}
+              width={"100%"}
+              height={"100%"}
+              alignItems={"center"}
+              justifyContent={"center"}
             >
-              <Tabs
-                isFitted
-                variant="enclosed"
-                w={"100%"}
-                borderRadius={"20px"}
+              <Flex
+                backgroundColor={"#aeaeae4e"}
+                boxShadow={"0 0 15px #464646"}
+                width={["100%", "100%", "100%", "100%", "90%"]}
+                height={["100%", "100%", "100%", "100%", "90%"]}
+                marginTop={["20px", "20px", "20px", "20px", "0px"]}
+                borderTopRadius={"15px"}
+                borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
+                color={"white"}
               >
-                <TabList mb="1em">
-                  <Tab
-                    color="#101010"
-                    fontWeight={"bold"}
-                    fontSize={"26px"}
-                    _selected={{
-                      color: "#FFFF",
-                      borderBottomColor: "#14213d",
-                      background: "#14213d",
-                      borderBottomWidth: "2px",
-                    }}
-                    _focus={{
-                      color: "#FFFF",
-
-                      borderTopLeftRadius: "18px",
-                      borderTopRightRadius: "18px",
-                      border: "2px solid #14213d",
-                    }}
-                  >
-                    Pedidos
-                  </Tab>
-                  <Tab
-                    color="#101010"
-                    fontWeight={"bold"}
-                    fontSize={"26px"}
-                    _selected={{
-                      color: "#FFFF",
-                      borderBottomColor: "#14213d",
-                      background: "#14213d",
-                      borderBottomWidth: "2px",
-                    }}
-                    _focus={{
-                      color: "#FFFF",
-
-                      borderTopLeftRadius: "18px",
-                      borderTopRightRadius: "18px",
-                      border: "2px solid #14213d",
-                    }}
-                  >
-                    Adicionar Novo Pedido
-                  </Tab>
-                </TabList>
-                <TabPanels
-                  sx={{
-                    minWidth: "100%",
-                    height: "100%",
-                    // maxHeight: "calc(100% - 75px)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  maxHeight={[
-                    "calc(100% - 150px)",
-                    "calc(100% - 110px)",
-                    "calc(100% - 110px)",
-                    "calc(100% - 110px)",
-                    "calc(100% - 80px)",
-                  ]}
+                <Tabs
+                  isFitted
+                  variant="enclosed"
+                  w={"100%"}
+                  borderRadius={"20px"}
                 >
-                  <TabPanel
-                    // backgroundColor={"#feffce"}
-                    width={"90%"}
-                    height={"100%"}
-                    maxH={"80vh"}
-                    display={"flex"}
-                    flexDir={"column"}
-                    alignItens={"center"}
-                    overflowY={"auto"}
-                    sx={{
-                      "&::-webkit-scrollbar": {
-                        width: "5px",
-                        height: "50px",
-                      },
-                      "&::-webkit-scrollbar-track": {
-                        background: "#7a7a7a",
-                        marginTop: "25px",
-                        marginBottom: "25px",
-                        borderRadius: "5px",
-                        boxShadow: "inset 0 0 3px black",
-                      },
-                      "&::-webkit-scrollbar-thumb": {
-                        background: "#505050",
-                        boxShadow: "inset 0 0 5px #e7e7e7dd",
-                        borderRadius: "5px",
-                      },
-                      "&::-webkit-scrollbar-thumb:hover": {
-                        background: "#555",
-                      },
-                    }}
-                  >
-                    {ticketsList?.map((ele) => (
-                      <CardPedidos
-                        key={ele.id}
-                        ticket={ele}
-                        getTicketsList={getTicketsList}
-                        setTicketList={setTicketList}
-                        token={token}
-                        // stockList={stockList}
-                      />
-                    ))}
-                  </TabPanel>
-                  <TabPanel
-                    width={"100%"}
-                    height={"100%"}
-                    maxH={"100%"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    sx={{}}
-                  >
-                    <Flex
-                      w={"100%"}
-                      maxWidth={"700px"}
-                      height={"100%"}
-                      justifyContent={"center"}
+                  <TabList mb="1em">
+                    <Tab
+                      color="#101010"
+                      fontWeight={"bold"}
+                      fontSize={"26px"}
+                      _selected={{
+                        color: "#FFFF",
+                        borderBottomColor: "#14213d",
+                        background: "#14213d",
+                        borderBottomWidth: "2px",
+                      }}
+                      _focus={{
+                        color: "#FFFF",
+
+                        borderTopLeftRadius: "18px",
+                        borderTopRightRadius: "18px",
+                        border: "2px solid #14213d",
+                      }}
                     >
-                      <Stack
-                        spacing={3}
-                        width="400px"
-                        maxWidth={"90%"}
+                      Pedidos
+                    </Tab>
+                    <Tab
+                      color="#101010"
+                      fontWeight={"bold"}
+                      fontSize={"26px"}
+                      _selected={{
+                        color: "#FFFF",
+                        borderBottomColor: "#14213d",
+                        background: "#14213d",
+                        borderBottomWidth: "2px",
+                      }}
+                      _focus={{
+                        color: "#FFFF",
+
+                        borderTopLeftRadius: "18px",
+                        borderTopRightRadius: "18px",
+                        border: "2px solid #14213d",
+                      }}
+                    >
+                      Adicionar Novo Pedido
+                    </Tab>
+                  </TabList>
+                  <TabPanels
+                    sx={{
+                      minWidth: "100%",
+                      height: "100%",
+                      // maxHeight: "calc(100% - 75px)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    maxHeight={[
+                      "calc(100% - 150px)",
+                      "calc(100% - 110px)",
+                      "calc(100% - 110px)",
+                      "calc(100% - 110px)",
+                      "calc(100% - 80px)",
+                    ]}
+                  >
+                    <TabPanel
+                      // backgroundColor={"#feffce"}
+                      width={"90%"}
+                      height={"100%"}
+                      maxH={"80vh"}
+                      display={"flex"}
+                      flexDir={"column"}
+                      alignItens={"center"}
+                      overflowY={"auto"}
+                      sx={{
+                        "&::-webkit-scrollbar": {
+                          width: "5px",
+                          height: "50px",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          background: "#7a7a7a",
+                          marginTop: "25px",
+                          marginBottom: "25px",
+                          borderRadius: "5px",
+                          boxShadow: "inset 0 0 3px black",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          background: "#505050",
+                          boxShadow: "inset 0 0 5px #e7e7e7dd",
+                          borderRadius: "5px",
+                        },
+                        "&::-webkit-scrollbar-thumb:hover": {
+                          background: "#555",
+                        },
+                      }}
+                    >
+                      {filteredTicketsList?.map((ele) => (
+                        <CardPedidos
+                          key={ele.id}
+                          ticket={ele}
+                          getTicketsList={getTicketsList}
+                          setTicketList={setTicketList}
+                          token={token}
+                          // stockList={stockList}
+                        />
+                      ))}
+                    </TabPanel>
+                    <TabPanel
+                      width={"100%"}
+                      height={"100%"}
+                      maxH={"100%"}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      sx={{}}
+                    >
+                      <Flex
+                        w={"100%"}
+                        maxWidth={"700px"}
                         height={"100%"}
-                        display="flex"
-                        flexDir={"column"}
-                        alignItems="center"
                         justifyContent={"center"}
-                        padding={"0 30px"}
-                        backgroundColor={"#fff"}
-                        borderRadius={"10px"}
-                        boxShadow="0 0 10px grey"
-                        color={"black"}
                       >
-                        <Heading fontSize={"30px"}> Adicionar Pedido</Heading>
-                        <Select
-                          placeholder="Cliente"
-                          {...register("client")}
-                          value={inputClient}
-                          onChange={(e) => {
-                            setInputClient(e.target.value);
-                          }}
+                        <Stack
+                          spacing={3}
+                          width="400px"
+                          maxWidth={"90%"}
+                          height={"100%"}
+                          display="flex"
+                          flexDir={"column"}
+                          alignItems="center"
+                          justifyContent={"center"}
+                          padding={"0 30px"}
+                          backgroundColor={"#fff"}
+                          borderRadius={"10px"}
+                          boxShadow="0 0 10px grey"
+                          color={"black"}
                         >
-                          {clientsList?.map((client) => (
-                            <option value={client.id}>{client.name} </option>
-                          ))}
-                        </Select>
-                        {errors.client && (
-                          <Text color={"#ff0000"} width={"95%"}>
-                            {errors.client.message}
-                          </Text>
-                        )}
-                        <Flex
-                          width={"100%"}
-                          direction={"column"}
-                          backgroundColor={"#f7f7f7"}
-                          boxShadow={"inset 0 0 5px #dbdbdb"}
-                          padding={"10px"}
-                          borderRadius={"5px"}
-                        >
+                          <Heading fontSize={"30px"}> Adicionar Pedido</Heading>
                           <Select
-                            placeholder="Produtos"
-                            margin={"5px 0"}
-                            backgroundColor={"#ffffff"}
-                            value={ticketItemId}
+                            placeholder="Cliente"
+                            {...register("client")}
+                            value={inputClient}
                             onChange={(e) => {
-                              setTicketItemId(e.target.value);
+                              setInputClient(e.target.value);
                             }}
                           >
-                            {productsList?.map((product) => (
-                              <option value={product.id}>
-                                {product.name} - R${product.price.toFixed(2)}
-                              </option>
+                            {clientsList?.map((client) => (
+                              <option value={client.id}>{client.name} </option>
                             ))}
                           </Select>
-                          <InputGroup
-                            margin={"5px 0"}
-                            backgroundColor={"#ffffff"}
+                          {errors.client && (
+                            <Text color={"#ff0000"} width={"95%"}>
+                              {errors.client.message}
+                            </Text>
+                          )}
+                          <Flex
+                            width={"100%"}
+                            direction={"column"}
+                            backgroundColor={"#f7f7f7"}
+                            boxShadow={"inset 0 0 5px #dbdbdb"}
+                            padding={"10px"}
+                            borderRadius={"5px"}
                           >
-                            <InputLeftAddon children={"Qty."} />
-                            <Input
-                              type={"number"}
+                            <Select
+                              placeholder="Produtos"
+                              margin={"5px 0"}
                               backgroundColor={"#ffffff"}
-                              value={ticketItemQuantity}
+                              value={ticketItemId}
                               onChange={(e) => {
-                                setTicketItemQuantity(e.target.value);
+                                setTicketItemId(e.target.value);
                               }}
+                            >
+                              {productsList?.map((product) => (
+                                <option value={product.id}>
+                                  {product.name} - R${product.price.toFixed(2)}
+                                </option>
+                              ))}
+                            </Select>
+                            <InputGroup
+                              margin={"5px 0"}
+                              backgroundColor={"#ffffff"}
+                            >
+                              <InputLeftAddon children={"Qty."} />
+                              <Input
+                                type={"number"}
+                                backgroundColor={"#ffffff"}
+                                value={ticketItemQuantity}
+                                onChange={(e) => {
+                                  setTicketItemQuantity(e.target.value);
+                                }}
+                              />
+                            </InputGroup>
+                            <Button
+                              margin={"5px 0"}
+                              colorScheme="blue"
+                              onClick={() => {
+                                //console.log(ticketItem);
+                                api
+                                  .get(`products/${ticketItemId}`)
+                                  .then((resp) => {
+                                    setTicketItensList([
+                                      ...ticketItensList,
+                                      {
+                                        ...resp.data,
+                                        quantity: +ticketItemQuantity,
+                                      },
+                                    ]);
+                                  });
+                                setTicketItem("");
+                                setTicketItemId("");
+                                setTicketItemQuantity("");
+                                setShowError(false);
+                              }}
+                            >
+                              Adicionar
+                            </Button>
+                            {ticketItensList?.map((ele, index) => (
+                              <Text
+                                value={ele.id}
+                                display={"flex"}
+                                fontWeight={"bold"}
+                                alignItems={"center"}
+                              >
+                                {index + 1}. {ele.name} - {ele.quantity} un.
+                                Total: R$
+                                {(+ele.quantity * +ele.price).toFixed(2)}
+                                <Button
+                                  value={ele.id}
+                                  size={"small"}
+                                  marginLeft={"10px"}
+                                  backgroundColor={"red"}
+                                  width={"15px"}
+                                  height={"15px"}
+                                  onClick={(e) => {
+                                    //console.log(e.target.value);
+                                  }}
+                                >
+                                  x
+                                </Button>
+                              </Text>
+                            ))}
+                          </Flex>
+                          {showError && (
+                            <Text color={"#ff0000"} width={"95%"}>
+                              Adicione ao menos um produto!
+                            </Text>
+                          )}
+                          <InputGroup>
+                            <InputLeftAddon children="Valor da Ordem" />
+                            <InputLeftElement
+                              pointerEvents="none"
+                              color="gray.300"
+                              fontSize="1.2em"
+                              left={"150px"}
+                              children="$"
+                            />
+                            <Input
+                              disabled
+                              type={"number"}
+                              value={ticketTotalPrice.toFixed(2)}
                             />
                           </InputGroup>
-                          <Button
-                            margin={"5px 0"}
-                            colorScheme="blue"
-                            onClick={() => {
-                              console.log(ticketItem);
-                              api
-                                .get(`products/${ticketItemId}`)
-                                .then((resp) => {
-                                  setTicketItensList([
-                                    ...ticketItensList,
-                                    {
-                                      ...resp.data,
-                                      quantity: +ticketItemQuantity,
-                                    },
-                                  ]);
-                                });
-                              setTicketItem("");
-                              setTicketItemId("");
-                              setTicketItemQuantity("");
-                              setShowError(false);
-                            }}
-                          >
-                            Adicionar
-                          </Button>
-                          {ticketItensList?.map((ele, index) => (
-                            <Text
-                              value={ele.id}
-                              display={"flex"}
-                              fontWeight={"bold"}
-                              alignItems={"center"}
-                            >
-                              {index + 1}. {ele.name} - {ele.quantity} un.
-                              Total: R$
-                              {(+ele.quantity * +ele.price).toFixed(2)}
-                              <Button
-                                value={ele.id}
-                                size={"small"}
-                                marginLeft={"10px"}
-                                backgroundColor={"red"}
-                                width={"15px"}
-                                height={"15px"}
-                                onClick={(e) => {
-                                  console.log(e.target.value);
-                                }}
-                              >
-                                x
-                              </Button>
-                            </Text>
-                          ))}
-                        </Flex>
-                        {showError && (
-                          <Text color={"#ff0000"} width={"95%"}>
-                            Adicione ao menos um produto!
-                          </Text>
-                        )}
-                        <InputGroup>
-                          <InputLeftAddon children="Valor da Ordem" />
-                          <InputLeftElement
-                            pointerEvents="none"
-                            color="gray.300"
-                            fontSize="1.2em"
-                            left={"150px"}
-                            children="$"
-                          />
-                          <Input
-                            disabled
-                            type={"number"}
-                            value={ticketTotalPrice.toFixed(2)}
-                          />
-                        </InputGroup>
 
-                        <Button
-                          minHeight={"40px"}
-                          colorScheme="blue"
-                          onClick={handleSubmit(onSubmitFunction)}
-                        >
-                          Cadastrar Ordem de Compra
-                        </Button>
-                      </Stack>
-                    </Flex>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
+                          <Button
+                            minHeight={"40px"}
+                            colorScheme="blue"
+                            onClick={handleSubmit(onSubmitFunction)}
+                          >
+                            Cadastrar Ordem de Compra
+                          </Button>
+                        </Stack>
+                      </Flex>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
-      </Flex>
       </Flex>
     </motion.div>
   );
