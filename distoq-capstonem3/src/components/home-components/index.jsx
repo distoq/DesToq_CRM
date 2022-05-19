@@ -21,6 +21,7 @@ import {
   ListItem,
   Heading,
   useToast,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { AddIcon, StarIcon } from "@chakra-ui/icons";
@@ -76,14 +77,22 @@ const CardSC = () => {
                 borderRadius="10px 10px 0px 0px"
               />
               <Stack spacing={3}>
+              <Tooltip label={product.name}>
+                
                 <Heading
                   variant={"primary"}
                   fontSize="lg"
                   align="center"
                   pt="15px"
+                  maxWidth= "15ch"
+                  overflow= "hidden"
+                  textOverflow= "ellipsis"
+                  whiteSpace= "nowrap"
+                  ml={"10px"}
                 >
                   {product.name}
                 </Heading>
+              </Tooltip>
                 <Flex pr="15px" justify="flex-end">
                   {Array(5)
                     .fill("")
