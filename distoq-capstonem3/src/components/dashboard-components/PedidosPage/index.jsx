@@ -35,7 +35,7 @@ export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
-  const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || ""
+  const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
 
   const [clientsList, setClientsList] = useState([]);
   const [productsList, setProductsList] = useState([]);
@@ -52,9 +52,10 @@ export const PedidosPage = () => {
   const [ticketsList, setTicketList] = useState([]);
 
   const { inputSearch } = useContext(DashFilterContext);
-  const filteredTicketsList = ticketsList.filter((item) =>
-    item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
-    item.id.toString().toLowerCase().includes(inputSearch.toLowerCase())
+  const filteredTicketsList = ticketsList.filter(
+    (item) =>
+      item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.id.toString().toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   const [stockList, setStockList] = useState([]);
@@ -163,7 +164,7 @@ export const PedidosPage = () => {
           cursor="pointer"
           borderRadius="md"
           fontWeight="bold"
-          fontSize="26px"
+          fontSize={["18px", "18px", "18px", "26px", "26px"]}
           color="white"
           alignItems="center"
           _checked={{
@@ -254,7 +255,7 @@ export const PedidosPage = () => {
                     <Tab
                       color="#101010"
                       fontWeight={"bold"}
-                      fontSize={"26px"}
+                      fontSize={["18px", "18px", "18px", "18px", "26px"]}
                       _selected={{
                         color: "#FFFF",
                         borderBottomColor: "#14213d",
@@ -274,7 +275,7 @@ export const PedidosPage = () => {
                     <Tab
                       color="#101010"
                       fontWeight={"bold"}
-                      fontSize={"26px"}
+                      fontSize={["18px", "18px", "18px", "18px", "26px"]}
                       _selected={{
                         color: "#FFFF",
                         borderBottomColor: "#14213d",
@@ -367,7 +368,7 @@ export const PedidosPage = () => {
                           spacing={3}
                           width="400px"
                           maxWidth={"90%"}
-                          height={"100%"}
+                          height={["120%", "120%", "120%", "120%", "100%"]}
                           display="flex"
                           flexDir={"column"}
                           alignItems="center"
@@ -378,7 +379,12 @@ export const PedidosPage = () => {
                           boxShadow="0 0 10px grey"
                           color={"black"}
                         >
-                          <Heading fontSize={"30px"}> Adicionar Pedido</Heading>
+                          <Heading
+                            fontSize={["22px", "22px", "22px", "30px", "30px"]}
+                          >
+                            {" "}
+                            Adicionar Pedido
+                          </Heading>
                           <Select
                             placeholder="Cliente"
                             {...register("client")}
@@ -473,8 +479,7 @@ export const PedidosPage = () => {
                                   backgroundColor={"red"}
                                   width={"15px"}
                                   height={"15px"}
-                                  onClick={(e) => {
-                                  }}
+                                  onClick={(e) => {}}
                                 >
                                   x
                                 </Button>
