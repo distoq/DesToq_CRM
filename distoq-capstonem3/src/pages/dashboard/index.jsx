@@ -7,6 +7,7 @@ import EstoquePage from "../../components/dashboard-components/EstoquePage";
 import FinanceiroPage from "../../components/dashboard-components/FinanceiroPage";
 import DashboardHeader from "../../components/header-components";
 import ComprasPage from "../../components/dashboard-components/ComprasPage";
+import DevelopersPage from "../../components/dashboard-components/DevelopersPage";
 import { useActivePage } from "../../Providers/DashboardPageController";
 import { useNavigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
@@ -23,7 +24,6 @@ const Dashboard = () => {
   const isAdmin = decodedToken?.sub;
  
 
-
   if (!isLoggedIn) {
     return navigate("/login");
   }
@@ -36,6 +36,7 @@ const Dashboard = () => {
     switch (value) {
       case "Dashboard":
         return <DashboardPage />;
+        
       case "Pedidos":
         return <PedidosPage />;
 
@@ -56,6 +57,9 @@ const Dashboard = () => {
 
       case "Financeiro":
         return <FinanceiroPage />;
+
+      case "Developers":
+        return <DevelopersPage />;
 
       default:
         return <DashboardPage />;
