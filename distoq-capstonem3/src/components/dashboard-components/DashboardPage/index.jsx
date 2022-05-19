@@ -8,13 +8,15 @@ import {
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
-
+import { motion } from "framer-motion";
+import { GoSearch } from "react-icons/go";
 import { useActivePage } from "../../../Providers/DashboardPageController";
 import { useUser } from "../../../Providers/Users";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Example from "../../lottie/lottie";
 AOS.init();
+
 export const DashboardPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
@@ -69,8 +71,13 @@ export const DashboardPage = () => {
     );
   }
   return (
-    //FULL CONTAINER
-    <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
+    <motion.div
+      initial={{opacity:0}}
+      animate={{opacity:1}}
+      exit={{opacity:0}}
+      transition={{duration:1}}
+    >
+      <Flex className="fullPage" width="100%" minHeight="calc(100vh - 80px)">
       <VStack
         {...group}
         alignItems="flex-start"
@@ -98,6 +105,14 @@ export const DashboardPage = () => {
         bgRepeat="no-repeat"
         backgroundSize="100% 100%"
       >
+        <Heading
+          variant="primary"
+          width="100%"
+          margin={["0px", "0px", "0px", "0px", "20px 0px"]}
+          textAlign="center"
+        >
+          Dashboard Page
+        </Heading>
         <Flex
           width={"100%"}
           height={"100%"}
@@ -133,42 +148,14 @@ export const DashboardPage = () => {
                 </Text>
               </Flex>
               <Box ml="40px" w="38%" maxW="600px">
-                {/* <Box>
-                  <Stack spacing="10">
-
-                  <Text
-                    p="10px"
-                    borderRadius="10px"
-                    border="1px solid black"
-                    maxW={"150px"}
-                    boxShadow="0 0 10px gray"
-                    _hover={{ boxShadow: "0 0 10px #101010" }}
-                    variant="primary"
-                  >
-                    Você pode controlar seu estoque de manineira fácil e
-                    dinâmica!{" "}
-                  </Text>
-                  <Text
-                    p="10px"
-                    borderRadius="10px"
-                    border="1px solid black"
-                    maxW={"150px"}
-                    boxShadow="0 0 10px gray"
-                    _hover={{ boxShadow: "0 0 10px #101010" }}
-                    variant="primary"
-                  >
-                    Tenha sua lista de fornecedores de forma rápida e fácil!{" "}
-                  </Text>
-                  </Stack>
-                 
-                </Flex> */}
-                 <Example/>
+                <Example/>
               </Box>
             </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      </Flex>
+    </motion.div>
   );
 };
 

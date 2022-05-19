@@ -5,20 +5,25 @@ const HomeFilter = () => {
   const { addInputSearch } = useInputHome();
 
   return (
-    <Flex>
-      <Button m={3} onClick={() => addInputSearch("")}>
+    <Flex 
+      overflowX={"auto"}
+      maxH={"400px"}
+      flexWrap={"wrap"}
+
+      >
+      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("")}>
         Todos
       </Button>
-      <Button m={3} onClick={() => addInputSearch("sanduiches")}>
+      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("sanduiches")}>
         Lanches
       </Button>
-      <Button m={3} onClick={() => addInputSearch("bebidas")}>
+      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("bebidas")}>
         Bebidas
       </Button>
-      <Button m={3} onClick={() => addInputSearch("porcoes")}>
+      <Button variant={'primary'} m={3} w={"100px"} onClick={() => addInputSearch("porcoes")}>
         Porções
       </Button>
-      <Button m={3} onClick={() => addInputSearch("milkshake")}>
+      <Button variant={'primary'} m={3} w={"120px"} onClick={() => addInputSearch("milkshake")}>
         Milkshakes
       </Button>
     </Flex>
