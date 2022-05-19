@@ -16,7 +16,8 @@ import { useStockList } from "../../../../Providers/Stock";
 export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
   const { id, providerData, quantity, status, supplyData, totalValue } = order;
   const [selectValue, setSelectValue] = useState("");
-  const { getListStock } = useStockList();
+  const { stockList, getListStock } = useStockList();
+
   return (
     <Flex
       key={id}
@@ -92,25 +93,61 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
                 });
 
               if (e.target.value === "Finalizado") {
-                api
-                  .post(
-                    "/stock",
-                    {
-                      ...order,
-                      ownerId: 1,
-                      userId: 1,
-                    },
-                    {
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                      },
-                    }
+                console.log(stockList);
+                console.log(supplyData);
+                console.log(order);
+
+                if (
+                  stockList.some(
+                    (ele) => ele.supplyData.name === supplyData.name
                   )
-                  .then((res) => {
-                    getListStock();
-                  });
+                ) {
+                  const itemInStock = stockList.filter(
+                    (ele) => ele.supplyData.name === supplyData.name
+                  );
+
+                  console.log(itemInStock);
+                  console.log(itemInStock[0].id);
+
+                  api
+                    .patch(
+                      `/stock/${itemInStock[0].id}`,
+                      {
+                        ...itemInStock[0],
+                        quantity: +itemInStock[0].quantity + +order.quantity,
+                      },
+                      {
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${token}`,
+                        },
+                      }
+                    )
+                    .then((rep) => {
+                      getOrdersList();
+                    });
+                } else {
+                  api
+                    .post(
+                      "/stock",
+                      {
+                        ...order,
+                        ownerId: 1,
+                        userId: 1,
+                      },
+                      {
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${token}`,
+                        },
+                      }
+                    )
+                    .then((res) => {
+                      getListStock();
+                    });
+                }
               }
+
               setSelectValue(e.target.value);
             }}
           >
