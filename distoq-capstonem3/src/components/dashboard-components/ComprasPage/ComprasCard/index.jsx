@@ -54,11 +54,16 @@ export const CardCompras = ({ order, getOrdersList, setOrdersList, token }) => {
           OC: #{id}
         </Text>
         <Flex alignItems={"center"}>
-          <Text marginRight={"20px"} fontSize={"20px"} fontWeight="bold">
+          <Text
+            marginRight={"20px"}
+            fontSize={"20px"}
+            fontWeight="bold"
+            flexWrap={["wrap", "wrap", "wrap", "nowrap"]}
+          >
             Status:
           </Text>
           <Box
-            width={"45px"}
+            width={["30px", "30px", "30px", "45px"]}
             height={"25px"}
             borderRadius={"50%"}
             marginRight={"20px"}
