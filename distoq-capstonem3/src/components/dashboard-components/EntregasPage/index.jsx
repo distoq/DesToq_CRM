@@ -16,11 +16,21 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Example from "../../lottie/lottie";
 import { MapPage } from "./MapsComponent";
+import { useEffect, useState } from "react";
+import api from "../../../services/api";
 AOS.init();
 
 export const EntregasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
+  const [ticketsList, setTicketsList] = useState([]);
+
+  useEffect(() => {
+    api.get("/tickets").then((res) => {
+      setTicketsList(res.data);
+    });
+  }, []);
+
   const { userLogin } = useUser();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -112,7 +122,7 @@ export const EntregasPage = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <MapPage />
+            <MapPage ticketsList={ticketsList} />
           </Flex>
         </Flex>
       </Flex>
