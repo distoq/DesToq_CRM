@@ -96,18 +96,18 @@ export const FormProviders = () => {
       .then((res) => {
         getApi();
         toast({
-          description: "Fornecedor cadastrado com sucesso!",
+          description: "cadastrado com sucesso",
           status: "success",
-          duration: 4000,
+          duration: 2500,
           isClosable: true,
           position: "top",
         });
       })
       .catch((err) => {
         toast({
-          description: "Ops, algo deu errado!",
+          description: "Ops! Algo deu errado",
           status: "error",
-          duration: 4000,
+          duration: 2000,
           isClosable: true,
           position: "top",
         });
@@ -115,29 +115,29 @@ export const FormProviders = () => {
   };
 
   const formSchema = yup.object().shape({
-    companyName: yup.string().required("Campo obrigatório"),
-    fantasyName: yup.string().required("Campo obrigatório"),
+    companyName: yup.string().required("campo obrigatório"),
+    fantasyName: yup.string().required("campo obrigatório"),
     cnpj: yup
       .string()
-      .required("Campo obrigatório")
+      .required("campo obrigatório")
       .min(14, "CNPJ inválido")
       .max(14, "CNPJ inválido"),
     ie: yup
       .string()
-      .required("Campo obrigatório")
+      .required("campo obrigatório")
       .min(9, "I.E inválida")
       .max(9, "I.E inválida"),
     cep: yup
       .string()
-      .required("Campo obrigatório")
+      .required("campo obrigatório")
       .min(8, "CEP inválido")
       .max(8, "CEP inválido"),
-    street: yup.string().required("Campo obrigatório"),
-    number: yup.string().required("Campo obrigatório"),
+    street: yup.string().required("campo obrigatório"),
+    number: yup.string().required("campo obrigatório"),
     complement: yup.string(),
-    district: yup.string().required("Campo obrigatório"),
-    city: yup.string().required("Campo obrigatório"),
-    state: yup.string().required("Campo obrigatório"),
+    district: yup.string().required("campo obrigatório"),
+    city: yup.string().required("campo obrigatório"),
+    state: yup.string().required("campo obrigatório"),
   });
   const {
     register,
@@ -146,14 +146,13 @@ export const FormProviders = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-  
 
   return (
     <motion.div
-      initial={{opacity:0}}
-      animate={{opacity:1}}
-      exit={{opacity:0}}
-      transition={{duration:1}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
     >
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <Flex direction="column">
@@ -172,7 +171,7 @@ export const FormProviders = () => {
             }}
           >
             <Flex>
-              <FormLabel>Nome da Empresa</FormLabel>
+              <FormLabel>Nome da empresa</FormLabel>
               {errors.companyName && (
                 <Text ml="5px" color="red.500">
                   {errors.companyName.message}
@@ -182,14 +181,14 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("companyName")}
-              placeholder="Digite o nome da empresa "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o nome da empresa"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.companyName && "#ff0000"}
               variant="outline"
             />
 
             <Flex>
-              <FormLabel>Nome Fantasia</FormLabel>
+              <FormLabel>Nome fantasia</FormLabel>
               {errors.fantasyName && (
                 <Text ml="5px" color="red.500">
                   {errors.fantasyName.message}
@@ -199,8 +198,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("fantasyName")}
-              placeholder="Digite o nome fantasia da empresa. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o nome fantasia"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.fantasyName && "#ff0000"}
               variant="outline"
             />
@@ -216,8 +215,8 @@ export const FormProviders = () => {
             <Input
               type="number"
               {...register("cnpj")}
-              placeholder="Digite o cnpj da empresa. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o CNPJ"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.cnpj && "#ff0000"}
               variant="outline"
             />
@@ -233,8 +232,8 @@ export const FormProviders = () => {
             <Input
               type="number"
               {...register("ie")}
-              placeholder="Digite a Inscrição Estadual da empresa. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite a Inscrição Estadual"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.number && "#ff0000"}
               variant="outline"
             />
@@ -250,8 +249,8 @@ export const FormProviders = () => {
             <Input
               type="number"
               {...register("cep")}
-              placeholder="Digite o CEP. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o CEP"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.cep && "#ff0000"}
               variant="outline"
             />
@@ -267,8 +266,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("street")}
-              placeholder="Digite o nome da rua. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite a rua"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.street && "#ff0000"}
               variant="outline"
             />
@@ -284,8 +283,8 @@ export const FormProviders = () => {
             <Input
               type="number"
               {...register("number")}
-              placeholder="Digite o número. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o número"
+              _placeholder={{ color: "#716C6C" }}
               border="1px"
               borderColor={errors.number && "#ff0000"}
               variant="outline"
@@ -302,8 +301,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("complement")}
-              placeholder="Digite o complemento. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o complemento se houver"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.complement && "#ff0000"}
               variant="outline"
             />
@@ -319,8 +318,8 @@ export const FormProviders = () => {
             <Input
               type="text"
               {...register("district")}
-              placeholder="Digite o nome do bairro. "
-              _placeholder={{ color: "#101010" }}
+              placeholder="digite o bairro"
+              _placeholder={{ color: "#716C6C" }}
               borderColor={errors.district && "#ff0000"}
               variant="outline"
             />
@@ -338,8 +337,8 @@ export const FormProviders = () => {
                 <Input
                   type="text"
                   {...register("city")}
-                  placeholder="Digite a cidade."
-                  _placeholder={{ color: "#101010" }}
+                  placeholder="digite a cidade"
+                  _placeholder={{ color: "#716C6C" }}
                   borderColor={errors.city && "red.500"}
                   variant="outline"
                 />
@@ -353,8 +352,8 @@ export const FormProviders = () => {
                   ml="5px"
                   w="120px"
                   {...register("state")}
-                  placeholder=" Estados"
-                  _placeholder={{ color: "#101010" }}
+                  placeholder="Estados"
+                  _placeholder={{ color: "#716C6C" }}
                   borderColor={errors.state ? "#ff0000" : "#101010"}
                   h="28px"
                   color="#101010"
@@ -373,7 +372,7 @@ export const FormProviders = () => {
             </Flex>
           </FormControl>
           <Button alignSelf="center" type="submit" variant="primary">
-            CADASTRAR
+            cadastrar
           </Button>
         </Flex>
       </form>

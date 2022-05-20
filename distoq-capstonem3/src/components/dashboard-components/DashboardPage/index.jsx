@@ -120,7 +120,7 @@ export const DashboardPage = () => {
             >
               <Flex w="100%" direction={"column"} align="center">
                 <Heading mt="40px" variant={"primary"}>
-                  Bem vindo, {userLogin.name}
+                  Bem vindo, {userLogin.name}!
                 </Heading>
                 <Flex mt="10px" w="100%" justify={"center"}>
                   <Text
@@ -135,7 +135,7 @@ export const DashboardPage = () => {
                     simples e descomplicada.
                   </Text>
                 </Flex>
-                <Box w="38%" maxW="600px">
+                <Box ml="40px" w="38%" maxW="600px">
                   <Example />
                 </Box>
               </Flex>

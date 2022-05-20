@@ -17,8 +17,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
-export const StockList = ({ list, min  }) => {
-  const valueStock = list.totalValue
+export const StockList = ({ list, min }) => {
+  const valueStock = list.totalValue;
 
   return (
     <>
@@ -55,7 +55,7 @@ export const StockList = ({ list, min  }) => {
             Fornecedor {list.providerData.companyName}
           </Text>
           <Flex direction="column" align={["center"]} justify="center">
-            <Text variant="bold">Categoria:</Text>
+            <Text variant="bold">categoria:</Text>
             <Badge alignSelf="center" variant="solid" colorScheme="purple">
               {list.supplyData.category}
             </Badge>
@@ -64,7 +64,7 @@ export const StockList = ({ list, min  }) => {
             <PopoverTrigger>
               <Stack spacing={10}>
                 <Button m="10px" colorScheme={"green"}>
-                  Mostrar <AddIcon margin="10px" />
+                  mostrar <AddIcon margin="10px" />
                 </Button>
               </Stack>
             </PopoverTrigger>
@@ -72,7 +72,7 @@ export const StockList = ({ list, min  }) => {
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader color="#101010">
-                Informações Financeiras
+                informações financeiras
               </PopoverHeader>
               <PopoverBody>
                 <Flex direction="column" align={["center"]}>
@@ -97,7 +97,7 @@ export const StockList = ({ list, min  }) => {
                   </Flex>
                 </Flex>
                 <Flex direction="column" align={["center"]}>
-                  <Text variant="bold">Valor de compra:</Text>
+                  <Text variant="bold">Valor da compra:</Text>
                   <Badge
                     alignSelf="center"
                     variant="solid"

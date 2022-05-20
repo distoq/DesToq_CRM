@@ -307,7 +307,7 @@ const FormRegister = () => {
             </Button>
             <Text>
               Já possui cadastro?
-              <Link onClick={() => history("/login")}> clique aqui </Link>
+              <Link onClick={() => history("/login")}> Clique aqui</Link>
             </Text>
           </FormControl>
         </Box>

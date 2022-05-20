@@ -56,12 +56,11 @@ const CardSC = () => {
           {searchFilter.map((product, index) => (
             <ListItem
               _hover={{
-                "transform": "scale(1.02)",
-                "boxShadow":" 0px 20px 40px rgba(0, 0, 0, 0.25)",
-                "border": "solid 1px #de9e36"
-                
+                transform: "scale(1.02)",
+                boxShadow: " 0px 20px 40px rgba(0, 0, 0, 0.25)",
+                border: "solid 1px #de9e36",
               }}
-              transition= "all ease .5s"
+              transition="all ease .5s"
               w="257px"
               h="507px"
               border="1px solid #E5E5E5"
@@ -103,7 +102,7 @@ const CardSC = () => {
                       />
                     ))}
                 </Flex>
-                <Popover placement='top'>
+                <Popover placement="top">
                   <Flex justify="flex-end">
                     <PopoverTrigger>
                       <Button bg="transparent" mr={"10px"}>
@@ -112,8 +111,8 @@ const CardSC = () => {
                     </PopoverTrigger>
                   </Flex>
                   <PopoverContent>
-                    <PopoverArrow position={"absolute"}/>
-                    <PopoverCloseButton/>
+                    <PopoverArrow position={"absolute"} />
+                    <PopoverCloseButton />
                     <PopoverHeader>Descrição:</PopoverHeader>
                     <PopoverBody>{product.description}</PopoverBody>
                   </PopoverContent>
