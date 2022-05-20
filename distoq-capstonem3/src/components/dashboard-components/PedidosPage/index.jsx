@@ -42,6 +42,7 @@ export const PedidosPage = () => {
   const [ticketItem, setTicketItem] = useState(null);
   const [ticketItensList, setTicketItensList] = useState([]);
   const [ticketTotalPrice, setTicketTotalPrice] = useState(0);
+  const [minQty, setMinQty] = useState(false);
 
   const [showError, setShowError] = useState(false);
 
@@ -443,21 +444,26 @@ export const PedidosPage = () => {
                               margin={"5px 0"}
                               colorScheme="blue"
                               onClick={() => {
-                                api
-                                  .get(`products/${ticketItemId}`)
-                                  .then((resp) => {
-                                    setTicketItensList([
-                                      ...ticketItensList,
-                                      {
-                                        ...resp.data,
-                                        quantity: +ticketItemQuantity,
-                                      },
-                                    ]);
-                                  });
-                                setTicketItem("");
-                                setTicketItemId("");
-                                setTicketItemQuantity("");
-                                setShowError(false);
+                                if ( ticketItemQuantity <= 0 ) {
+                                  setMinQty(true);
+                                } else {
+                                  setMinQty(false)
+                                  api
+                                    .get(`products/${ticketItemId}`)
+                                    .then((resp) => {
+                                      setTicketItensList([
+                                        ...ticketItensList,
+                                        {
+                                          ...resp.data,
+                                          quantity: +ticketItemQuantity,
+                                        },
+                                      ]);
+                                    });
+                                  setTicketItem("");
+                                  setTicketItemId("");
+                                  setTicketItemQuantity("");
+                                  setShowError(false);
+                                }
                               }}
                             >
                               Adicionar
@@ -479,7 +485,10 @@ export const PedidosPage = () => {
                                   backgroundColor={"red"}
                                   width={"15px"}
                                   height={"15px"}
-                                  onClick={(e) => {}}
+                                  onClick={(e) => {
+                                  setTicketItensList(ticketItensList.filter((elem) => elem.id != e.target.value) 
+                                    
+                                  )}}
                                 >
                                   x
                                 </Button>
@@ -489,6 +498,11 @@ export const PedidosPage = () => {
                           {showError && (
                             <Text color={"#ff0000"} width={"95%"}>
                               Adicione ao menos um produto!
+                            </Text>
+                          )}
+                          {minQty && (
+                            <Text color={"#ff0000"} width={"95%"}>
+                              Quantidade mínima de 1!
                             </Text>
                           )}
                           <InputGroup>
