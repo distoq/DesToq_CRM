@@ -6,7 +6,7 @@
 ## Como usar:
 ### 1. Como pode ficar a gestão do seu negócio com o DEStoq:
 <ul>
-	<li> 1.1 - vinculação com seu e-commerc
+	<li> 1.1 - vinculação com seu e-commerce
 		<img src="https://media.giphy.com/media/9vTAH2YT1J0SQ0iM1i/giphy.gif" alt="tela do ecommerce" height="500px" width="1000px" />
 	</li>
 	<br>
