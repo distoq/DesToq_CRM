@@ -18,7 +18,20 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 
-export const MapPage = () => {
+export const MapPage = ({ ticketsList }) => {
+  const deliveryList = ticketsList.filter(
+    (ele) => ele.status === "Pronto entrega"
+  );
+
+  console.log(deliveryList);
+
+  const arrayDelivery = deliveryList.map((ele) => ({
+    location: `${ele.clientInfo.addressInfo.address}, ${ele.clientInfo.addressInfo.number}, ${ele.clientInfo.addressInfo.city}`,
+    stopover: true,
+  }));
+
+  console.log(arrayDelivery);
+
   const { isLoaded } = useJsApiLoader({
     // id: "google-map-script",
     googleMapsApiKey: "AIzaSyBI_YF6Rs6l6uDAaWXt6PIrU602GxVAk7w",
@@ -48,10 +61,7 @@ export const MapPage = () => {
       destination: center,
       //eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
-      waypoints: [
-        { location: "Av. Olavo Fontoura, Sao Paulo", stopover: true },
-        { location: "Rua Bela Vista de Goias, Guarulhos", stopover: true },
-      ],
+      waypoints: arrayDelivery,
       optimizeWaypoints: true,
       drivingOptions: {
         departureTime: new Date(),
@@ -125,7 +135,7 @@ export const MapPage = () => {
                   display={"inline-block"}
                   ml={"5px"}
                 >
-                  2
+                  {deliveryList.length}
                 </Text>
               </Heading>
               <Flex width={"fit-content"} padding={"0"}>
