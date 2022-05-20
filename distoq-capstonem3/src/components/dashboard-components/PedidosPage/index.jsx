@@ -107,7 +107,7 @@ export const PedidosPage = () => {
   };
 
   const formSchema = yup.object().shape({
-    client: yup.string().required("Cliente obrigatório!"),
+    client: yup.string().required("cliente obrigatório"),
   });
 
   const {
@@ -388,6 +388,7 @@ export const PedidosPage = () => {
                           </Heading>
                           <Select
                             placeholder="Cliente"
+                            _placeholder={{ color: "#716C6C" }}
                             {...register("client")}
                             value={inputClient}
                             onChange={(e) => {
@@ -412,7 +413,8 @@ export const PedidosPage = () => {
                             borderRadius={"5px"}
                           >
                             <Select
-                              placeholder="Produtos"
+                              placeholder="produtos"
+                              _placeholder={{ color: "#716C6C" }}
                               margin={"5px 0"}
                               backgroundColor={"#ffffff"}
                               value={ticketItemId}
@@ -430,7 +432,7 @@ export const PedidosPage = () => {
                               margin={"5px 0"}
                               backgroundColor={"#ffffff"}
                             >
-                              <InputLeftAddon children={"Qty."} />
+                              <InputLeftAddon children={"Qtd."} />
                               <Input
                                 type={"number"}
                                 backgroundColor={"#ffffff"}

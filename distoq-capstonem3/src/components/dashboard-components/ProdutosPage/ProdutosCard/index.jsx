@@ -39,10 +39,10 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
 
   return (
     <motion.div
-      initial={{opacity:0}}
-      animate={{opacity:1}}
-      exit={{opacity:0}}
-      transition={{duration:1}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
     >
       <Flex
         key={id}
@@ -70,12 +70,11 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           justifyContent={"space-between"}
         >
           <Button
-         
             colorScheme={"red"}
             size={"sm"}
             onClick={() => removeProduct(id)}
           >
-            Remover
+            remover
           </Button>
         </Flex>
         <Flex alignItems={"center"}>
@@ -113,21 +112,21 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
             Categoria:
             <span>{category}</span>
           </Text>
-          <Popover >
-          <Flex w="100%" justify="flex-end" >
-            <PopoverTrigger>
-              <Button  bg="transparent">
-                descrição <AddIcon ml="10px" cursor="pointer" />
-              </Button>
-            </PopoverTrigger>
-          </Flex>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
-            <PopoverBody>{description}</PopoverBody>
-          </PopoverContent>
-        </Popover>
+          <Popover>
+            <Flex w="100%" justify="flex-end">
+              <PopoverTrigger>
+                <Button bg="transparent">
+                  descrição <AddIcon ml="10px" cursor="pointer" />
+                </Button>
+              </PopoverTrigger>
+            </Flex>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
+              <PopoverBody>{description}</PopoverBody>
+            </PopoverContent>
+          </Popover>
           <Text width={"100%"} fontWeight={"bold"}>
             Preço: R$
             <span fontWeight={"400"}>{price.toFixed(2)}</span>

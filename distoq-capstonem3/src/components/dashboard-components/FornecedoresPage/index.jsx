@@ -219,5 +219,4 @@ export const FornecedoresPage = () => {
     </motion.div>
   );
 };
-
 export default FornecedoresPage;

@@ -121,7 +121,8 @@ export const CardPedidos = ({
           />
           <Select
             disabled={status === "Pedido concluido"}
-            placeholder="Status"
+            placeholder="status"
+            _placeholder={{ color: "#716C6C" }}
             backgroundColor={"#fff"}
             defaultValue={status}
             onChange={(e) => {
@@ -170,11 +171,11 @@ export const CardPedidos = ({
               setSelectValue(e.target.value);
             }}
           >
-            <option value="Realizado">Realizado</option>
-            <option value="Aceito">Aceito</option>
-            <option value="Em preparo">Em preparo</option>
-            <option value="Pronto entrega">Pronto entrega</option>
-            <option value="Pedido concluido">Pedido concluido</option>
+            <option value="Realizado">realizado</option>
+            <option value="Aceito">aceito</option>
+            <option value="Em preparo">em preparo</option>
+            <option value="Pronto entrega">para entrega</option>
+            <option value="Pedido concluido">pedido concluído</option>
           </Select>
         </Flex>
       </Flex>
@@ -258,7 +259,7 @@ export const CardPedidos = ({
 
         <Flex flexDirection={"column"} justifyContent={"center"} margin={"5px"}>
           <Button colorScheme="red" disabled={status === "Pedido concluido"}>
-            Cancelar
+            cancelar
           </Button>
         </Flex>
       </Flex>

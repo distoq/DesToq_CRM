@@ -41,10 +41,10 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
 
   return (
     <motion.div
-      initial={{opacity:0}}
-      animate={{opacity:1}}
-      exit={{opacity:0}}
-      transition={{duration:1}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
     >
       <Flex
         key={id}
@@ -71,29 +71,29 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-        <Text>
-          Categoria:
-          <span>{category}</span>
-        </Text>
-        <Popover >
-          <Flex w="100%" justify="flex-end" >
-            <PopoverTrigger>
-              <Button  bg="transparent">
-                descrição <AddIcon ml="10px" cursor="pointer" />
-              </Button>
-            </PopoverTrigger>
-          </Flex>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
-            <PopoverBody>{description}</PopoverBody>
-          </PopoverContent>
-        </Popover>
-        <Text width={"100%"} fontWeight={"bold"}>
-          Preço: R$
-          <span fontWeight={"400"}>{price.toFixed(2)}</span>
-        </Text>
+          <Text>
+            Categoria:
+            <span>{category}</span>
+          </Text>
+          <Popover>
+            <Flex w="100%" justify="flex-end">
+              <PopoverTrigger>
+                <Button bg="transparent">
+                  descrição <AddIcon ml="10px" cursor="pointer" />
+                </Button>
+              </PopoverTrigger>
+            </Flex>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader fontWeight={"bold"}>Descrição:</PopoverHeader>
+              <PopoverBody>{description}</PopoverBody>
+            </PopoverContent>
+          </Popover>
+          <Text width={"100%"} fontWeight={"bold"}>
+            Preço: R$
+            <span fontWeight={"400"}>{price.toFixed(2)}</span>
+          </Text>
           <Text
             fontWeight={"bold"}
             fontSize={"22px"}
@@ -102,14 +102,14 @@ export const CardProdutos = ({ product, setProductsList, getProductsList }) => {
             padding={"5px 10px 0px 10px"}
             boxShadow={"0 0 5px #202020"}
           >
-            P.Id: #{id}
+            id: #{id}
           </Text>
           <Button
             colorScheme={"red"}
             size={"sm"}
             onClick={() => removeProduct(id)}
           >
-            Remover
+            remover
           </Button>
         </Flex>
         <Flex alignItems={"center"}>

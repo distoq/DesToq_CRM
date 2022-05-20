@@ -34,13 +34,10 @@ const FormLogin = () => {
         localStorage.setItem(
           "@DEStoq:token",
           JSON.stringify(res.data.accessToken)
-         
         );
-        localStorage.setItem(
-          "@DEStoq:user",
-          JSON.stringify(res.data.user))
-          
-        return navigate("/")
+        localStorage.setItem("@DEStoq:user", JSON.stringify(res.data.user));
+
+        return navigate("/");
       })
       .catch((err) => {
         toast({
@@ -107,7 +104,7 @@ const FormLogin = () => {
                 maxW: "300px",
                 margin: "auto",
                 _placeholder: {
-                  color: "black",
+                  color: "#716C6C",
                   borderColor: "black",
                 },
               },

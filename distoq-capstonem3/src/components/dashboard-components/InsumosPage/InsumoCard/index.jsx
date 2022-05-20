@@ -73,7 +73,7 @@ export const CardInsumo = ({ supply }) => {
         alignItems={"center"}
         margin={"5px"}
       >
-        <Text fontWeight={"bold"}>Categoria:</Text>
+        <Text fontWeight={"bold"}>categoria:</Text>
         <Badge colorScheme={"green"} maxW={"fit-content"}>
           {category}
         </Badge>
@@ -84,7 +84,7 @@ export const CardInsumo = ({ supply }) => {
         justifyContent={"center"}
         margin={"5px"}
       >
-        <Text fontWeight={"bold"}>Preço de Compra:</Text>
+        <Text fontWeight={"bold"}>Preço de compra:</Text>
         <InputGroup fontWeight={"bold"}>
           <InputLeftAddon children="R$" />
           <Input
@@ -101,13 +101,13 @@ export const CardInsumo = ({ supply }) => {
         alignItems={"center"}
         margin={"5px"}
       >
-        <Text fontWeight={"bold"}>Un. de Medida:</Text>
+        <Text fontWeight={"bold"}>unidade de medida:</Text>
         <Badge colorScheme={"green"} maxW={"fit-content"}>
           {measurementUnit}
         </Badge>
       </Flex>
       <Flex flexDirection={"column"} justifyContent={"center"} margin={"5px"}>
-        <Button colorScheme="red">Deletar</Button>
+        <Button colorScheme="red">deletar</Button>
       </Flex>
     </Flex>
   );

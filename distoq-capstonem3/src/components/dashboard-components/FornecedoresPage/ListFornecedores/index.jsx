@@ -39,7 +39,7 @@ export const ListProviders = ({ list }) => {
       .then((res) => {
         getApi();
         toast({
-          description: "Fornecedor cadastrado com sucesso!",
+          description: "Cadastrado com sucesso!",
           status: "success",
           duration: 4000,
           isClosable: true,
@@ -48,7 +48,7 @@ export const ListProviders = ({ list }) => {
       })
       .catch((err) => {
         toast({
-          description: "Ops, algo deu errado!",
+          description: "Ops! Algo deu errado",
           status: "error",
           duration: 4000,
           isClosable: true,
@@ -68,11 +68,20 @@ export const ListProviders = ({ list }) => {
           rounded={"lg"}
           bg="#ffffff"
         >
-          <Flex align={"center"} direction={["column","column","row"]} justify={["center","center","space-between"]} w="100%" >
-            <Heading w={["","","230px"]} alignSelf="center" variant="dashboard">
+          <Flex
+            align={"center"}
+            direction={["column", "column", "row"]}
+            justify={["center", "center", "space-between"]}
+            w="100%"
+          >
+            <Heading
+              w={["", "", "230px"]}
+              alignSelf="center"
+              variant="dashboard"
+            >
               {companyName}
             </Heading>
-            <Text variant="primary">CNPJ: {cnpj}</Text>
+            <Text variant="primary">CNPJ {cnpj}</Text>
 
             <Popover>
               <PopoverTrigger>
@@ -93,27 +102,23 @@ export const ListProviders = ({ list }) => {
                 <PopoverBody>
                   <UnorderedList m="0" listStyleType={"none"}>
                     <ListItem>
-                      <Text variant="primary">CEP: {address.cep}</Text>
-                      <Text variant="primary">Rua: {address.street}</Text>
-                      <Text variant="primary">Número: {address.number}</Text>
+                      <Text variant="primary">CEP {address.cep}</Text>
+                      <Text variant="primary">Rua {address.street}</Text>
+                      <Text variant="primary">Número {address.number}</Text>
                       {address.complement.length > 0 && (
                         <Text variant="primary">
-                          Complemento: {address.complement}
+                          Complemento {address.complement}
                         </Text>
                       )}
-                      <Text variant="primary">Cidade: {address.city}</Text>
-                      <Text variant="primary">Estado: {address.state}</Text>
+                      <Text variant="primary">Cidade {address.city}</Text>
+                      <Text variant="primary">Estado {address.state}</Text>
                     </ListItem>
                   </UnorderedList>
                 </PopoverBody>
               </PopoverContent>
             </Popover>
-            <Button
-              
-              colorScheme="red"
-              onClick={() => deleteProvider(list.id)}
-            >
-              Delete
+            <Button colorScheme="red" onClick={() => deleteProvider(list.id)}>
+              delete
             </Button>
           </Flex>
         </ListItem>

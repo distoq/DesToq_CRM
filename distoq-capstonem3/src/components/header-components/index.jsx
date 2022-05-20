@@ -130,7 +130,8 @@ const DashboardHeader = () => {
             <Input
               pr="4.5rem"
               type={"text"}
-              placeholder="Faça sua pesquisa..."
+              placeholder="digite sua pesquisa"
+              _placeholder={{ color: "#716C6C" }}
               backgroundColor={"white"}
               fontWeight={"bold"}
               boxShadow={"0 0 5px grey"}

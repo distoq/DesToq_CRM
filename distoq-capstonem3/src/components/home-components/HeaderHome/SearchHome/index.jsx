@@ -12,9 +12,9 @@ const Search = ({ value }) => {
         value={inputSearch}
         type="email"
         placeholder="digite sua pesquisa"
+        _placeholder={{ color: "#716C6C" }}
         borderColor="#101010"
         color="#101010"
-        _placeholder={{ color: "#101010" }}
         onChange={(e) => addInputSearch(e.target.value)}
       />
       <Box position="relative" right={"25px"}>
