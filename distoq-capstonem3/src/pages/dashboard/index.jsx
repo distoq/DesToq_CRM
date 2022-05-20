@@ -11,19 +11,18 @@ import DevelopersPage from "../../components/dashboard-components/DevelopersPage
 import { useActivePage } from "../../Providers/DashboardPageController";
 import { useNavigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import { useToken } from "../../Providers/Token";
+import EntregasPage from "../../components/dashboard-components/EntregasPage";
 
 const Dashboard = () => {
   const { activeDashboardPage } = useActivePage();
   const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
-  const {token} = useToken();
+  const { token } = useToken();
   const { decodedToken, isExpired } = useJwt(token);
 
   const navigate = useNavigate();
-  const isAdmin = userLogin.userId
- 
-
+  const isAdmin = userLogin.userId;
 
   if (isAdmin != "1") {
     return navigate("/");
@@ -33,7 +32,7 @@ const Dashboard = () => {
     switch (value) {
       case "Dashboard":
         return <DashboardPage />;
-        
+
       case "Pedidos":
         return <PedidosPage />;
 
@@ -55,6 +54,9 @@ const Dashboard = () => {
       case "Financeiro":
         return <FinanceiroPage />;
 
+      case "Entregas":
+        return <EntregasPage />;
+
       case "Developers":
         return <DevelopersPage />;
 
@@ -65,11 +67,10 @@ const Dashboard = () => {
 
   return (
     <motion.div
-      initial={{opacity:0}}
-      animate={{opacity:1}}
-      exit={{opacity:0}}
-      transition={{duration:1}}
-    
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
     >
       <DashboardHeader />
       {handlePageRender(activeDashboardPage)}

@@ -2,22 +2,36 @@ import {
   Box,
   Flex,
   Heading,
+  Stack,
   Text,
   useRadio,
   useRadioGroup,
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { GoSearch } from "react-icons/go";
 import { useActivePage } from "../../../Providers/DashboardPageController";
+import { useUser } from "../../../Providers/Users";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Example from "../../lottie/lottie";
+import { MapPage } from "./MapsComponent";
+import { useEffect, useState } from "react";
+import api from "../../../services/api";
 AOS.init();
 
-export const DashboardPage = () => {
+export const EntregasPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
-  const userLogin = JSON.parse(localStorage.getItem("@DEStoq:user")) || "";
+  const [ticketsList, setTicketsList] = useState([]);
+
+  useEffect(() => {
+    api.get("/tickets").then((res) => {
+      setTicketsList(res.data);
+    });
+  }, []);
+
+  const { userLogin } = useUser();
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "menuOptions",
@@ -108,38 +122,7 @@ export const DashboardPage = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <Flex
-              backgroundColor={"#aeaeae4e"}
-              boxShadow={"0 0 15px #464646"}
-              width={["100%", "100%", "100%", "100%", "90%"]}
-              height={["100%", "100%", "100%", "100%", "90%"]}
-              marginTop={["20px", "20px", "20px", "20px", "0px"]}
-              borderTopRadius={"15px"}
-              borderBottomRadius={["0px", "0px", "0px", "0px", "15px"]}
-              color={"white"}
-            >
-              <Flex w="100%" direction={"column"} align="center">
-                <Heading mt="40px" variant={"primary"}>
-                  Bem vindo, {userLogin.name}
-                </Heading>
-                <Flex mt="10px" w="100%" justify={"center"}>
-                  <Text
-                    p="10px"
-                    borderRadius="10px"
-                    border="1px solid black"
-                    variant="primary"
-                    boxShadow="0 0 10px gray"
-                    _hover={{ boxShadow: "0 0 10px #101010" }}
-                  >
-                    Tudo aqui foi feito para você fazer sua gestão de forma
-                    simples e descomplicada.
-                  </Text>
-                </Flex>
-                <Box w="38%" maxW="600px">
-                  <Example />
-                </Box>
-              </Flex>
-            </Flex>
+            <MapPage ticketsList={ticketsList} />
           </Flex>
         </Flex>
       </Flex>
@@ -147,4 +130,4 @@ export const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default EntregasPage;

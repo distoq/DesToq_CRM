@@ -31,10 +31,6 @@ export const CardPedidos = ({
   const [selectValue, setSelectValue] = useState("");
 
   const { stockList, getListStock } = useStockList();
-  console.log(id);
-  console.log(ticket);
-  console.log(ticketProducts);
-  console.log(stockList);
 
   const reduceStock = (id, quantity) => {
     console.log(id);
@@ -85,7 +81,7 @@ export const CardPedidos = ({
       >
         <Text
           fontWeight={"bold"}
-          fontSize={"22px"}
+          fontSize={["18px", "18px", "18px", "18px", "22px"]}
           backgroundColor={"#fff"}
           borderRadius={"20px"}
           padding={"5px 10px 0px 10px"}
@@ -93,13 +89,21 @@ export const CardPedidos = ({
         >
           Pedido: #{id}
         </Text>
-        <Flex alignItems={"center"} ml={["10px"]}>
-          <Text marginRight={"20px"} fontSize={"20px"} fontWeight="bold">
+        <Flex
+          alignItems={"center"}
+          ml={["10px"]}
+          flexWrap={["wrap", "wrap", "wrap", "wrap", "nowrap"]}
+        >
+          <Text
+            marginRight={"20px"}
+            fontSize={["18px", "18px", "18px", "18px", "20px"]}
+            fontWeight="bold"
+          >
             Status:
           </Text>
           <Box
-            width={"45px"}
-            height={"25px"}
+            width={["25px", "25px", "25px", "45px", "45px"]}
+            height={["20px", "20px", "20px", "25px", "25px"]}
             borderRadius={"50%"}
             marginRight={"20px"}
             backgroundColor={
@@ -181,10 +185,16 @@ export const CardPedidos = ({
           margin={"5px"}
           width={"300px"}
         >
-          <Text fontWeight={"bold"} fontSize={"20px"}>
+          <Text
+            fontWeight={"bold"}
+            fontSize={["18px", "18px", "18px", "20px", "20px"]}
+          >
             Cliente #{clientInfo.id}
           </Text>
-          <Text fontWeight={"bold"} fontSize={"20px"}>
+          <Text
+            fontWeight={"bold"}
+            fontSize={["18px", "18px", "18px", "20px", "20px"]}
+          >
             Nome: {clientInfo.name}
           </Text>
           <Text fontWeight={"bold"}>
