@@ -227,8 +227,8 @@ const HeaderHome = () => {
             <Button w="100%" variant="primary" onClick={getOrder}>
               finalizar compra
             </Button>
-            <Button w="40%" colorScheme={"red"} onClick={closeDrawer}>
-              sair
+            <Button w="55%" colorScheme={"red"} onClick={closeDrawer}>
+              Continuar Comprando
             </Button>
           </DrawerFooter>
         </DrawerContent>

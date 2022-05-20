@@ -131,7 +131,6 @@ export const FinanceiroPage = () => {
               isFitted
               variant="enclosed"
               w={"100%"}
-              // backgroundColor={"#434343"}
               borderRadius={"20px"}
             >
               <TabList mb="1em">
@@ -193,11 +192,11 @@ export const FinanceiroPage = () => {
                 
                 <TabPanel
                   width={"90%"}
-                  height={"100%"}
-                  maxH={"80vh"}
+                  // height={"100%"}
+                  maxH={"70vh"}
                   display={"flex"}
                   flexDir={"column"}
-                  justifyContent={"center"}
+                  // justifyContent={"center"}
                   alignItens={"center"}
                   overflowY={"auto"}
                   sx={{
@@ -226,7 +225,7 @@ export const FinanceiroPage = () => {
                 </TabPanel>
                 <TabPanel
                   width={"90%"}
-                  height={"100%"}
+                  height={"80%"}
                   maxH={"80vh"}
                   display={"flex"}
                   flexDir={"column"}

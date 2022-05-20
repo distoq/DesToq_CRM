@@ -7,8 +7,6 @@ import {
   InputGroup,
   InputLeftAddon,
   InputLeftElement,
-  InputRightAddon,
-  InputRightElement,
   Select,
   Stack,
   Tab,
@@ -24,21 +22,20 @@ import {
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { GoSearch } from "react-icons/go";
 
 import { useActivePage } from "../../../Providers/DashboardPageController";
 
-import { useToken } from "../../../Providers/Token";
 import api from "../../../services/api";
 import { CardPedidos } from "./TicketCard";
+import { DashFilterContext } from "../../../Providers/DashboardFilter";
 
 export const PedidosPage = () => {
   const { activeDashboardPage, setActiveDashboardPage, handleIcons, options } =
     useActivePage();
 
-  const { token } = useToken();
+  const userToken = JSON.parse(localStorage.getItem("@DEStoq:token")) || "";
 
   const [clientsList, setClientsList] = useState([]);
   const [productsList, setProductsList] = useState([]);
@@ -54,13 +51,18 @@ export const PedidosPage = () => {
 
   const [ticketsList, setTicketList] = useState([]);
 
+  const { inputSearch } = useContext(DashFilterContext);
+  const filteredTicketsList = ticketsList.filter(
+    (item) =>
+      item.status.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      item.id.toString().toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   const [stockList, setStockList] = useState([]);
 
   const getStockList = () => {
     api.get(`/stock`).then((resp) => setStockList(resp.data));
   };
-
-  console.log(stockList);
 
   const getProductsList = () => {
     api
@@ -127,14 +129,11 @@ export const PedidosPage = () => {
         ticketProducts: [...ticketItensList],
         status: "Realizado",
       };
-      console.log(data);
-      console.log(ticketData);
-
       api
         .post(`/tickets`, ticketData, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${userToken}`,
           },
         })
         .then(() => getTicketsList());
@@ -163,13 +162,11 @@ export const PedidosPage = () => {
         <Flex
           {...checkbox}
           cursor="pointer"
-          //   borderWidth="1px"
           borderRadius="md"
           fontWeight="bold"
-          fontSize="26px"
+          fontSize={["18px", "18px", "18px", "26px", "26px"]}
           color="white"
           alignItems="center"
-          //   boxShadow="md"
           _checked={{
             bg: "#F4BF39",
             color: "#434343",
@@ -258,7 +255,7 @@ export const PedidosPage = () => {
                     <Tab
                       color="#101010"
                       fontWeight={"bold"}
-                      fontSize={"26px"}
+                      fontSize={["18px", "18px", "18px", "18px", "26px"]}
                       _selected={{
                         color: "#FFFF",
                         borderBottomColor: "#14213d",
@@ -278,7 +275,7 @@ export const PedidosPage = () => {
                     <Tab
                       color="#101010"
                       fontWeight={"bold"}
-                      fontSize={"26px"}
+                      fontSize={["18px", "18px", "18px", "18px", "26px"]}
                       _selected={{
                         color: "#FFFF",
                         borderBottomColor: "#14213d",
@@ -300,7 +297,6 @@ export const PedidosPage = () => {
                     sx={{
                       minWidth: "100%",
                       height: "100%",
-                      // maxHeight: "calc(100% - 75px)",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -314,7 +310,6 @@ export const PedidosPage = () => {
                     ]}
                   >
                     <TabPanel
-                      // backgroundColor={"#feffce"}
                       width={"90%"}
                       height={"100%"}
                       maxH={"80vh"}
@@ -344,14 +339,13 @@ export const PedidosPage = () => {
                         },
                       }}
                     >
-                      {ticketsList?.map((ele) => (
+                      {filteredTicketsList?.map((ele) => (
                         <CardPedidos
                           key={ele.id}
                           ticket={ele}
                           getTicketsList={getTicketsList}
                           setTicketList={setTicketList}
-                          token={token}
-                          // stockList={stockList}
+                          token={userToken}
                         />
                       ))}
                     </TabPanel>
@@ -374,7 +368,7 @@ export const PedidosPage = () => {
                           spacing={3}
                           width="400px"
                           maxWidth={"90%"}
-                          height={"100%"}
+                          height={["120%", "120%", "120%", "120%", "100%"]}
                           display="flex"
                           flexDir={"column"}
                           alignItems="center"
@@ -385,9 +379,14 @@ export const PedidosPage = () => {
                           boxShadow="0 0 10px grey"
                           color={"black"}
                         >
-                          <Heading fontSize={"30px"}>Adicionar pedido</Heading>
+                          <Heading
+                            fontSize={["22px", "22px", "22px", "30px", "30px"]}
+                          >
+                            {" "}
+                            Adicionar Pedido
+                          </Heading>
                           <Select
-                            placeholder="cliente"
+                            placeholder="Cliente"
                             _placeholder={{ color: "#716C6C" }}
                             {...register("client")}
                             value={inputClient}
@@ -446,7 +445,6 @@ export const PedidosPage = () => {
                               margin={"5px 0"}
                               colorScheme="blue"
                               onClick={() => {
-                                console.log(ticketItem);
                                 api
                                   .get(`products/${ticketItemId}`)
                                   .then((resp) => {
@@ -464,7 +462,7 @@ export const PedidosPage = () => {
                                 setShowError(false);
                               }}
                             >
-                              adicionar
+                              Adicionar
                             </Button>
                             {ticketItensList?.map((ele, index) => (
                               <Text
@@ -483,9 +481,7 @@ export const PedidosPage = () => {
                                   backgroundColor={"red"}
                                   width={"15px"}
                                   height={"15px"}
-                                  onClick={(e) => {
-                                    console.log(e.target.value);
-                                  }}
+                                  onClick={(e) => {}}
                                 >
                                   x
                                 </Button>
@@ -518,7 +514,7 @@ export const PedidosPage = () => {
                             colorScheme="blue"
                             onClick={handleSubmit(onSubmitFunction)}
                           >
-                            cadastrar ordem de compra
+                            Cadastrar Ordem de Compra
                           </Button>
                         </Stack>
                       </Flex>

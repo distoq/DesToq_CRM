@@ -24,7 +24,7 @@ const HomeFilter = () => {
         variant={"primary"}
         m={["1", "1", "1", "1", "3"]}
         w={["80px", "80px", "80px", "80px", "100px"]}
-        onClick={() => addInputSearch("sanduiches")}
+        onClick={() => addInputSearch("lanches")}
       >
         Lanches
       </Button>

@@ -115,13 +115,17 @@ const DashboardHeader = () => {
           >
             <HamburgerIcon w="45px" h="47px" />
           </Button>
-          <Image src={DEStoq} width="150px" alt="DEStoq logo" />
+          <Image
+            src={DEStoq}
+            width={["125px", "125px", "125px", "150px", "150px"]}
+            alt="DEStoq logo"
+          />
           <InputGroup
             size="md"
             width={"90%"}
             maxW={"400px"}
             margin={["0px", "0px", "0px", "0px", "20px 0 0 0"]}
-            display={["flex"]}
+            display={["none", "none", "none", "flex", "flex"]}
           >
             <Input
               pr="4.5rem"
@@ -147,7 +151,7 @@ const DashboardHeader = () => {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <Flex w={["28%", "28%", "20%", "13%"]} justify="space-around">
+          <Flex w={["35%", "35%", "20%", "13%"]} justify="space-around">
             <Button
               backgroundColor="#101010"
               display={"inline-block"}
